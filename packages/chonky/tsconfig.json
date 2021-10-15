@@ -14,6 +14,7 @@
     "noUnusedParameters": true,
     "moduleResolution": "node",
     "jsx": "react",
+    "noImplicitAny": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,

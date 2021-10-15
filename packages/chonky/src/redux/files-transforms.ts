@@ -20,7 +20,7 @@ interface SanitizeFiles {
 }
 
 export const sanitizeInputArray: SanitizeFiles = (mode: string, rawArray: any[]) => {
-  const sanitizedFiles = [];
+  const sanitizedFiles: any[] = [];
   const errorMessages: string[] = [];
 
   if ((mode === 'folderChain' || mode === 'fileActions') && !rawArray) {

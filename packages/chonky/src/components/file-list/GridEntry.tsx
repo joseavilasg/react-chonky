@@ -40,25 +40,29 @@ export const GridEntry: React.FC<FileEntryProps> = React.memo(({ file, selected,
 });
 GridEntry.displayName = 'GridEntry';
 
-const useFileEntryStyles = makeLocalChonkyStyles((theme) => ({
-  gridFileEntry: {
-    flexDirection: 'column',
-    display: 'flex',
-    height: '100%',
-  },
-  gridFileEntryPreview: {
-    flexGrow: 1,
-  },
-  gridFileEntryNameContainer: {
-    fontSize: theme.gridFileEntry.fontSize,
-    wordBreak: 'break-word',
-    textAlign: 'center',
-    paddingTop: 5,
-  },
-  gridFileEntryName: {
-    backgroundColor: (state: FileEntryState) => (state.selected ? 'rgba(0,153,255, .25)' : 'transparent'),
-    textDecoration: (state: FileEntryState) => (state.focused ? 'underline' : 'none'),
-    borderRadius: 3,
-    padding: [2, 4],
-  },
+const useFileEntryStyles = makeLocalChonkyStyles(theme => ({
+    gridFileEntry: {
+        flexDirection: 'column',
+        display: 'flex',
+        height: '100%',
+    },
+    gridFileEntryPreview: {
+        flexGrow: 1,
+    },
+    gridFileEntryNameContainer: {
+        fontSize: theme.gridFileEntry.fontSize,
+        wordBreak: 'break-word',
+        textAlign: 'center',
+        paddingTop: 5,
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        height: '21%',
+        whiteSpace: 'nowrap'
+    },
+    gridFileEntryName: {
+        backgroundColor: (state: FileEntryState) => (state.selected ? 'rgba(0,153,255, .25)' : 'transparent'),
+        textDecoration: (state: FileEntryState) => (state.focused ? 'underline' : 'none'),
+        borderRadius: 3,
+        padding: [2, 4],
+    },
 }));

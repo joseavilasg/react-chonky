@@ -77,6 +77,7 @@
     "@types/react-dom": "^18.0.11",
     "@types/react-redux": "^7.1.25",
     "@types/react-virtualized-auto-sizer": "^1.0.0",
+    "@types/react-window-infinite-loader": "^1.0.5",
     "@types/react-window": "^1.8.2",
     "@types/redux-watch": "^1.1.0",
     "@types/shortid": "^0.0.29",
@@ -95,6 +96,7 @@
     "react-redux": "^8.0.5",
     "react-virtualized-auto-sizer": "^1.0.5",
     "react-window": "^1.8.6",
+    "react-window-infinite-loader":"^1.0.8",
     "redux-watch": "^1.2.0",
     "shortid": "^2.2.16",
     "tsdef": "^0.0.14"

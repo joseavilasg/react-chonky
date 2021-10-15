@@ -1,7 +1,6 @@
 import React, { UIEvent, useCallback, useContext, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import AutoSizer from 'react-virtualized-auto-sizer';
-
 import { ChonkyActions } from '../../action-definitions/index';
 import { selectCurrentFolder, selectFileViewConfig, selectors } from '../../redux/selectors';
 import { FileViewMode } from '../../types/file-view.types';
@@ -15,6 +14,10 @@ import { ListContainer } from './ListContainer';
 
 export interface FileListProps {
   onScroll?: (e: UIEvent<HTMLDivElement>) => void;
+  hasNextPage?:boolean;
+  isNextPageLoading?:boolean;
+  loadNextPage?:any;
+
 }
 
 interface StyleState {

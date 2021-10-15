@@ -8,17 +8,20 @@ import React, { CSSProperties, useCallback, useEffect, useMemo, useRef, useState
 import { useSelector } from 'react-redux';
 import { VariableSizeGrid } from 'react-window';
 
-import { ChonkyActions } from '../../action-definitions';
 import { selectFileViewConfig, selectors } from '../../redux/selectors';
 import { FileViewConfigGrid } from '../../types/file-view.types';
-import { RootState } from '../../types/redux.types';
 import { useInstanceVariable } from '../../util/hooks-helpers';
 import { makeGlobalChonkyStyles, useIsMobileBreakpoint } from '../../util/styles';
 import { SmartFileEntry } from './FileEntry';
+import InfiniteLoader from 'react-window-infinite-loader';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export interface FileListGridProps {
-  width: number;
-  height: number;
+    width: number;
+    height: number;
+    hasNextPage?:boolean;
+    isNextPageLoading?:boolean;
+    loadNextPage?: any;
 }
 
 interface GridConfig {
@@ -145,50 +148,73 @@ export const GridContainer: React.FC<FileListGridProps> = React.memo((props) => 
         boxSizing: 'border-box',
       };
 
-      return (
-        <div style={styleWithGutter}>
-          <SmartFileEntry fileId={fileId ?? null} displayIndex={index} fileViewMode={viewConfig.mode} />
-        </div>
-      );
-    },
-    [displayFileIds, viewConfig.mode],
-  );
-
-  const classes = useStyles();
-  const gridComponent = useMemo(() => {
-    return (
-      <VariableSizeGrid
-        ref={gridRef as any}
-        className={classes.gridContainer}
-        estimatedRowHeight={gridConfig.rowHeight + gridConfig.gutter}
-        rowHeight={sizers.getRowHeight}
-        estimatedColumnWidth={gridConfig.columnWidth + gridConfig.gutter}
-        columnWidth={sizers.getColumnWidth}
-        columnCount={gridConfig.columnCount}
-        height={height}
-        rowCount={gridConfig.rowCount}
-        width={width}
-        itemKey={getItemKey}
-      >
-        {cellRenderer}
-      </VariableSizeGrid>
+            return (
+                <div style={styleWithGutter}>
+                    {!isItemLoaded(data.rowIndex) ?
+                    <CircularProgress /> :
+                    <SmartFileEntry fileId={fileId ?? null} displayIndex={index} fileViewMode={viewConfig.mode} />}
+                </div>
+            );
+        },
+        [displayFileIds, viewConfig.mode]
     );
-  }, [
-    classes.gridContainer,
-    gridConfig.rowHeight,
-    gridConfig.gutter,
-    gridConfig.columnWidth,
-    gridConfig.columnCount,
-    gridConfig.rowCount,
-    sizers.getRowHeight,
-    sizers.getColumnWidth,
-    height,
-    width,
-    getItemKey,
-    cellRenderer,
-  ]);
+    const itemCount = props.hasNextPage ? displayFileIds.length + 1 : displayFileIds.length;
 
-  return gridComponent;
+    const loadMoreItems =  props.isNextPageLoading ? () => {} : props.loadNextPage;
+
+    const isItemLoaded = (index:number) => !props.hasNextPage || index < displayFileIds.length;
+
+    const classes = useStyles();
+    const gridComponent = useMemo(() => {
+        return (
+            <InfiniteLoader
+            isItemLoaded={isItemLoaded}
+            itemCount={itemCount}
+            loadMoreItems={loadMoreItems}
+          >
+            {({onItemsRendered}) => (
+            <VariableSizeGrid
+            ref={gridRef as any}
+            className={classes.gridContainer}
+            estimatedRowHeight={gridConfig.rowHeight + gridConfig.gutter}
+            rowHeight={sizers.getRowHeight}
+            onItemsRendered={props =>
+                onItemsRendered({
+                  visibleStartIndex: props.visibleRowStartIndex * gridConfig.columnCount,
+                  visibleStopIndex: props.visibleRowStopIndex * gridConfig.columnCount,
+                  overscanStartIndex: props.overscanRowStartIndex * gridConfig.columnCount,
+                  overscanStopIndex: props.overscanRowStopIndex * gridConfig.columnCount,
+                })
+            }
+            estimatedColumnWidth={gridConfig.columnWidth + gridConfig.gutter}
+            columnWidth={sizers.getColumnWidth}
+            columnCount={gridConfig.columnCount}
+            height={height}
+            rowCount={gridConfig.rowCount}
+            width={width}
+            itemKey={getItemKey}
+        >
+            {cellRenderer}
+        </VariableSizeGrid>
+            )}
+            </InfiniteLoader>
+        );
+    }, [
+        classes.gridContainer,
+        gridConfig.rowHeight,
+        gridConfig.gutter,
+        gridConfig.columnWidth,
+        gridConfig.columnCount,
+        gridConfig.rowCount,
+        sizers.getRowHeight,
+        sizers.getColumnWidth,
+        height,
+        width,
+        getItemKey,
+        cellRenderer,
+    ]);
+
+    return gridComponent;
 });
 
 const useStyles = makeGlobalChonkyStyles(() => ({

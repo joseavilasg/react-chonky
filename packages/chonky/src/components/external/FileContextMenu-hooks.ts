@@ -55,22 +55,22 @@ export  function useContextMenuHandler(callback) {
     const onTouchStart = (e) => {
       contextMenuPossible = true;
       const touch = e.touches[0];
-      longPressCountdown = setTimeout(() => {
+      longPressCountdown = window.setTimeout(() => {
         contextMenuPossible = false;
         callback(touch);
       }, longPressDuration);
     };
   
-    const onTouchMove = (e) => {
+    const onTouchMove = () => {
       clearTimeout(longPressCountdown);
     };
   
-    const onTouchCancel = (e) => {
+    const onTouchCancel = () => {
       contextMenuPossible = false;
       clearTimeout(longPressCountdown);
     };
   
-    const onTouchEnd = (e) => {
+    const onTouchEnd = () => {
       contextMenuPossible = false;
       clearTimeout(longPressCountdown);
     };
