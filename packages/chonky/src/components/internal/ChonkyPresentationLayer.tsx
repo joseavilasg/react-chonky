@@ -15,7 +15,7 @@ import { ChonkyDispatch } from '../../types/redux.types';
 import { useDndContextAvailable } from '../../util/dnd-fallback';
 import { elementIsInsideButton } from '../../util/helpers';
 import { makeGlobalChonkyStyles } from '../../util/styles';
-import { useContextMenuTrigger } from '../external/FileContextMenu-hooks';
+import { useContextMenuTrigger, useContextMenuHandler } from '../external/FileContextMenu-hooks';
 import { DnDFileListDragLayer } from '../file-list/DnDFileListDragLayer';
 import { HotkeyListener } from './HotkeyListener';
 
@@ -53,19 +53,30 @@ export const ChonkyPresentationLayer: React.FC<ChonkyPresentationLayerProps> = (
     [fileActionIds],
   );
 
-  const dndContextAvailable = useDndContextAvailable();
-  const showContextMenu = useContextMenuTrigger();
+    const dndContextAvailable = useDndContextAvailable();
+    const showContextMenu = useContextMenuTrigger();
+    const {
+        onTouchStart,
+        onTouchMove,
+        onTouchCancel,
+        onTouchEnd,
+        onContextMenu
+      } = useContextMenuHandler(showContextMenu);
 
-  const classes = useStyles();
-  return (
-    <ClickAwayListener onClickAway={handleClickAway}>
-      <Box className={classes.chonkyRoot} onContextMenu={showContextMenu}>
-        {!dndDisabled && dndContextAvailable && <DnDFileListDragLayer />}
-        {hotkeyListenerComponents}
-        {children ? children : null}
-      </Box>
-    </ClickAwayListener>
-  );
+    const classes = useStyles();
+    return (
+        <ClickAwayListener onClickAway={handleClickAway}>
+            <Box className={classes.chonkyRoot} onContextMenu={onContextMenu}
+             onTouchStart={onTouchStart}
+             onTouchCancel={onTouchCancel}
+             onTouchEnd={onTouchEnd}
+             onTouchMove={onTouchMove}>
+                {!dndDisabled && dndContextAvailable && <DnDFileListDragLayer />}
+                {hotkeyListenerComponents}
+                {children ? children : null}
+            </Box>
+        </ClickAwayListener>
+    );
 };
 
 const useStyles = makeGlobalChonkyStyles((theme) => ({
