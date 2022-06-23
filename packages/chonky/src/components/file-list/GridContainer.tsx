@@ -29,10 +29,21 @@ interface GridConfig {
   columnWidth: number;
 }
 
-export const isMobileDevice = () => {
-  // noinspection JSDeprecatedSymbols
-  return typeof window.orientation !== 'undefined' || navigator.userAgent.indexOf('IEMobile') !== -1;
-};
+export const isMobileDevice=()=> {
+    const toMatch = [
+        /Android/i,
+        /webOS/i,
+        /iPhone/i,
+        /iPad/i,
+        /iPod/i,
+        /BlackBerry/i,
+        /Windows Phone/i
+    ];
+    
+    return toMatch.some((toMatchItem) => {
+        return navigator.userAgent.match(toMatchItem);
+    });
+}
 
 export const getGridConfig = (
   width: number,

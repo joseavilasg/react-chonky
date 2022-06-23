@@ -8,6 +8,7 @@ import { TextPlaceholder } from '../external/TextPlaceholder';
 import { useDndIcon, useFileEntryHtmlProps, useFileEntryState } from './FileEntry-hooks';
 import { FileEntryName } from './FileEntryName';
 import { FileEntryState, useCommonEntryStyles } from './GridEntryPreview';
+import { isMobileDevice } from './GridContainer';
 
 interface StyleState {
   entryState: FileEntryState;
@@ -18,41 +19,63 @@ export const ListEntry: React.FC<FileEntryProps> = React.memo(({ file, selected,
   const entryState: FileEntryState = useFileEntryState(file, selected, focused);
   const dndIconName = useDndIcon(dndState);
 
-  const { fileModDateString, fileSizeString } = useLocalizedFileEntryStrings(file);
-  const styleState = useMemo<StyleState>(
-    () => ({
-      entryState,
-      dndState,
-    }),
-    [dndState, entryState],
-  );
-  const classes = useStyles(styleState);
-  const commonClasses = useCommonEntryStyles(entryState);
-  const ChonkyIcon = useContext(ChonkyIconContext);
-  const fileEntryHtmlProps = useFileEntryHtmlProps(file);
-  return (
-    <div className={classes.listFileEntry} {...fileEntryHtmlProps}>
-      <div className={commonClasses.focusIndicator}></div>
-      <div className={c([commonClasses.selectionIndicator, classes.listFileEntrySelection])}></div>
-      <div className={classes.listFileEntryIcon}>
-        <ChonkyIcon
-          icon={dndIconName ?? entryState.icon}
-          spin={dndIconName ? false : entryState.iconSpin}
-          fixedWidth={true}
-        />
-      </div>
-      <div className={classes.listFileEntryName} title={file ? file.name : undefined}>
-        <FileEntryName file={file} />
-      </div>
-      <div className={classes.listFileEntryProperty}>
-        {file ? fileModDateString ?? <span>—</span> : <TextPlaceholder minLength={5} maxLength={15} />}
-      </div>
-      <div className={classes.listFileEntryProperty}>
-        {file ? fileSizeString ?? <span>—</span> : <TextPlaceholder minLength={10} maxLength={20} />}
-      </div>
-    </div>
-  );
-});
+        const { fileModDateString, fileSizeString } = useLocalizedFileEntryStrings(
+            file
+        );
+        const styleState = useMemo<StyleState>(
+            () => ({
+                entryState,
+                dndState,
+            }),
+            [dndState, entryState]
+        );
+        const classes = useStyles(styleState);
+        const commonClasses = useCommonEntryStyles(entryState);
+        const ChonkyIcon = useContext(ChonkyIconContext);
+        const fileEntryHtmlProps = useFileEntryHtmlProps(file);
+
+        const isMobile = isMobileDevice()
+
+        return (
+            <div className={classes.listFileEntry} {...fileEntryHtmlProps}>
+                <div className={commonClasses.focusIndicator}></div>
+                <div
+                    className={c([
+                        commonClasses.selectionIndicator,
+                        classes.listFileEntrySelection,
+                    ])}
+                ></div>
+                <div className={classes.listFileEntryIcon}>
+                    <ChonkyIcon
+                        icon={dndIconName ?? entryState.icon}
+                        spin={dndIconName ? false : entryState.iconSpin}
+                        fixedWidth={true}
+                    />
+                </div>
+                <div
+                    className={classes.listFileEntryName}
+                    title={file ? file.name : undefined}
+                >
+                    <FileEntryName file={file} isMobile={isMobile} />
+                </div>
+                <div className={classes.listFileEntryProperty}>
+                    {file ? (
+                        fileModDateString ?? <span>—</span>
+                    ) : (
+                        <TextPlaceholder minLength={5} maxLength={15} />
+                    )}
+                </div>
+                <div className={classes.listFileEntryProperty}>
+                    {file ? (
+                        fileSizeString ?? <span>—</span>
+                    ) : (
+                        <TextPlaceholder minLength={10} maxLength={20} />
+                    )}
+                </div>
+            </div>
+        );
+    }
+);
 
 const useStyles = makeLocalChonkyStyles((theme) => ({
   listFileEntry: {

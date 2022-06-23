@@ -6,28 +6,37 @@ import { c, makeLocalChonkyStyles } from '../../util/styles';
 import { useFileEntryHtmlProps, useFileEntryState } from './FileEntry-hooks';
 import { FileEntryName } from './FileEntryName';
 import { FileEntryState, GridEntryPreviewFile, GridEntryPreviewFolder } from './GridEntryPreview';
+import { isMobileDevice } from './GridContainer';
 
 export const GridEntry: React.FC<FileEntryProps> = React.memo(({ file, selected, focused, dndState }) => {
-  const isDirectory = FileHelper.isDirectory(file);
-  const entryState = useFileEntryState(file, selected, focused);
-
-  const classes = useFileEntryStyles(entryState);
-  const fileEntryHtmlProps = useFileEntryHtmlProps(file);
-  const entryClassName = c({
-    [classes.gridFileEntry]: true,
-  });
-  return (
-    <div className={entryClassName} {...fileEntryHtmlProps}>
-      {isDirectory ? (
-        <GridEntryPreviewFolder className={classes.gridFileEntryPreview} entryState={entryState} dndState={dndState} />
-      ) : (
-        <GridEntryPreviewFile className={classes.gridFileEntryPreview} entryState={entryState} dndState={dndState} />
-      )}
-      <div className={classes.gridFileEntryNameContainer}>
-        <FileEntryName className={classes.gridFileEntryName} file={file} />
-      </div>
-    </div>
-  );
+    const isDirectory = FileHelper.isDirectory(file);
+    const entryState = useFileEntryState(file, selected, focused);
+    const isMobile = isMobileDevice()
+    const classes = useFileEntryStyles(entryState);
+    const fileEntryHtmlProps = useFileEntryHtmlProps(file);
+    const entryClassName = c({
+        [classes.gridFileEntry]: true,
+    });
+    return (
+        <div className={entryClassName} {...fileEntryHtmlProps}>
+            {isDirectory ? (
+                <GridEntryPreviewFolder
+                    className={classes.gridFileEntryPreview}
+                    entryState={entryState}
+                    dndState={dndState}
+                />
+            ) : (
+                <GridEntryPreviewFile
+                    className={classes.gridFileEntryPreview}
+                    entryState={entryState}
+                    dndState={dndState}
+                />
+            )}
+            <div className={classes.gridFileEntryNameContainer}>
+                <FileEntryName className={classes.gridFileEntryName} file={file} isMobile={isMobile} />
+            </div>
+        </div>
+    );
 });
 GridEntry.displayName = 'GridEntry';
 
