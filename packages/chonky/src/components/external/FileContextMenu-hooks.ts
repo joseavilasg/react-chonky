@@ -46,50 +46,51 @@ export const useContextMenuTrigger = () => {
   );
 };
 
-//const longPressDuration = 610;
+const longPressDuration = 610;
 
-// export  function useContextMenuHandler(callback) {
-//     let longPressCountdown:number;
-//     let contextMenuPossible:boolean = false;
+export function useContextMenuHandler(callback: any) {
 
-//     const onTouchStart = (e) => {
-//       contextMenuPossible = true;
-//       const touch = e.touches[0];
-//       longPressCountdown = window.setTimeout(() => {
-//         contextMenuPossible = false;
-//         callback(touch);
-//       }, longPressDuration);
-//     };
-  
-//     const onTouchMove = () => {
-//       clearTimeout(longPressCountdown);
-//     };
-  
-//     const onTouchCancel = () => {
-//       contextMenuPossible = false;
-//       clearTimeout(longPressCountdown);
-//     };
-  
-//     const onTouchEnd = () => {
-//       contextMenuPossible = false;
-//       clearTimeout(longPressCountdown);
-//     };
-  
-//     const onContextMenu = (e) => {
-//       contextMenuPossible = false;
-//       clearTimeout(longPressCountdown);
-//       callback(e);
-//       e.preventDefault();
-//     };
-  
-//     return {
-//       onTouchStart,
-//       onTouchMove,
-//       onTouchCancel,
-//       onTouchEnd,
-//       onContextMenu
-//     };
-//   }
+  let longPressCountdown: ReturnType<typeof setTimeout>;
+  let contextMenuPossible: boolean = false;
+
+  const onTouchStart = (e: any) => {
+    contextMenuPossible = true;
+    const touch = e.touches[0];
+    longPressCountdown = setTimeout(() => {
+      contextMenuPossible = false;
+      callback(touch);
+    }, longPressDuration);
+  };
+
+  const onTouchMove = () => {
+    clearTimeout(longPressCountdown);
+  };
+
+  const onTouchCancel = () => {
+    contextMenuPossible = false;
+    clearTimeout(longPressCountdown);
+  };
+
+  const onTouchEnd = () => {
+    contextMenuPossible = false;
+    clearTimeout(longPressCountdown);
+  };
+
+  const onContextMenu = (e: any) => {
+    contextMenuPossible = false;
+    clearTimeout(longPressCountdown);
+    callback(e);
+    e.preventDefault();
+  };
+
+  return {
+    onTouchStart,
+    onTouchMove,
+    onTouchCancel,
+    onTouchEnd,
+    onContextMenu
+  };
+}
 
 export const useContextMenuDismisser = () => {
   const dispatch: ChonkyDispatch = useDispatch();

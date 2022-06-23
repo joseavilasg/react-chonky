@@ -136,22 +136,19 @@ export const thunkActivateSortAction =
   (fileActionId: Nilable<string>): ChonkyThunk =>
     (dispatch, getState) => {
       if (!fileActionId) return;
-      const { sortActionId: oldActionId, fileActionMap } = getState();
+
+      const { sortActionId: oldActionId, sortOrder: oldOrder, fileActionMap } = getState();
       const action = fileActionMap[fileActionId];
       if (!action || !action.sortKeySelector) return;
 
-      let oldOrder = JSON.parse(localStorage.getItem('sortOrder') as string) || SortOrder.ASC
-      let order = oldOrder === SortOrder.ASC ? SortOrder.DESC : SortOrder.ASC
+      let order = oldOrder === SortOrder.ASC ? SortOrder.DESC : SortOrder.ASC;
       if (oldActionId !== fileActionId) {
-        order = oldOrder;
-      }
-
-      if (oldActionId === fileActionId) {
-        localStorage.setItem('sortOrder', JSON.stringify(order))
+        order = SortOrder.ASC;
       }
 
       dispatch(reduxActions.setSort({ actionId: fileActionId, order: order }));
     };
+
 
 export const thunkApplySelectionTransform =
   (action: FileAction): ChonkyThunk =>
