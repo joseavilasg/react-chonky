@@ -135,7 +135,7 @@ const getSortedFileIds = createSelector(
 
     const prepareSortKeySelector = (selector: FileSortKeySelector) => (file: Nullable<FileData>) => selector(file);
 
-    const sortFunctions: {
+    let  sortFunctions: {
       asc?: (file: FileData) => any;
       desc?: (file: FileData) => any;
     }[] = [];
@@ -154,6 +154,11 @@ const getSortedFileIds = createSelector(
       });
     }
     if (sortFunctions.length === 0) return fileIds;
+
+    if (sortFunctions.length > 0)
+      sortFunctions = sortFunctions.map((item) => {
+        return { ...item, ...{ comparer: new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' }).compare } }
+      })
 
     // We copy the array because `fast-sort` mutates it
     const sortedFileIds = sort([...files])
