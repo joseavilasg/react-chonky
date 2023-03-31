@@ -63,7 +63,6 @@ export const ListContainer: React.FC<FileListListProps> = React.memo((props) => 
         isItemLoaded={isItemLoaded}
         itemCount={itemCount}
         loadMoreItems={loadMoreItems}
-        threshold={15}
       >
         {({ onItemsRendered, ref }) => (
           <FixedSizeList

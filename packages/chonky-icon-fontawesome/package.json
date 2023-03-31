@@ -15,6 +15,7 @@
   "scripts": {
     "start": "dts watch",
     "build": "dts build",
+    "prepare": "dts build",
     "lint": "dts lint",
     "size": "size-limit",
     "analyze": "size-limit --why",

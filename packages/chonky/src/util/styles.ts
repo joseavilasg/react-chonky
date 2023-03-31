@@ -73,10 +73,10 @@ export const lightTheme = {
   },
 
   listFileEntry: {
-    propertyFontSize: 14,
+    propertyFontSize: 16,
     iconFontSize: '1.1em',
     iconBorderRadius: 5,
-    fontSize: 14,
+    fontSize: 16,
   },
 };
 
