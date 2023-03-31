@@ -933,7 +933,7 @@
 
 "@bhunter179/chonky-icon-fontawesome@file:C:\\Users\\divya\\Documents\\Github\\react-chonky\\packages\\chonky-icon-fontawesome":
   "resolved" "file:packages/chonky-icon-fontawesome"
-  "version" "0.2.2"
+  "version" "0.2.4"
   dependencies:
     "@bhunter179/chonky" "^0.2.6"
     "@fortawesome/fontawesome-svg-core" "^6.3.0"
