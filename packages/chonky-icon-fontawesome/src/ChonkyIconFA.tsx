@@ -20,6 +20,7 @@ import { faChevronRight } from '@fortawesome/free-solid-svg-icons/faChevronRight
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons/faCircleNotch';
 import { faCogs } from '@fortawesome/free-solid-svg-icons/faCogs';
 import { faCopy } from '@fortawesome/free-solid-svg-icons/faCopy';
+import { faPlay } from '@fortawesome/free-solid-svg-icons/faPlay';
 import { faCubes } from '@fortawesome/free-solid-svg-icons/faCubes';
 import { faDatabase } from '@fortawesome/free-solid-svg-icons/faDatabase';
 import { faDownload } from '@fortawesome/free-solid-svg-icons/faDownload';
@@ -64,6 +65,8 @@ import { faToggleOn } from '@fortawesome/free-solid-svg-icons/faToggleOn';
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
 import { faUpload } from '@fortawesome/free-solid-svg-icons/faUpload';
 import { faUsers } from '@fortawesome/free-solid-svg-icons/faUsers';
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons/faPenToSquare';
+import { faSquareArrowUpRight } from '@fortawesome/free-solid-svg-icons/faSquareArrowUpRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ChonkyIconName, ChonkyIconProps } from '@bhunter179/chonky';
 import React from 'react';
@@ -73,16 +76,19 @@ const IconMap: { [iconName in ChonkyIconName]: any } = {
   [ChonkyIconName.loading]: faCircleNotch,
   [ChonkyIconName.dropdown]: faChevronDown,
   [ChonkyIconName.placeholder]: faMinus,
+  [ChonkyIconName.newTab]: faSquareArrowUpRight,
 
   // File Actions: Drag & drop
   [ChonkyIconName.dndDragging]: faFistRaised,
   [ChonkyIconName.dndCanDrop]: faArrowDown,
   [ChonkyIconName.dndCannotDrop]: faTimes,
+  [ChonkyIconName.play]: faPlay,
 
   // File Actions: File operations
   [ChonkyIconName.openFiles]: faBoxOpen,
   [ChonkyIconName.openParentFolder]: faLevelUpAlt,
   [ChonkyIconName.copy]: faCopy,
+  [ChonkyIconName.rename]: faPenToSquare,
   [ChonkyIconName.paste]: faPaste,
   [ChonkyIconName.share]: faShareAlt,
   [ChonkyIconName.search]: faSearch,
