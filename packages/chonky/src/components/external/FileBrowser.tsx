@@ -1,4 +1,3 @@
-import merge from 'deepmerge';
 import React, { ReactNode, useMemo } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -10,9 +9,9 @@ import {
   createTheme,
   ThemeProvider as MuiThemeProvider,
   StyledEngineProvider,
-  ThemeOptions,
 } from '@mui/material/styles';
-
+import { deepmerge } from "@mui/utils";
+import { CssBaseline } from "@mui/material";
 import { useChonkyStore } from '../../redux/store';
 import { FileBrowserHandle, FileBrowserProps } from '../../types/file-browser.types';
 import { defaultConfig } from '../../util/default-config';
@@ -24,6 +23,7 @@ import { darkThemeOverride, lightTheme, mobileThemeOverride, useIsMobileBreakpoi
 import { ChonkyBusinessLogic } from '../internal/ChonkyBusinessLogic';
 import { ChonkyIconPlaceholder } from '../internal/ChonkyIconPlaceholder';
 import { ChonkyPresentationLayer } from '../internal/ChonkyPresentationLayer';
+import { getDesignTokens, getThemedComponents} from '@bhunter179/react-material-you-theme';
 
 // if (process.env.NODE_ENV === 'development') {
 //     const whyDidYouRender = require('@welldone-software/why-did-you-render');
@@ -45,7 +45,9 @@ export const FileBrowser = React.forwardRef<FileBrowserHandle, FileBrowserProps 
       defaultConfig.disableDragAndDropProvider,
       'boolean',
     );
-    const darkMode = getValueOrFallback(props.darkMode, defaultConfig.darkMode, 'boolean');
+
+    const themeScheme = getValueOrFallback(props.themeScheme, defaultConfig.themeScheme);
+    const themeMode = getValueOrFallback(props.themeMode, defaultConfig.themeMode);
     const i18n = getValueOrFallback(props.i18n, defaultConfig.i18n);
     const formatters = useMemo(() => ({ ...defaultFormatters, ...i18n?.formatters }), [i18n]);
 
@@ -53,20 +55,21 @@ export const FileBrowser = React.forwardRef<FileBrowserHandle, FileBrowserProps 
     const store = useChonkyStore(chonkyInstanceId);
 
     const isMobileBreakpoint = useIsMobileBreakpoint();
+
+
     const theme = useMemo(() => {
-      let muiOptions: ThemeOptions = {
-        palette: { mode: darkMode ? 'dark' : 'light' },
-      };
-      if (props.muiThemeOptions) {
-        muiOptions = merge(muiOptions, props.muiThemeOptions);
-      }
-      const muiTheme = createTheme(muiOptions);
-      const combinedTheme = merge(
-        muiTheme,
-        merge(merge(lightTheme, darkMode ? darkThemeOverride : {}), props.theme || {}),
+      const designTokens = getDesignTokens(themeMode, themeScheme[themeMode], themeScheme.tones);
+      let newM3Theme = createTheme(designTokens);
+      newM3Theme = deepmerge(newM3Theme, getThemedComponents(newM3Theme));
+
+      const combinedTheme = deepmerge(
+        newM3Theme,
+        deepmerge(deepmerge(lightTheme, themeMode == 'dark' ? darkThemeOverride : {}), props.theme || {}),
       );
-      return isMobileBreakpoint ? merge(combinedTheme, mobileThemeOverride) : combinedTheme;
-    }, [darkMode, isMobileBreakpoint]);
+
+      return isMobileBreakpoint ? deepmerge(combinedTheme, mobileThemeOverride) : combinedTheme;
+
+    }, [themeMode, themeScheme, isMobileBreakpoint]);
 
     const chonkyComps = (
       <>
@@ -82,6 +85,7 @@ export const FileBrowser = React.forwardRef<FileBrowserHandle, FileBrowserProps 
             <ThemeProvider theme={theme}>
               <StyledEngineProvider injectFirst>
                 <MuiThemeProvider theme={theme}>
+                  <CssBaseline enableColorScheme />
                   <ChonkyIconContext.Provider
                     value={iconComponent ?? defaultConfig.iconComponent ?? ChonkyIconPlaceholder}
                   >

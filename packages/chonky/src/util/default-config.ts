@@ -1,6 +1,7 @@
 import { ChonkyActions } from '../action-definitions/index';
 import { ChonkyIconPlaceholder } from '../components/internal/ChonkyIconPlaceholder';
 import { FileBrowserProps } from '../types/file-browser.types';
+import {DEFAULT_M3_THEME_SCHEME} from '@bhunter179/react-material-you-theme';
 
 export type ChonkyConfig = Pick<
   FileBrowserProps,
@@ -18,8 +19,9 @@ export type ChonkyConfig = Pick<
   | 'defaultFileViewActionId'
   | 'clearSelectionOnOutsideClick'
   | 'iconComponent'
-  | 'darkMode'
   | 'i18n'
+  | 'themeScheme'
+  | 'themeMode'
 >;
 
 export const defaultConfig: ChonkyConfig = {
@@ -37,8 +39,9 @@ export const defaultConfig: ChonkyConfig = {
   defaultFileViewActionId: ChonkyActions.EnableListView.id,
   clearSelectionOnOutsideClick: true,
   iconComponent: ChonkyIconPlaceholder,
-  darkMode: false,
   i18n: {},
+  themeScheme: DEFAULT_M3_THEME_SCHEME,
+  themeMode: "dark"
 };
 
 export const setChonkyDefaults = (config: Partial<ChonkyConfig>) => {

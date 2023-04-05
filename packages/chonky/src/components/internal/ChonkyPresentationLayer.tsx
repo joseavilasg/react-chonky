@@ -4,7 +4,6 @@
  * @license MIT
  */
 
-import Box from '@mui/material/Box';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import React, { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,9 +14,10 @@ import { ChonkyDispatch } from '../../types/redux.types';
 import { useDndContextAvailable } from '../../util/dnd-fallback';
 import { elementIsInsideButton } from '../../util/helpers';
 import { makeGlobalChonkyStyles } from '../../util/styles';
-import { useContextMenuTrigger, useContextMenuHandler } from '../external/FileContextMenu-hooks';
+import { useContextMenuTrigger} from '../external/FileContextMenu-hooks';
 import { DnDFileListDragLayer } from '../file-list/DnDFileListDragLayer';
 import { HotkeyListener } from './HotkeyListener';
+import { Box } from '@mui/material';
 
 export interface ChonkyPresentationLayerProps {
   children?: React.ReactNode;
@@ -53,43 +53,31 @@ export const ChonkyPresentationLayer: React.FC<ChonkyPresentationLayerProps> = (
     [fileActionIds],
   );
 
-    const dndContextAvailable = useDndContextAvailable();
-    const showContextMenu = useContextMenuTrigger();
-    const {
-        onTouchStart,
-        onTouchMove,
-        onTouchCancel,
-        onTouchEnd,
-        onContextMenu
-      } = useContextMenuHandler(showContextMenu);
-
-    const classes = useStyles();
-    return (
-        <ClickAwayListener onClickAway={handleClickAway}>
-            <Box className={classes.chonkyRoot} onContextMenu={onContextMenu}
-             onTouchStart={onTouchStart}
-             onTouchCancel={onTouchCancel}
-             onTouchEnd={onTouchEnd}
-             onTouchMove={onTouchMove}>
-                {!dndDisabled && dndContextAvailable && <DnDFileListDragLayer />}
-                {hotkeyListenerComponents}
-                {children ? children : null}
-            </Box>
-        </ClickAwayListener>
-    );
+  const dndContextAvailable = useDndContextAvailable();
+  const showContextMenu = useContextMenuTrigger();
+  const classes = useStyles();
+  return (
+    <ClickAwayListener onClickAway={handleClickAway}>
+      <Box className={classes.chonkyRoot} onContextMenu={showContextMenu}>
+        {!dndDisabled && dndContextAvailable && <DnDFileListDragLayer />}
+        {hotkeyListenerComponents}
+        {children ? children : null}
+      </Box>
+    </ClickAwayListener>
+  );
 };
 
 const useStyles = makeGlobalChonkyStyles((theme) => ({
   chonkyRoot: {
-    backgroundColor: theme.palette.background.paper,
     padding: theme.margins.rootLayoutMargin,
+    background: theme.palette.background.paper,
     fontSize: theme.fontSizes.rootPrimary,
     color: theme.palette.text.primary,
     touchAction: 'manipulation', // Disabling zoom on double tap
     flexDirection: 'column',
     boxSizing: 'border-box',
     textAlign: 'left',
-    borderRadius: 4* theme.root.borderRadius,
+    borderRadius: 4 * theme.root.borderRadius,
     display: 'flex',
     height: theme.root.height,
 

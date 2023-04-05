@@ -1,8 +1,7 @@
-import { ElementType, UIEvent } from 'react';
+import { ElementType, UIEvent, Dispatch, SetStateAction } from 'react';
 import { Nullable } from 'tsdef';
 import { ThemeOptions as MuiThemeOptions } from '@mui/material/styles';
 import { DeepPartial } from 'tsdef';
-
 import { ChonkyActions } from '../action-definitions/index';
 import { GenericFileActionHandler } from './action-handler.types';
 import { FileAction } from './action.types';
@@ -11,6 +10,8 @@ import { I18nConfig } from './i18n.types';
 import { ChonkyIconProps } from './icons.types';
 import { ThumbnailGenerator } from './thumbnails.types';
 import { ChonkyTheme } from '../util/styles';
+import { M3ThemeScheme, M3ThemeMode } from '@bhunter179/react-material-you-theme';
+
 
 /**
  * File browser methods exposed to developers via the `FileBrowser` ref.
@@ -160,9 +161,15 @@ export interface FileBrowserProps {
   iconComponent?: ElementType<ChonkyIconProps>;
 
   /**
-   * Enables dark mode theme.
+   * Theme Mode
    */
-  darkMode?: boolean;
+  themeMode?: M3ThemeMode
+
+
+  /**
+   * Material Theme Scheme
+   */
+  themeScheme?: M3ThemeScheme
 
   /**
    * Configuration for the `react-intl` i18n library. Chonky provides some default

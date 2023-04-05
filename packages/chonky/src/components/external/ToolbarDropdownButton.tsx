@@ -68,7 +68,7 @@ const useStyles = makeGlobalChonkyStyles((theme) => ({
     fontSize: important(theme.toolbar.fontSize),
   },
   activeButton: {
-    color: important(theme.colors.textActive),
+    color: important(theme.palette.primary.main),
   },
 }));
 
