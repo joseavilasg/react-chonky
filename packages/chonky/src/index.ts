@@ -14,6 +14,7 @@ export { defineFileAction } from './util/helpers';
 export { ChonkyIconContext } from './util/icon-helper';
 export { FileHelper } from './util/file-helper';
 export { makeGlobalChonkyStyles, ChonkyTheme } from './util/styles';
+export { useIconData, ColorsLight } from './util/icon-helper'
 
 export { FileData, FileArray } from './types/file.types';
 export {
