@@ -1,7 +1,7 @@
 import { GenericFileActionHandler, MapFileActionsToData } from './types/action-handler.types';
 import { ChonkyActionUnion } from './types/file-browser.types';
 
-export { FileBrowser } from './components/external/FileBrowser';
+export { FileBrowser, ChonkywithStore, ChonkywithTheme, useChonkyTheme } from './components/external/FileBrowser';
 export { FileNavbar } from './components/external/FileNavbar';
 export { FileToolbar } from './components/external/FileToolbar';
 export { FileList } from './components/file-list/FileList';
@@ -13,7 +13,7 @@ export { ChonkyActions, DefaultFileActions, OptionIds } from './action-definitio
 export { defineFileAction } from './util/helpers';
 export { ChonkyIconContext } from './util/icon-helper';
 export { FileHelper } from './util/file-helper';
-export { makeGlobalChonkyStyles, ChonkyTheme } from './util/styles';
+export { makeLocalChonkyStyles } from './util/styles';
 export { useIconData, ColorsLight } from './util/icon-helper'
 
 export { FileData, FileArray } from './types/file.types';

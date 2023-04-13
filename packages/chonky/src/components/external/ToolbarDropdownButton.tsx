@@ -17,8 +17,8 @@ import { CustomVisibilityState } from '../../types/action.types';
 import { useFileActionProps, useFileActionTrigger } from '../../util/file-actions';
 import { useLocalizedFileActionStrings } from '../../util/i18n';
 import { ChonkyIconContext } from '../../util/icon-helper';
-import { c, important, makeGlobalChonkyStyles } from '../../util/styles';
-
+import { important, makeLocalChonkyStyles } from '../../util/styles';
+import { cx } from '@emotion/css'
 export interface ToolbarDropdownButtonProps {
   text: string;
   active?: boolean;
@@ -30,10 +30,10 @@ export interface ToolbarDropdownButtonProps {
 export const ToolbarDropdownButton = React.forwardRef(
   (props: ToolbarDropdownButtonProps, ref: React.Ref<HTMLLIElement>) => {
     const { text, active, icon, onClick, disabled } = props;
-    const classes = useStyles();
+    const { classes } = useStyles();
     const ChonkyIcon = useContext(ChonkyIconContext);
 
-    const className = c({
+    const className = cx({
       [classes.baseButton]: true,
       [classes.activeButton]: active,
     });
@@ -50,22 +50,22 @@ export const ToolbarDropdownButton = React.forwardRef(
   },
 );
 
-const useStyles = makeGlobalChonkyStyles((theme) => ({
+const useStyles = makeLocalChonkyStyles((theme) => ({
   baseButton: {
     lineHeight: important(theme.toolbar.lineHeight),
-    height: important(theme.toolbar.size),
+    height: theme.toolbar.size,
     minHeight: important('auto'),
     minWidth: important('auto'),
-    padding: important(theme.toolbar.buttonPadding),
+    padding: theme.toolbar.buttonPadding,
   },
   icon: {
-    fontSize: important(theme.toolbar.fontSize),
+    fontSize: theme.toolbar.fontSize,
     minWidth: important('auto'),
     color: important('inherit'),
     marginRight: 8,
   },
   text: {
-    fontSize: important(theme.toolbar.fontSize),
+    fontSize: theme.toolbar.fontSize,
   },
   activeButton: {
     color: important(theme.palette.primary.main),

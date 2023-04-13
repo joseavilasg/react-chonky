@@ -2,7 +2,7 @@ import React, { ReactElement, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 import { selectToolbarItems, selectHideToolbarInfo } from '../../redux/selectors';
-import { makeGlobalChonkyStyles } from '../../util/styles';
+import { makeLocalChonkyStyles } from '../../util/styles';
 import { SmartToolbarButton } from './ToolbarButton';
 import { ToolbarDropdown } from './ToolbarDropdown';
 import { ToolbarInfo } from './ToolbarInfo';
@@ -11,7 +11,7 @@ import { ToolbarSearch } from './ToolbarSearch';
 export interface FileToolbarProps {}
 
 export const FileToolbar: React.FC<FileToolbarProps> = React.memo(() => {
-  const classes = useStyles();
+  const {classes} = useStyles();
   const toolbarItems = useSelector(selectToolbarItems);
 
   const toolbarItemComponents = useMemo(() => {
@@ -45,7 +45,7 @@ export const FileToolbar: React.FC<FileToolbarProps> = React.memo(() => {
   );
 });
 
-const useStyles = makeGlobalChonkyStyles((theme) => ({
+const useStyles = makeLocalChonkyStyles((theme) => ({
   toolbarWrapper: {},
   toolbarContainer: {
     flexWrap: 'wrap-reverse',

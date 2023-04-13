@@ -15,8 +15,8 @@ import { CustomVisibilityState } from '../../types/action.types';
 import { useFileActionProps, useFileActionTrigger } from '../../util/file-actions';
 import { useLocalizedFileActionStrings } from '../../util/i18n';
 import { ChonkyIconContext } from '../../util/icon-helper';
-import { c, important, makeGlobalChonkyStyles } from '../../util/styles';
-
+import { important, makeLocalChonkyStyles } from '../../util/styles';
+import { cx } from '@emotion/css'
 export interface ToolbarButtonProps {
   className?: string;
   text: string;
@@ -31,7 +31,7 @@ export interface ToolbarButtonProps {
 
 export const ToolbarButton: React.FC<ToolbarButtonProps> = React.memo((props) => {
   const { className: externalClassName, text, tooltip, active, icon, iconOnly, onClick, disabled, dropdown } = props;
-  const classes = useStyles();
+  const { classes } = useStyles();
   const ChonkyIcon = useContext(ChonkyIconContext);
 
   const iconComponent =
@@ -41,7 +41,7 @@ export const ToolbarButton: React.FC<ToolbarButtonProps> = React.memo((props) =>
       </div>
     ) : null;
 
-  const className = c({
+  const className = cx({
     [externalClassName ?? '']: true,
     [classes.baseButton]: true,
     [classes.iconOnlyButton]: iconOnly,
@@ -60,16 +60,16 @@ export const ToolbarButton: React.FC<ToolbarButtonProps> = React.memo((props) =>
   );
 });
 
-const useStyles = makeGlobalChonkyStyles((theme) => ({
+const useStyles = makeLocalChonkyStyles((theme) => ({
   baseButton: {
-    fontSize: important(theme.toolbar.fontSize),
+    fontSize: theme.toolbar.fontSize,
     textTransform: important('none'),
-    letterSpacing: important(0),
+    letterSpacing: 0,
     minWidth: important('auto'),
     lineHeight: theme.toolbar.lineHeight,
     height: theme.toolbar.size,
-    paddingBottom: important(0),
-    paddingTop: important(0),
+    paddingBottom: 0,
+    paddingTop: 0,
     paddingLeft: theme.toolbar.buttonPadding,
     paddingRight: theme.toolbar.buttonPadding,
   },

@@ -4,11 +4,11 @@
  * @license MIT
  */
 
-import c from 'classnames';
 import React from 'react';
 import { Nullable } from 'tsdef';
 
-import { makeGlobalChonkyStyles } from '../../util/styles';
+import { makeLocalChonkyStyles } from '../../util/styles';
+import {cx} from '@emotion/css'
 
 export interface FileThumbnailProps {
   className: string;
@@ -20,12 +20,12 @@ export const FileThumbnail: React.FC<FileThumbnailProps> = React.memo((props) =>
 
   const thumbnailStyle: React.CSSProperties = thumbnailUrl ? { backgroundImage: `url('${thumbnailUrl}')` } : {};
 
-  const classes = useStyles();
-  return <div className={c([className, classes.fileThumbnail])} style={thumbnailStyle} />;
+  const {classes} = useStyles();
+  return <div className={cx([className, classes.fileThumbnail])} style={thumbnailStyle} />;
 });
 FileThumbnail.displayName = 'FileThumbnail';
 
-const useStyles = makeGlobalChonkyStyles(() => ({
+const useStyles = makeLocalChonkyStyles(() => ({
   fileThumbnail: {
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',

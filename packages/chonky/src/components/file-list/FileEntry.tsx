@@ -7,7 +7,7 @@ import { useParamSelector } from '../../redux/store';
 import { DndEntryState, FileEntryProps } from '../../types/file-list.types';
 import { FileViewMode } from '../../types/file-view.types';
 import { FileHelper } from '../../util/file-helper';
-import { makeGlobalChonkyStyles } from '../../util/styles';
+import { makeLocalChonkyStyles } from '../../util/styles';
 import { ClickableWrapper, ClickableWrapperProps } from '../internal/ClickableWrapper';
 import { CompactEntry } from './CompactEntry';
 import { DnDFileEntry } from './DnDFileEntry';
@@ -28,7 +28,7 @@ const disabledDndState: DndEntryState = {
 };
 
 export const SmartFileEntry: React.FC<SmartFileEntryProps> = React.memo(({ fileId, displayIndex, fileViewMode }) => {
-  const classes = useStyles();
+  const {classes} = useStyles();
 
   // Basic properties
   const file = useParamSelector(selectFileData, fileId);
@@ -73,7 +73,7 @@ export const SmartFileEntry: React.FC<SmartFileEntryProps> = React.memo(({ fileI
 });
 SmartFileEntry.displayName = 'SmartFileEntry';
 
-const useStyles = makeGlobalChonkyStyles(() => ({
+const useStyles = makeLocalChonkyStyles(() => ({
   fileEntryClickableWrapper: {
     // We disable default browser outline because Chonky provides its own outline
     // (which doesn't compromise accessibility, hopefully)

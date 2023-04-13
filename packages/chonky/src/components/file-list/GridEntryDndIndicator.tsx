@@ -8,8 +8,9 @@ import React, { useContext } from 'react';
 
 import { DndEntryState } from '../../types/file-list.types';
 import { ChonkyIconContext } from '../../util/icon-helper';
-import { c, makeLocalChonkyStyles } from '../../util/styles';
+import { makeLocalChonkyStyles } from '../../util/styles';
 import { useDndIcon } from './FileEntry-hooks';
+import { cx } from '@emotion/css'
 
 export interface DnDIndicatorProps {
   className: string;
@@ -19,10 +20,10 @@ export interface DnDIndicatorProps {
 export const GridEntryDndIndicator: React.FC<DnDIndicatorProps> = React.memo((props) => {
   const { className: externalClassName, dndState } = props;
   const dndIconName = useDndIcon(dndState);
-  const classes = useStyles(dndState);
+  const {classes} = useStyles(dndState);
   const ChonkyIcon = useContext(ChonkyIconContext);
   if (!dndIconName) return null;
-  const className = c({
+  const className = cx({
     [classes.dndIndicator]: true,
     [externalClassName]: true,
   });
@@ -33,10 +34,9 @@ export const GridEntryDndIndicator: React.FC<DnDIndicatorProps> = React.memo((pr
   );
 });
 
-const useStyles = makeLocalChonkyStyles((theme) => ({
+const useStyles = makeLocalChonkyStyles((theme,dndState) => ({
   dndIndicator: {
-    color: (dndState: DndEntryState) =>
-      dndState.dndIsOver ? (dndState.dndCanDrop ? theme.dnd.canDropColor : theme.dnd.cannotDropColor) : '#000',
+    color: dndState.dndIsOver ? (dndState.dndCanDrop ? theme.dnd.canDropColor : theme.dnd.cannotDropColor) : '#000',
     boxSizing: 'border-box',
     position: 'absolute',
     fontSize: '1.2em',

@@ -9,7 +9,7 @@ import React, { useCallback, useMemo } from 'react';
 
 import { FileActionGroup } from '../../types/action-menus.types';
 import { useLocalizedFileActionGroup } from '../../util/i18n';
-import { important, makeGlobalChonkyStyles } from '../../util/styles';
+import { important, makeLocalChonkyStyles } from '../../util/styles';
 import { ToolbarButton, ToolbarButtonProps } from './ToolbarButton';
 import { SmartToolbarDropdownButton } from './ToolbarDropdownButton';
 
@@ -45,7 +45,7 @@ export const ToolbarDropdown: React.FC<ToolbarDropdownProps> = React.memo((props
     toolbarButtonProps.text = '';
   }
 
-  const classes = useStyles();
+  const {classes} = useStyles();
   return (
     <>
       <ToolbarButton {...toolbarButtonProps} />
@@ -65,9 +65,9 @@ export const ToolbarDropdown: React.FC<ToolbarDropdownProps> = React.memo((props
   );
 });
 
-const useStyles = makeGlobalChonkyStyles(() => ({
+const useStyles = makeLocalChonkyStyles(() => ({
   dropdownList: {
-    paddingBottom: important(0),
-    paddingTop: important(0),
+    paddingBottom: 0,
+    paddingTop: 0,
   },
 }));

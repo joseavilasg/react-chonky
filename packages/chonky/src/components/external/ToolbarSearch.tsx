@@ -17,7 +17,7 @@ import { ChonkyIconName } from '../../types/icons.types';
 import { useDebounce } from '../../util/hooks-helpers';
 import { getI18nId, I18nNamespace } from '../../util/i18n';
 import { ChonkyIconContext } from '../../util/icon-helper';
-import { important, makeGlobalChonkyStyles } from '../../util/styles';
+import { important, makeLocalChonkyStyles } from '../../util/styles';
 import { ChonkyDispatch } from '../../types/redux.types';
 
 export interface ToolbarSearchProps {}
@@ -29,7 +29,7 @@ export const ToolbarSearch: React.FC<ToolbarSearchProps> = React.memo(() => {
     defaultMessage: 'Search',
   });
 
-  const classes = useStyles();
+  const {classes} = useStyles();
   const ChonkyIcon = useContext(ChonkyIconContext);
 
   const searchInputRef = useRef<HTMLInputElement>();
@@ -102,7 +102,7 @@ export const ToolbarSearch: React.FC<ToolbarSearchProps> = React.memo(() => {
   );
 });
 
-const useStyles = makeGlobalChonkyStyles((theme) => ({
+const useStyles = makeLocalChonkyStyles((theme) => ({
   searchFieldContainer: {
     height: theme.toolbar.size,
     width: 150,
@@ -112,21 +112,22 @@ const useStyles = makeGlobalChonkyStyles((theme) => ({
     opacity: 0.75,
   },
   searchFieldInput: {
-    lineHeight: important(0),
-    padding: important(0),
-    margin: important(0),
-    fontSize: important(theme.toolbar.fontSize),
+    lineHeight: 0,
+    padding: 0,
+    margin:0,
+    fontSize: theme.toolbar.fontSize,
     borderRadius: theme.toolbar.buttonRadius,
     height: theme.toolbar.size - 4,
-    paddingLeft: important(8),
+    paddingLeft: 8,
     marginTop: 2,
   },
   searchFieldInputInner: {
     lineHeight: important(`${theme.toolbar.size - 4}px`),
-    fontSize: important(theme.toolbar.fontSize),
-    height: important(theme.toolbar.size - 4),
-    padding: important([0, 8, 0, 0]),
-    margin: important(0),
-    '-webkit-appearance': 'none',
+    fontSize: theme.toolbar.fontSize,
+    height: theme.toolbar.size - 4,
+    padding: 0,
+    paddingRight: 8,
+    margin: 0,
+    WebkitAppearance: 'none'
   },
 }));

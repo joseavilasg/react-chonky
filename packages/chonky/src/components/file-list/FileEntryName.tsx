@@ -21,7 +21,7 @@ export const FileEntryName: React.FC<FileEntryNameProps> = React.memo(({ file, c
     const modifierIconComponents = useModifierIconComponents(file);
     const fileNameComponent = useFileNameComponent(file);
 
-    const classes = useStyles();
+    const { classes } = useStyles();
     return (
         <span className={className} title={file && !isMobile ? file.name : undefined}>
             {modifierIconComponents.length > 0 && (

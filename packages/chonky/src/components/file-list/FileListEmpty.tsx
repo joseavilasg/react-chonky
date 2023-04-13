@@ -10,7 +10,7 @@ import { useIntl } from 'react-intl';
 import { ChonkyIconName } from '../../types/icons.types';
 import { getI18nId, I18nNamespace } from '../../util/i18n';
 import { ChonkyIconContext } from '../../util/icon-helper';
-import { makeGlobalChonkyStyles } from '../../util/styles';
+import { makeLocalChonkyStyles } from '../../util/styles';
 
 export interface FileListEmptyProps {
   width: number;
@@ -19,7 +19,7 @@ export interface FileListEmptyProps {
 
 export const FileListEmpty: React.FC<FileListEmptyProps> = (props) => {
   const { width, height } = props;
-  const classes = useStyles();
+  const {classes} = useStyles();
   const ChonkyIcon = useContext(ChonkyIconContext);
   const style: CSSProperties = {
     width,
@@ -42,7 +42,7 @@ export const FileListEmpty: React.FC<FileListEmptyProps> = (props) => {
   );
 };
 
-const useStyles = makeGlobalChonkyStyles((theme) => ({
+const useStyles = makeLocalChonkyStyles((theme) => ({
   fileListEmpty: {
     color: theme.palette.text.disabled,
     position: 'relative',

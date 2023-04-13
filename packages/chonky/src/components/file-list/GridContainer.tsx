@@ -11,7 +11,7 @@ import { VariableSizeGrid } from 'react-window';
 import { selectFileViewConfig, selectors } from '../../redux/selectors';
 import { FileViewConfigGrid } from '../../types/file-view.types';
 import { useInstanceVariable } from '../../util/hooks-helpers';
-import { makeGlobalChonkyStyles, useIsMobileBreakpoint } from '../../util/styles';
+import { makeLocalChonkyStyles, useIsMobileBreakpoint } from '../../util/styles';
 import { SmartFileEntry } from './FileEntry';
 import InfiniteLoader from 'react-window-infinite-loader';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -164,7 +164,7 @@ export const GridContainer: React.FC<FileListGridProps> = React.memo((props) => 
 
     const isItemLoaded = (index:number) => !props.hasNextPage || index < displayFileIds.length;
 
-    const classes = useStyles();
+    const {classes} = useStyles();
     const gridComponent = useMemo(() => {
         return (
             <InfiniteLoader
@@ -217,6 +217,6 @@ export const GridContainer: React.FC<FileListGridProps> = React.memo((props) => 
     return gridComponent;
 });
 
-const useStyles = makeGlobalChonkyStyles(() => ({
+const useStyles = makeLocalChonkyStyles(() => ({
   gridContainer: {},
 }));

@@ -12,12 +12,12 @@ import Typography from '@mui/material/Typography';
 
 import { selectHiddenFileCount, selectors, selectSelectionSize } from '../../redux/selectors';
 import { getI18nId, I18nNamespace } from '../../util/i18n';
-import { important, makeGlobalChonkyStyles } from '../../util/styles';
+import { important, makeLocalChonkyStyles } from '../../util/styles';
 
-export interface ToolbarInfoProps {}
+export interface ToolbarInfoProps { }
 
 export const ToolbarInfo: React.FC<ToolbarInfoProps> = React.memo(() => {
-  const classes = useStyles();
+  const { classes } = useStyles();
 
   const displayFileIds = useSelector(selectors.getDisplayFileIds);
   const selectionSize = useSelector(selectSelectionSize);
@@ -72,20 +72,20 @@ export const ToolbarInfo: React.FC<ToolbarInfoProps> = React.memo(() => {
   );
 });
 
-const useStyles = makeGlobalChonkyStyles((theme) => ({
+const useStyles = makeLocalChonkyStyles((theme) => ({
   infoContainer: {
     height: theme.toolbar.size,
     display: 'flex',
   },
   infoText: {
     lineHeight: important(theme.toolbar.lineHeight),
-    fontSize: important(theme.toolbar.fontSize),
-    marginLeft: important(12),
+    fontSize: theme.toolbar.fontSize,
+    marginLeft: 12,
     height: theme.toolbar.size,
   },
   extraInfoSpan: {
-    marginRight: important(8),
-    marginLeft: important(8),
+    marginRight: 8,
+    marginLeft: 8,
     opacity: 0.8,
   },
   selectionSizeText: {

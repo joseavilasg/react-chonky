@@ -14,7 +14,7 @@ import Menu from '@mui/material/Menu';
 import { reduxActions } from '../../redux/reducers';
 import { selectContextMenuConfig, selectContextMenuItems } from '../../redux/selectors';
 import { getI18nId, I18nNamespace } from '../../util/i18n';
-import { important, makeGlobalChonkyStyles } from '../../util/styles';
+import { important, makeLocalChonkyStyles } from '../../util/styles';
 import { useContextMenuDismisser } from './FileContextMenu-hooks';
 import { SmartToolbarDropdownButton } from './ToolbarDropdownButton';
 import { ChonkyDispatch } from '../../types/redux.types';
@@ -76,7 +76,7 @@ export const FileContextMenu: React.FC<FileContextMenuProps> = React.memo(() => 
     [contextMenuConfig],
   );
 
-  const classes = useStyles();
+  const {classes} = useStyles();
   return (
     <Menu
       elevation={2}
@@ -96,13 +96,13 @@ export const FileContextMenu: React.FC<FileContextMenuProps> = React.memo(() => 
   );
 });
 
-const useStyles = makeGlobalChonkyStyles(() => ({
+const useStyles = makeLocalChonkyStyles(() => ({
   contextMenuList: {
-    paddingBottom: important(0),
-    paddingTop: important(0),
+    paddingBottom: 0,
+    paddingTop: 0,
   },
   browserMenuTooltip: {
-    lineHeight: important('30px'),
-    fontSize: important('0.7em'),
+    lineHeight: '30px',
+    fontSize: '0.7em',
   },
 }));

@@ -5,11 +5,11 @@
  */
 
 import React from 'react';
-import { useDragLayer } from 'react-dnd';
+import { useDragLayer } from '@bhunter179/react-dnd';
 import { Nullable } from 'tsdef';
 
 import { ChonkyDndFileEntryItem, ChonkyDndFileEntryType } from '../../types/dnd.types';
-import { makeGlobalChonkyStyles } from '../../util/styles';
+import { makeLocalChonkyStyles } from '../../util/styles';
 
 export interface DnDFileListDragLayerProps {}
 
@@ -42,7 +42,7 @@ const getItemStyles = (
 };
 
 export const DnDFileListDragLayer: React.FC<DnDFileListDragLayerProps> = () => {
-  const classes = useStyles();
+  const {classes} = useStyles();
 
   const { itemType, item, initialCursorOffset, initialFileOffset, currentFileOffset, isDragging } = useDragLayer(
     (monitor) => ({
@@ -79,7 +79,7 @@ export const DnDFileListDragLayer: React.FC<DnDFileListDragLayerProps> = () => {
   );
 };
 
-const useStyles = makeGlobalChonkyStyles((theme) => ({
+const useStyles = makeLocalChonkyStyles((theme) => ({
   fileDragPreview: {
     boxShadow: `2px 2px 5px ${theme.palette.divider}`,
     backgroundColor: theme.palette.background.default,

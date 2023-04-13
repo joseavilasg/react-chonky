@@ -13,7 +13,7 @@ import { selectClearSelectionOnOutsideClick, selectFileActionIds, selectIsDnDDis
 import { ChonkyDispatch } from '../../types/redux.types';
 import { useDndContextAvailable } from '../../util/dnd-fallback';
 import { elementIsInsideButton } from '../../util/helpers';
-import { makeGlobalChonkyStyles } from '../../util/styles';
+import { makeLocalChonkyStyles } from '../../util/styles';
 import { useContextMenuTrigger} from '../external/FileContextMenu-hooks';
 import { DnDFileListDragLayer } from '../file-list/DnDFileListDragLayer';
 import { HotkeyListener } from './HotkeyListener';
@@ -55,7 +55,7 @@ export const ChonkyPresentationLayer: React.FC<ChonkyPresentationLayerProps> = (
 
   const dndContextAvailable = useDndContextAvailable();
   const showContextMenu = useContextMenuTrigger();
-  const classes = useStyles();
+  const {classes} = useStyles();
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
       <Box className={classes.chonkyRoot} onContextMenu={showContextMenu}>
@@ -67,7 +67,7 @@ export const ChonkyPresentationLayer: React.FC<ChonkyPresentationLayerProps> = (
   );
 };
 
-const useStyles = makeGlobalChonkyStyles((theme) => ({
+const useStyles = makeLocalChonkyStyles((theme) => ({
   chonkyRoot: {
     padding: theme.margins.rootLayoutMargin,
     background: theme.palette.background.paper,

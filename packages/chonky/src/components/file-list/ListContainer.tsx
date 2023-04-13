@@ -40,7 +40,7 @@ export const ListContainer: React.FC<FileListListProps> = React.memo((props) => 
 
   const isItemLoaded = (index: number) => !props.hasNextPage || index < displayFileIds.length;
 
-  const classes = useStyles();
+  const {classes} = useStyles();
   const listComponent = useMemo(() => {
     // When entry size is null, we use List view
     const rowRenderer = (data: { index: number; style: CSSProperties }) => {

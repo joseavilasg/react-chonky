@@ -22,7 +22,7 @@ export const TextPlaceholder: React.FC<TextPlaceholderProps> = React.memo((props
   const placeholderLength = getRandomInt(minLength, maxLength);
   const whitespace = '&nbsp;'.repeat(placeholderLength);
 
-  const classes = useStyles();
+  const { classes} = useStyles();
   return <span className={classes.textPlaceholder} dangerouslySetInnerHTML={{ __html: whitespace }} />;
 });
 

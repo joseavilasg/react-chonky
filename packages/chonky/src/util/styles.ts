@@ -1,8 +1,7 @@
 import { Theme as MuiTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import classnames from 'classnames';
-import { createUseStyles } from 'react-jss';
 import { DeepPartial } from 'tsdef';
+import { makeStyles } from "tss-react/mui";
 
 export const lightTheme = {
   colors: {
@@ -80,9 +79,108 @@ export const lightTheme = {
   },
 };
 
-export type ChonkyTheme = typeof lightTheme;
 
-export const darkThemeOverride: DeepPartial<ChonkyTheme> = {
+interface Colors {
+  debugRed: string
+  debugBlue: string
+  debugGreen: string
+  debugPurple: string
+  debugYellow: string
+  textActive: string
+}
+
+interface FontSizes {
+  rootPrimary: number
+}
+
+interface Margins {
+  rootLayoutMargin: number
+}
+
+interface Root2 {
+  borderRadius: number
+  borderStyle: string
+  height: string
+}
+
+interface Toolbar {
+  size: number
+  lineHeight: string
+  buttonPadding: number
+  fontSize: number
+  buttonRadius: number
+}
+
+interface Dnd {
+  canDropColor: string
+  cannotDropColor: string
+  canDropMask: string
+  cannotDropMask: string
+  fileListCanDropMaskOne: string
+  fileListCanDropMaskTwo: string
+  fileListCannotDropMaskOne: string
+  fileListCannotDropMaskTwo: string
+}
+
+interface DragLayer {
+  border: string
+  padding: string
+  borderRadius: number
+}
+
+interface FileList {
+  desktopGridGutter: number
+  mobileGridGutter: number
+}
+
+interface GridFileEntry {
+  childrenCountSize: string
+  iconColorFocused: string
+  iconSize: string
+  iconColor: string
+  borderRadius: number
+  fontSize: number
+  fileColorTint: string
+  folderBackColorTint: string
+  folderFrontColorTint: string
+}
+
+interface ListFileEntry {
+  propertyFontSize: number
+  iconFontSize: string
+  iconBorderRadius: number
+  fontSize: number
+}
+
+declare module '@mui/material/styles/createTheme' {
+  interface ThemeOptions {
+    colors: Colors
+    fontSizes: FontSizes
+    margins: Margins
+    root: Root2
+    toolbar: Toolbar
+    dnd: Dnd
+    dragLayer: DragLayer
+    fileList: FileList
+    gridFileEntry: GridFileEntry
+    listFileEntry: ListFileEntry
+
+  }
+  interface Theme {
+    colors: Colors
+    fontSizes: FontSizes
+    margins: Margins
+    root: Root2
+    toolbar: Toolbar
+    dnd: Dnd
+    dragLayer: DragLayer
+    fileList: FileList
+    gridFileEntry: GridFileEntry
+    listFileEntry: ListFileEntry
+  }
+}
+
+export const darkThemeOverride: DeepPartial<MuiTheme> = {
   gridFileEntry: {
     fileColorTint: 'rgba(50, 50, 50, 0.4)',
     folderBackColorTint: 'rgba(50, 50, 50, 0.4)',
@@ -90,7 +188,7 @@ export const darkThemeOverride: DeepPartial<ChonkyTheme> = {
   },
 };
 
-export const mobileThemeOverride: DeepPartial<ChonkyTheme> = {
+export const mobileThemeOverride: DeepPartial<MuiTheme> = {
   fontSizes: {
     rootPrimary: 13,
   },
@@ -125,43 +223,16 @@ export const getStripeGradient = (colorOne: string, colorTwo: string) =>
   `${colorTwo} 20px` +
   ')';
 
-export const makeLocalChonkyStyles = <C extends string = string>(
-  styles: (theme: ChonkyTheme & MuiTheme) => any,
+export const makeLocalChonkyStyles = (
+  styles: (theme: MuiTheme, props: any) => any,
   // @ts-ignore
-): any => createUseStyles<ChonkyTheme, C>(styles);
+): any => {
+  const useStyles = makeStyles<any>()(
+    (theme, props) => styles(theme, props)
+  )
 
-export const makeGlobalChonkyStyles = <C extends string = string>(
-  makeStyles: (theme: ChonkyTheme & MuiTheme) => any,
-) => {
-  const selectorMapping = {};
-  const makeGlobalStyles = (theme: ChonkyTheme) => {
-    const localStyles = makeStyles(theme as any);
-    const globalStyles = {};
-    const localSelectors = Object.keys(localStyles);
-    localSelectors.map((localSelector) => {
-      const globalSelector = `chonky-${localSelector}`;
-      const jssSelector = `@global .${globalSelector}`;
-      // @ts-ignore
-      globalStyles[jssSelector] = localStyles[localSelector];
-      // @ts-ignore
-      selectorMapping[localSelector] = globalSelector;
-    });
-    return globalStyles;
-  };
+  return useStyles
+}
 
-  // @ts-ignore
-  const useStyles = createUseStyles<ChonkyTheme, C>(makeGlobalStyles as any);
-  return (...args: any[]): any => {
-    const styles = useStyles(...args);
-    const classes = {};
-    Object.keys(selectorMapping).map((localSelector) => {
-      // @ts-ignore
-      classes[localSelector] = selectorMapping[localSelector];
-    });
-    return { ...classes, ...styles };
-  };
-};
 
-export const important = <T>(value: T) => [value, '!important'];
-
-export const c = classnames;
+export const important = <T>(value: T) => `${value} !important`;

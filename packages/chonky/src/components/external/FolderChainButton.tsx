@@ -10,11 +10,11 @@ import { DndEntryState } from '../../types/file-list.types';
 import { ChonkyIconName } from '../../types/icons.types';
 import { useDndHoverOpen, useFileDrop } from '../../util/dnd';
 import { ChonkyIconContext } from '../../util/icon-helper';
-import { c, important, makeLocalChonkyStyles } from '../../util/styles';
+import { important, makeLocalChonkyStyles } from '../../util/styles';
 import { useDndIcon } from '../file-list/FileEntry-hooks';
 import { FolderChainItem } from './FileNavbar-hooks';
 import { ToolbarButton } from './ToolbarButton';
-
+import { cx } from '@emotion/css'
 export interface FolderChainButtonProps {
   first: boolean;
   current: boolean;
@@ -39,8 +39,8 @@ export const FolderChainButton: React.FC<FolderChainButtonProps> = React.memo(({
   const dndIconName = useDndIcon(dndState);
   const ChonkyIcon = useContext(ChonkyIconContext);
 
-  const classes = useStyles(dndState);
-  const className = c({
+  const { classes } = useStyles(dndState);
+  const className = cx({
     [classes.baseBreadcrumb]: true,
     [classes.disabledBreadcrumb]: disabled,
     [classes.currentBreadcrumb]: current,
@@ -60,31 +60,30 @@ export const FolderChainButton: React.FC<FolderChainButtonProps> = React.memo(({
   );
 });
 
-const useStyles = makeLocalChonkyStyles((theme) => ({
+const useStyles = makeLocalChonkyStyles((theme, dndState) => ({
   buttonContainer: {
     position: 'relative',
   },
   baseBreadcrumb: {
-    color: (dndState: DndEntryState) => {
+    color: (() => {
       let color = theme.palette.text.primary;
       if (dndState.dndIsOver) {
         color = dndState.dndCanDrop ? theme.dnd.canDropColor : theme.dnd.cannotDropColor;
       }
       return important(color);
-    },
+    })(),
   },
   disabledBreadcrumb: {
     // Constant function here is on purpose. Without the function, the color here
     // does not override the `baseBreadcrumb` color from above.
-    color: () => important(theme.palette.text.disabled),
+    color: (() => important(theme.palette.text.disabled))(),
   },
   currentBreadcrumb: {
     textDecoration: important('underline'),
   },
   dndIndicator: {
-    color: (dndState: DndEntryState) => (dndState.dndCanDrop ? theme.dnd.canDropColor : theme.dnd.cannotDropColor),
-    backgroundColor: (dndState: DndEntryState) =>
-      dndState.dndCanDrop ? theme.dnd.canDropMask : theme.dnd.cannotDropMask,
+    color: (dndState.dndCanDrop ? theme.dnd.canDropColor : theme.dnd.cannotDropColor),
+    backgroundColor: dndState.dndCanDrop ? theme.dnd.canDropMask : theme.dnd.cannotDropMask,
     lineHeight: `calc(${theme.toolbar.lineHeight} - 6px)`,
     transform: 'translateX(-50%) translateY(-50%)',
     borderRadius: theme.toolbar.buttonRadius,

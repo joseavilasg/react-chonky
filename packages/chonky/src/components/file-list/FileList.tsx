@@ -7,7 +7,7 @@ import { FileViewMode } from '../../types/file-view.types';
 import { ChonkyIconName } from '../../types/icons.types';
 import { useFileDrop } from '../../util/dnd';
 import { ChonkyIconContext } from '../../util/icon-helper';
-import { c, getStripeGradient, makeGlobalChonkyStyles, makeLocalChonkyStyles } from '../../util/styles';
+import { getStripeGradient, makeLocalChonkyStyles } from '../../util/styles';
 import { FileListEmpty } from './FileListEmpty';
 import { GridContainer } from './GridContainer';
 import { ListContainer } from './ListContainer';
@@ -33,9 +33,8 @@ export const FileList: React.FC<FileListProps> = React.memo((props: FileListProp
   const { drop, dndCanDrop, dndIsOverCurrent } = useFileDrop({ file: currentFolder });
   const styleState = useMemo<StyleState>(() => ({ dndCanDrop, dndIsOverCurrent }), [dndCanDrop, dndIsOverCurrent]);
 
-  const localClasses = useLocalStyles(styleState);
-  const classes = useStyles(viewConfig);
-  const { onScroll, hasNextPage, isNextPageLoading, loadNextPage } = props;
+  const { classes: localClasses } = useLocalStyles(styleState);
+  const { onScroll } = props;
 
   // In Chonky v0.x, this field was user-configurable. In Chonky v1.x+, we hardcode
   // this to `true` to simplify configuration. Users can just wrap Chonky in their
@@ -60,7 +59,7 @@ export const FileList: React.FC<FileListProps> = React.memo((props: FileListProp
     <div
       onScroll={onScroll}
       ref={drop}
-      className={c([classes.fileListWrapper, localClasses.fileListWrapper])}
+      className={localClasses.fileListWrapper}
       role="list"
     >
       <div className={localClasses.dndDropZone}>
@@ -74,18 +73,19 @@ export const FileList: React.FC<FileListProps> = React.memo((props: FileListProp
 });
 FileList.displayName = 'FileList';
 
-const useLocalStyles = makeLocalChonkyStyles((theme) => ({
+const useLocalStyles = makeLocalChonkyStyles((theme, state) => ({
   fileListWrapper: {
     minHeight: ChonkyActions.EnableGridView.fileViewConfig.entryHeight + 2,
-    background: (state: StyleState) =>
-      state.dndIsOverCurrent && state.dndCanDrop
-        ? state.dndCanDrop
-          ? getStripeGradient(theme.dnd.fileListCanDropMaskOne, theme.dnd.fileListCanDropMaskTwo)
-          : getStripeGradient(theme.dnd.fileListCannotDropMaskOne, theme.dnd.fileListCannotDropMaskTwo)
-        : 'none',
+    background: state.dndIsOverCurrent && state.dndCanDrop
+      ? state.dndCanDrop
+        ? getStripeGradient(theme.dnd.fileListCanDropMaskOne, theme.dnd.fileListCanDropMaskTwo)
+        : getStripeGradient(theme.dnd.fileListCannotDropMaskOne, theme.dnd.fileListCannotDropMaskTwo)
+      : 'none',
+    height: '100%',
+    maxHeight: '100%',
   },
   dndDropZone: {
-    display: (state: StyleState) =>
+    display:
       // When we cannot drop, we don't show an indicator at all
       state.dndIsOverCurrent && state.dndCanDrop ? 'block' : 'none',
     borderRadius: theme.gridFileEntry.borderRadius,
@@ -96,8 +96,8 @@ const useLocalStyles = makeLocalChonkyStyles((theme) => ({
     zIndex: 2,
   },
   dndDropZoneIcon: {
-    backgroundColor: (state: StyleState) => (state.dndCanDrop ? theme.dnd.canDropMask : theme.dnd.cannotDropMask),
-    color: (state: StyleState) => (state.dndCanDrop ? theme.dnd.canDropColor : theme.dnd.cannotDropColor),
+    backgroundColor: (state.dndCanDrop ? theme.dnd.canDropMask : theme.dnd.cannotDropMask),
+    color: (state.dndCanDrop ? theme.dnd.canDropColor : theme.dnd.cannotDropColor),
     borderRadius: theme.gridFileEntry.borderRadius,
     transform: 'translateX(-50%) translateY(-50%)',
     position: 'absolute',
@@ -108,12 +108,5 @@ const useLocalStyles = makeLocalChonkyStyles((theme) => ({
     height: 60,
     top: '50%',
     width: 60,
-  },
-}));
-
-const useStyles = makeGlobalChonkyStyles(() => ({
-  fileListWrapper: {
-    height: '100%',
-    maxHeight: '100%',
   },
 }));

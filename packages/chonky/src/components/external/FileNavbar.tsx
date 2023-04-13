@@ -9,15 +9,15 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import React, { ReactElement, useMemo } from 'react';
 
 import { ChonkyActions } from '../../action-definitions/index';
-import { important, makeGlobalChonkyStyles } from '../../util/styles';
+import { important, makeLocalChonkyStyles } from '../../util/styles';
 import { useFolderChainItems } from './FileNavbar-hooks';
 import { FolderChainButton } from './FolderChainButton';
 import { SmartToolbarButton } from './ToolbarButton';
 
-export interface FileNavbarProps {}
+export interface FileNavbarProps { }
 
 export const FileNavbar: React.FC<FileNavbarProps> = React.memo(() => {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const folderChainItems = useFolderChainItems();
 
   const folderChainComponents = useMemo(() => {
@@ -49,7 +49,7 @@ export const FileNavbar: React.FC<FileNavbarProps> = React.memo(() => {
   );
 });
 
-const useStyles = makeGlobalChonkyStyles((theme) => ({
+const useStyles = makeLocalChonkyStyles((theme) => ({
   navbarWrapper: {
     paddingBottom: theme.margins.rootLayoutMargin,
   },
@@ -57,17 +57,17 @@ const useStyles = makeGlobalChonkyStyles((theme) => ({
     display: 'flex',
   },
   upDirectoryButton: {
-    fontSize: important(theme.toolbar.fontSize),
+    fontSize: theme.toolbar.fontSize,
     height: theme.toolbar.size,
     width: theme.toolbar.size,
     padding: '0px !important',
   },
   navbarBreadcrumbs: {
-    fontSize: important(theme.toolbar.fontSize),
+    fontSize: theme.toolbar.fontSize,
     flexGrow: 100,
   },
   separator: {
-    marginRight: important(4),
-    marginLeft: important(4),
+    marginRight: 4,
+    marginLeft: 4,
   },
 }));

@@ -9,7 +9,7 @@ import { FileArray } from './file.types';
 import { I18nConfig } from './i18n.types';
 import { ChonkyIconProps } from './icons.types';
 import { ThumbnailGenerator } from './thumbnails.types';
-import { ChonkyTheme } from '../util/styles';
+import { Theme as MuiTheme } from '@mui/material/styles';
 import { M3ThemeScheme, M3ThemeMode } from '@bhunter179/react-material-you-theme';
 
 
@@ -187,10 +187,14 @@ export interface FileBrowserProps {
   /**
    * Overrides ChonkyTheme properties.
    */
-  theme?: DeepPartial<ChonkyTheme>;
+  theme?: DeepPartial<MuiTheme>;
 
   /**
    * Overrides MuiThemeOptions properties.
    */
   muiThemeOptions?: DeepPartial<MuiThemeOptions>;
+
+  useThemeProvider?: boolean;
+
+  useStoreProvider?: boolean;
 }
