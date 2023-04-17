@@ -1,6 +1,6 @@
 {
   "name": "@bhunter179/chonky",
-  "version": "0.2.13",
+  "version": "0.2.17",
   "description": "A File Browser component for React",
   "license": "MIT",
   "main": "dist/index.js",
@@ -87,7 +87,7 @@
     "deepmerge": "^4.3.0",
     "exact-trie": "^1.0.13",
     "fast-sort": "^3.2.1",
-    "filesize": "^10.0.6",
+    "filesize": "^10.0.7",
     "fuzzy-search": "^3.2.1",
     "hotkeys-js": "^3.8.3",
     "immer": "9.0.21",
