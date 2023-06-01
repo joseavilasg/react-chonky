@@ -95,7 +95,7 @@ export const SmartToolbarDropdownButton = React.forwardRef(
     if (!action) return null;
     const { button } = action;
     if (!button) return null;
-    if (action.customVisibility !== undefined && action.customVisibility() === CustomVisibilityState.Hidden)
+    if (action.customVisibility !== undefined && action.customVisibility() === CustomVisibilityState.Hidden || disabled)
       return null;
 
     return (

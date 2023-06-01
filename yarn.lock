@@ -948,7 +948,7 @@
 
 "@bhunter179/chonky@^0.2.6", "@bhunter179/chonky@file:C:\\Users\\divya\\Documents\\Github\\react-chonky\\packages\\chonky":
   "resolved" "file:packages/chonky"
-  "version" "0.2.11"
+  "version" "0.2.20"
   dependencies:
     "@bhunter179/react-dnd" "^16.0.3"
     "@bhunter179/react-dnd-html5-backend" "^16.0.3"
@@ -973,7 +973,7 @@
     "deepmerge" "^4.3.0"
     "exact-trie" "^1.0.13"
     "fast-sort" "^3.2.1"
-    "filesize" "^10.0.6"
+    "filesize" "^10.0.7"
     "fuzzy-search" "^3.2.1"
     "hotkeys-js" "^3.8.3"
     "immer" "9.0.21"
@@ -3785,10 +3785,10 @@
   dependencies:
     "flat-cache" "^3.0.4"
 
-"filesize@^10.0.6":
-  "integrity" "sha512-rzpOZ4C9vMFDqOa6dNpog92CoLYjD79dnjLk2TYDDtImRIyLTOzqojCb05Opd1WuiWjs+fshhCgTd8cl7y5t+g=="
-  "resolved" "https://registry.npmjs.org/filesize/-/filesize-10.0.6.tgz"
-  "version" "10.0.6"
+"filesize@^10.0.7":
+  "integrity" "sha512-iMRG7Qo9nayLoU3PNCiLizYtsy4W1ClrapeCwEgtiQelOAOuRJiw4QaLI+sSr8xr901dgHv+EYP2bCusGZgoiA=="
+  "resolved" "https://registry.npmjs.org/filesize/-/filesize-10.0.7.tgz"
+  "version" "10.0.7"
 
 "fill-range@^7.0.1":
   "integrity" "sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ=="

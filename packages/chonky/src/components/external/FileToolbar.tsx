@@ -3,15 +3,18 @@ import { useSelector } from 'react-redux';
 
 import { selectToolbarItems, selectHideToolbarInfo } from '../../redux/selectors';
 import { makeLocalChonkyStyles } from '../../util/styles';
+import { getValueOrFallback } from '../../util/helpers';
 import { SmartToolbarButton } from './ToolbarButton';
 import { ToolbarDropdown } from './ToolbarDropdown';
 import { ToolbarInfo } from './ToolbarInfo';
 import { ToolbarSearch } from './ToolbarSearch';
 
-export interface FileToolbarProps {}
+export interface FileToolbarProps {
+  hideSearchBar?: boolean;
+}
 
-export const FileToolbar: React.FC<FileToolbarProps> = React.memo(() => {
-  const {classes} = useStyles();
+export const FileToolbar: React.FC<FileToolbarProps> = React.memo((props) => {
+  const { classes } = useStyles();
   const toolbarItems = useSelector(selectToolbarItems);
 
   const toolbarItemComponents = useMemo(() => {
@@ -32,11 +35,13 @@ export const FileToolbar: React.FC<FileToolbarProps> = React.memo(() => {
   }, [toolbarItems]);
 
   const hideToolbarInfo = useSelector(selectHideToolbarInfo);
+  const hideSearchBar = getValueOrFallback(props.hideSearchBar, true)
+
   return (
     <div className={classes.toolbarWrapper}>
       <div className={classes.toolbarContainer}>
         <div className={classes.toolbarLeft}>
-          <ToolbarSearch />
+          {!hideSearchBar && <ToolbarSearch />}
           {!hideToolbarInfo && <ToolbarInfo />}
         </div>
         <div className={classes.toolbarRight}>{toolbarItemComponents}</div>

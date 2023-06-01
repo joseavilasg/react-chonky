@@ -1,6 +1,6 @@
 {
   "name": "@bhunter179/chonky",
-  "version": "0.2.17",
+  "version": "0.2.20",
   "description": "A File Browser component for React",
   "license": "MIT",
   "main": "dist/index.js",
