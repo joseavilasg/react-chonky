@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo } from 'react';
-import { DragSourceMonitor, DropTargetMonitor } from '@bhunter179/react-dnd';
-import { getEmptyImage } from '@bhunter179/react-dnd-html5-backend';
+import { DragSourceMonitor, DropTargetMonitor } from 'react-dnd';
+import { getEmptyImage } from 'react-dnd-html5-backend';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { ExcludeKeys, Nullable } from 'tsdef';
 

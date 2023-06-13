@@ -1,5 +1,5 @@
 import { useCallback, useContext } from 'react';
-import { DndContext, useDrag, useDrop } from '@bhunter179/react-dnd';
+import { DndContext, useDrag, useDrop } from 'react-dnd';
 
 export const useDndContextAvailable = () => {
   const dndContext = useContext(DndContext);

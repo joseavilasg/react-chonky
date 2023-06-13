@@ -1,12 +1,12 @@
 import React, { ReactNode, useMemo, FC } from 'react';
-import { DndProvider } from '@bhunter179/react-dnd';
-import { HTML5Backend } from '@bhunter179/react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import { IntlProvider } from 'react-intl';
 import { Provider as ReduxProvider } from 'react-redux';
 import shortid from 'shortid';
 import { createTheme, ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
 import { deepmerge } from "@mui/utils";
-import { CssBaseline } from "@mui/material";
+import { CssBaseline,useMediaQuery } from "@mui/material";
 import { useChonkyStore } from '../../redux/store';
 import { FileBrowserHandle, FileBrowserProps } from '../../types/file-browser.types';
 import { defaultConfig } from '../../util/default-config';
@@ -14,11 +14,11 @@ import { getValueOrFallback } from '../../util/helpers';
 import { useStaticValue } from '../../util/hooks-helpers';
 import { ChonkyFormattersContext, defaultFormatters } from '../../util/i18n';
 import { ChonkyIconContext } from '../../util/icon-helper';
-import { darkThemeOverride, lightTheme, mobileThemeOverride, useIsMobileBreakpoint } from '../../util/styles';
+import { darkThemeOverride, lightTheme, mobileThemeOverride } from '../../util/styles';
 import { ChonkyBusinessLogic } from '../internal/ChonkyBusinessLogic';
 import { ChonkyIconPlaceholder } from '../internal/ChonkyIconPlaceholder';
 import { ChonkyPresentationLayer } from '../internal/ChonkyPresentationLayer';
-import { M3ThemeMode, M3ThemeScheme, getDesignTokens, getThemedComponents } from '@bhunter179/react-material-you-theme';
+import {M3ThemeMode,getDesignTokens,getThemedComponents,generateThemeScheme} from '@bhunter179/react-material-you-theme';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import createCache from '@emotion/cache';
 import { Theme as MuiTheme } from '@mui/material/styles';
@@ -29,21 +29,15 @@ const cache = createCache({
   prepend: true,
 });
 
-// if (process.env.NODE_ENV === 'development') {
-//     const whyDidYouRender = require('@welldone-software/why-did-you-render');
-//     whyDidYouRender(React, {
-//         trackAllPureComponents: true,
-//     });
-// }
-
 export const useChonkyTheme = (themeMode = defaultConfig.themeMode as M3ThemeMode,
-  themeScheme = defaultConfig.themeScheme as M3ThemeScheme, themeOverride: MuiTheme) => {
+  themeColor = defaultConfig.themeColor, themeOverride: MuiTheme) => {
 
+  const themeScheme = generateThemeScheme(themeColor as string)
   const designTokens = getDesignTokens(themeMode, themeScheme[themeMode], themeScheme.tones);
   let newM3Theme = createTheme(designTokens);
   newM3Theme = deepmerge(newM3Theme, getThemedComponents(newM3Theme));
 
-  const isMobileBreakpoint = useIsMobileBreakpoint();
+  const isMobileBreakpoint = useMediaQuery('(max-width:480px)');
 
   const combinedTheme = deepmerge(
     newM3Theme,
@@ -72,12 +66,12 @@ export const ChonkywithStore: FC<{ children: ReactNode, instanceId?: string }> =
 }
 
 export const ChonkywithTheme: FC<{
-  children: ReactNode, themeMode?: M3ThemeMode, themeScheme?: M3ThemeScheme,
+  children: ReactNode, themeMode?: M3ThemeMode, themeColor?: string,
   overrideTheme?: DeepPartial<MuiTheme>, emotionCache?: EmotionCache
 }>
-  = ({ children, themeMode, themeScheme, overrideTheme, emotionCache }) => {
+  = ({ children, themeMode, themeColor, overrideTheme, emotionCache }) => {
 
-    const theme = useChonkyTheme(themeMode, themeScheme, overrideTheme as MuiTheme)
+    const theme = useChonkyTheme(themeMode, themeColor, overrideTheme as MuiTheme)
     return (
       <CacheProvider value={emotionCache ?? cache}>
         <MuiThemeProvider theme={theme}>
@@ -137,7 +131,7 @@ export const FileBrowser = React.forwardRef<FileBrowserHandle, FileBrowserProps 
             </ChonkywithStore>
           )}
           {useThemeProvider && !useStoreProvider && (
-            <ChonkywithTheme themeScheme={props.themeScheme} themeMode={props.themeMode}
+            <ChonkywithTheme themeColor={props.themeColor} themeMode={props.themeMode}
               overrideTheme={props.theme}>
               {chonkyMain}
             </ChonkywithTheme>
@@ -145,7 +139,7 @@ export const FileBrowser = React.forwardRef<FileBrowserHandle, FileBrowserProps 
 
           {useThemeProvider && useStoreProvider && (
             <ChonkywithStore instanceId={instanceId}>
-              <ChonkywithTheme themeScheme={props.themeScheme} themeMode={props.themeMode}
+              <ChonkywithTheme themeColor={props.themeColor} themeMode={props.themeMode}
                 overrideTheme={props.theme}>
                 {chonkyMain}
               </ChonkywithTheme>

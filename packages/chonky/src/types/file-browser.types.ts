@@ -10,7 +10,7 @@ import { I18nConfig } from './i18n.types';
 import { ChonkyIconProps } from './icons.types';
 import { ThumbnailGenerator } from './thumbnails.types';
 import { Theme as MuiTheme } from '@mui/material/styles';
-import { M3ThemeScheme, M3ThemeMode } from '@bhunter179/react-material-you-theme';
+import { M3ThemeMode } from '@bhunter179/react-material-you-theme';
 
 
 /**
@@ -169,7 +169,7 @@ export interface FileBrowserProps {
   /**
    * Material Theme Scheme
    */
-  themeScheme?: M3ThemeScheme
+  themeColor?: string
 
   /**
    * Configuration for the `react-intl` i18n library. Chonky provides some default

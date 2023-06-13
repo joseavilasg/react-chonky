@@ -1,10 +1,16 @@
 {
   "name": "@bhunter179/chonky-icon-fontawesome",
-  "version": "0.2.5",
+  "version": "0.2.9",
   "description": "FontAwesome icon component for Chonky file browser",
   "license": "MIT",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/chonky-icon-fontawesome.esm.js"
+    }
+  },
   "files": [
     "dist",
     "src"
@@ -13,10 +19,9 @@
     "node": ">=10"
   },
   "scripts": {
-    "start": "dts watch",
-    "build": "dts build",
-    "prepare": "dts build",
-    "lint": "dts lint",
+    "build": "dts build --format esm",
+    "release": "npm publish --access=public",
+    "patch": "npm --no-git-tag-version version patch",
     "size": "size-limit",
     "analyze": "size-limit --why",
     "format": "prettier --config ../../.prettierrc.js --ignore-path ../../.prettierignore . --write",
@@ -27,7 +32,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "dts lint"
+      "pre-commit": ""
     }
   },
   "prettier": {
@@ -38,35 +43,24 @@
     "useTabs": false,
     "printWidth": 88
   },
-  "module": "dist/chonky-icon-fontawesome.esm.js",
-  "size-limit": [
-    {
-      "path": "dist/chonky-icon-fontawesome.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/chonky-icon-fontawesome.esm.js",
-      "limit": "10 KB"
-    }
-  ],
-  "devDependencies": {
-    "@size-limit/preset-small-lib": "^8.2.4",
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
-    "dts-cli": "^1.6.3",
-    "husky": "^8.0.3",
+  "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "size-limit": "^8.2.4",
-    "tslib": "^2.5.0",
-    "typescript": "^5.0.0"
-  },
-  "dependencies": {
-    "@bhunter179/chonky": "^0.2.6",
-    "@fortawesome/fontawesome-svg-core": "^6.3.0",
-    "@fortawesome/free-brands-svg-icons": "6.3.0",
-    "@fortawesome/free-solid-svg-icons": "^6.3.0",
+    "@bhunter179/chonky": "latest",
+    "@fortawesome/fontawesome-svg-core": "^6.4.0",
+    "@fortawesome/free-brands-svg-icons": "6.4.0",
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0"
+  },
+  "devDependencies": {
+    "@size-limit/preset-small-lib": "^8.2.4",
+    "@types/react": "^18.2.12",
+    "@types/react-dom": "^18.2.5",
+    "dts-cli": "^2.0.3",
+    "husky": "^8.0.3",
+    "size-limit": "^8.2.4",
+    "tslib": "^2.5.3",
+    "typescript": "^5.1.3"
   },
   "homepage": "https://chonky.io/",
   "author": {

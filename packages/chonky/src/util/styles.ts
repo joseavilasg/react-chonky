@@ -1,5 +1,4 @@
 import { Theme as MuiTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import { DeepPartial } from 'tsdef';
 import { makeStyles } from "tss-react/mui";
 
@@ -210,9 +209,6 @@ export const mobileThemeOverride: DeepPartial<MuiTheme> = {
   },
 };
 
-export const useIsMobileBreakpoint = () => {
-  return useMediaQuery('(max-width:480px)');
-};
 
 export const getStripeGradient = (colorOne: string, colorTwo: string) =>
   'repeating-linear-gradient(' +

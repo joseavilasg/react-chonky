@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { useDragLayer } from '@bhunter179/react-dnd';
+import { useDragLayer } from 'react-dnd';
 import { Nullable } from 'tsdef';
 
 import { ChonkyDndFileEntryItem, ChonkyDndFileEntryType } from '../../types/dnd.types';

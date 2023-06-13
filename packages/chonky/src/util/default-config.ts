@@ -1,7 +1,6 @@
 import { ChonkyActions } from '../action-definitions/index';
 import { ChonkyIconPlaceholder } from '../components/internal/ChonkyIconPlaceholder';
 import { FileBrowserProps } from '../types/file-browser.types';
-import {DEFAULT_M3_THEME_SCHEME} from '@bhunter179/react-material-you-theme';
 
 export type ChonkyConfig = Pick<
   FileBrowserProps,
@@ -20,7 +19,7 @@ export type ChonkyConfig = Pick<
   | 'clearSelectionOnOutsideClick'
   | 'iconComponent'
   | 'i18n'
-  | 'themeScheme'
+  | 'themeColor'
   | 'themeMode'
 >;
 
@@ -40,7 +39,7 @@ export const defaultConfig: ChonkyConfig = {
   clearSelectionOnOutsideClick: true,
   iconComponent: ChonkyIconPlaceholder,
   i18n: {},
-  themeScheme: DEFAULT_M3_THEME_SCHEME,
+  themeColor: "#904d00",
   themeMode: "dark"
 };
 

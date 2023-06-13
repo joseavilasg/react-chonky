@@ -11,10 +11,11 @@ import { VariableSizeGrid } from 'react-window';
 import { selectFileViewConfig, selectors } from '../../redux/selectors';
 import { FileViewConfigGrid } from '../../types/file-view.types';
 import { useInstanceVariable } from '../../util/hooks-helpers';
-import { makeLocalChonkyStyles, useIsMobileBreakpoint } from '../../util/styles';
+import { makeLocalChonkyStyles } from '../../util/styles';
 import { SmartFileEntry } from './FileEntry';
 import InfiniteLoader from 'react-window-infinite-loader';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useMediaQuery } from '@mui/material';
 
 export interface FileListGridProps {
     width: number;
@@ -86,7 +87,7 @@ export const GridContainer: React.FC<FileListGridProps> = React.memo((props) => 
   const fileCount = useMemo(() => displayFileIds.length, [displayFileIds]);
 
   const gridRef = useRef<VariableSizeGrid>();
-  const isMobileBreakpoint = useIsMobileBreakpoint();
+  const isMobileBreakpoint = useMediaQuery('(max-width:480px)');
 
   // Whenever the grid config changes at runtime, we call a method on the
   // `VariableSizeGrid` handle to reset column width/row height cache.

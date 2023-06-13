@@ -1,7 +1,9 @@
 {
   "name": "root",
   "private": true,
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "homepage": "https://chonky.io/",
   "author": {
     "name": "Timur Kuzhagaliyev",

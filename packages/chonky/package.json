@@ -1,10 +1,16 @@
 {
   "name": "@bhunter179/chonky",
-  "version": "0.2.20",
+  "version": "0.2.27",
   "description": "A File Browser component for React",
   "license": "MIT",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/chonky.esm.js"
+    }
+  },
   "files": [
     "dist",
     "src"
@@ -13,11 +19,9 @@
     "node": ">=10"
   },
   "scripts": {
-    "start": "dts watch",
-    "build": "dts build",
-    "prepare": "dts build",
-    "test": "dts test --passWithNoTests",
-    "lint": "dts lint",
+    "build": "dts build --format esm",
+    "release": "npm publish --access=public",
+    "patch": "npm --no-git-tag-version version patch",
     "size": "size-limit",
     "analyze": "size-limit --why",
     "format": "prettier --config ../../.prettierrc.js --ignore-path ../../.prettierignore . --write",
@@ -28,7 +32,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "dts lint"
+      "pre-commit": ""
     }
   },
   "prettier": {
@@ -39,69 +43,55 @@
     "useTabs": false,
     "printWidth": 88
   },
-  "module": "dist/chonky.esm.js",
-  "size-limit": [
-    {
-      "path": "dist/chonky.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/chonky.esm.js",
-      "limit": "10 KB"
-    }
-  ],
-  "devDependencies": {
-    "@babel/core": "^7.21.0",
-    "@size-limit/preset-small-lib": "^8.2.4",
-    "@testing-library/react": "^14.0.0",
-    "babel-loader": "^9.1.2",
-    "dts-cli": "^1.6.3",
-    "husky": "^8.0.3",
-    "prettier": "^2.8.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-is": "^18.2.0",
-    "size-limit": "^8.2.4",
-    "tslib": "^2.5.0",
-    "typescript": "^5.0.0"
-  },
   "dependencies": {
-    "@bhunter179/react-material-you-theme": "^0.1.5",
-    "@emotion/css": "^11.10.6",
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
-    "@mui/material": "^5.11.12",
-    "@mui/styles": "^5.11.12",
-    "@reduxjs/toolkit": "^1.9.3",
-    "@types/classnames": "^2.2.11",
-    "@types/fuzzy-search": "^2.1.0",
-    "@types/memoizee": "^0.4.5",
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
-    "@types/react-redux": "^7.1.25",
-    "@types/react-virtualized-auto-sizer": "^1.0.0",
-    "@types/react-window": "^1.8.2",
-    "@types/react-window-infinite-loader": "^1.0.5",
-    "@types/redux-watch": "^1.1.0",
-    "@types/shortid": "^0.0.29",
-    "deepmerge": "^4.3.0",
+    "@bhunter179/react-material-you-theme": "^0.1.18",
+    "@emotion/css": "^11.11.0",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.13.5",
+    "@reduxjs/toolkit": "^1.9.5",
+    "deepmerge": "^4.3.1",
     "exact-trie": "^1.0.13",
-    "fast-sort": "^3.2.1",
+    "fast-sort": "^3.4.0",
     "filesize": "^10.0.7",
     "fuzzy-search": "^3.2.1",
-    "hotkeys-js": "^3.8.3",
-    "immer": "9.0.21",
-    "@bhunter179/react-dnd": "^16.0.3",
-    "@bhunter179/react-dnd-html5-backend": "^16.0.3",
-    "react-intl": "^6.2.10",
-    "react-redux": "^8.0.5",
-    "react-virtualized-auto-sizer": "^1.0.5",
-    "react-window": "^1.8.6",
-    "react-window-infinite-loader": "^1.0.8",
+    "hotkeys-js": "^3.10.2",
+    "immer": "10.0.2",
+    "react": ">=16",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
+    "react-dom": "^18.2.0",
+    "react-intl": "^6.4.4",
+    "react-redux": "^8.1.0",
+    "react-virtualized-auto-sizer": "^1.0.20",
+    "react-window": "^1.8.9",
+    "react-window-infinite-loader": "^1.0.9",
     "redux-watch": "^1.2.0",
     "shortid": "^2.2.16",
     "tsdef": "^0.0.14",
-    "tss-react": "^4.8.2"
+    "tss-react": "^4.8.6"
+  },
+  "devDependencies": {
+    "@size-limit/preset-small-lib": "^8.2.4",
+    "@testing-library/react": "^14.0.0",
+    "@types/classnames": "^2.3.0",
+    "@types/fuzzy-search": "^2.1.2",
+    "@types/memoizee": "^0.4.8",
+    "@types/react": "^18.2.12",
+    "@types/react-dom": "^18.2.5",
+    "@types/react-redux": "^7.1.25",
+    "@types/react-virtualized-auto-sizer": "^1.0.1",
+    "@types/react-window": "^1.8.5",
+    "@types/react-window-infinite-loader": "^1.0.6",
+    "@types/redux-watch": "^1.1.0",
+    "@types/shortid": "^0.0.29",
+    "dts-cli": "^2.0.3",
+    "husky": "^8.0.3",
+    "prettier": "^2.8.8",
+    "react-is": "^18.2.0",
+    "size-limit": "^8.2.4",
+    "tslib": "^2.5.3",
+    "typescript": "^5.1.3"
   },
   "homepage": "https://chonky.io/",
   "author": {
