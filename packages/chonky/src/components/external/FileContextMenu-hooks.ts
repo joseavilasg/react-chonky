@@ -23,15 +23,17 @@ export const useContextMenuTrigger = () => {
   const dispatch: ChonkyDispatch = useDispatch();
   const contextMenuMountedRef = useInstanceVariable(useSelector(selectContextMenuMounted));
   return useCallback(
-    (event: React.MouseEvent<HTMLDivElement>) => {
+    (event: React.MouseEvent<HTMLDivElement> | Touch) => {
       // Use default browser context menu when Chonky context menu component
       // is not mounted.
       if (!contextMenuMountedRef.current) return;
       // Users can use Alt+Right Click to bring up browser's default
       // context menu instead of Chonky's context menu.
-      if (event.altKey) return;
-
-      event.preventDefault();
+      if (!(event instanceof Touch)) {
+        if (event.altKey) return;
+        
+        event.preventDefault();
+      }
 
       const triggerFileId = findClosestChonkyFileId(event.target);
       dispatch(
