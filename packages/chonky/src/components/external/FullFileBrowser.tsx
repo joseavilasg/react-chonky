@@ -19,7 +19,7 @@ export const FullFileBrowser = React.memo(
       <FileBrowser ref={ref} {...props}>
         {props.folderChain?.length ? <FileNavbar /> : undefined}
         <FileToolbar />
-        <FileList {...props} />
+        <FileList/>
         <FileContextMenu />
       </FileBrowser>
     );

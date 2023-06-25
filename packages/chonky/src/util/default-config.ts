@@ -1,5 +1,5 @@
 import { ChonkyActions } from '../action-definitions/index';
-import { ChonkyIconPlaceholder } from '../components/internal/ChonkyIconPlaceholder';
+import { ChonkyIconFA } from '../components/external/ChonkyIconFA';
 import { FileBrowserProps } from '../types/file-browser.types';
 
 export type ChonkyConfig = Pick<
@@ -37,7 +37,7 @@ export const defaultConfig: ChonkyConfig = {
   defaultSortActionId: ChonkyActions.SortFilesByName.id,
   defaultFileViewActionId: ChonkyActions.EnableListView.id,
   clearSelectionOnOutsideClick: true,
-  iconComponent: ChonkyIconPlaceholder,
+  iconComponent: ChonkyIconFA,
   i18n: {},
   themeColor: "#904d00",
   themeMode: "dark"

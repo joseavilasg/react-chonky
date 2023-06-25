@@ -11,20 +11,16 @@ import { ChonkyIconName } from '../../types/icons.types';
 import { getI18nId, I18nNamespace } from '../../util/i18n';
 import { ChonkyIconContext } from '../../util/icon-helper';
 import { makeLocalChonkyStyles } from '../../util/styles';
+import { width } from '@fortawesome/free-brands-svg-icons/faGitAlt';
 
 export interface FileListEmptyProps {
-  width: number;
   height: number;
 }
 
 export const FileListEmpty: React.FC<FileListEmptyProps> = (props) => {
-  const { width, height } = props;
-  const {classes} = useStyles();
+  const { height } = props;
+  const { classes } = useStyles();
   const ChonkyIcon = useContext(ChonkyIconContext);
-  const style: CSSProperties = {
-    width,
-    height,
-  };
 
   const intl = useIntl();
   const emptyString = intl.formatMessage({
@@ -33,7 +29,7 @@ export const FileListEmpty: React.FC<FileListEmptyProps> = (props) => {
   });
 
   return (
-    <div className={classes.fileListEmpty} style={style}>
+    <div className={classes.fileListEmpty} style={{ height, width: '100%' }}>
       <div className={classes.fileListEmptyContent}>
         <ChonkyIcon icon={ChonkyIconName.folderOpen} />
         &nbsp; {emptyString}

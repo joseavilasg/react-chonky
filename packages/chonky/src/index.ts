@@ -8,6 +8,8 @@ export { FileList } from './components/file-list/FileList';
 export { FileContextMenu } from './components/external/FileContextMenu';
 export { FullFileBrowser } from './components/external/FullFileBrowser';
 
+export { ChonkyIconFA } from './components/external/ChonkyIconFA'
+
 export { ChonkyActions, DefaultFileActions, OptionIds } from './action-definitions';
 
 export { defineFileAction } from './util/helpers';

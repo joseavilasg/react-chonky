@@ -3,19 +3,18 @@
  * @copyright 2020
  * @license MIT
  */
-import React, { CSSProperties, useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { FixedSizeList } from 'react-window';
 import { selectFileViewConfig, selectors } from '../../redux/selectors';
 import { FileViewMode } from '../../types/file-view.types';
 import { useInstanceVariable } from '../../util/hooks-helpers';
 import { makeLocalChonkyStyles } from '../../util/styles';
 import { SmartFileEntry } from './FileEntry';
-import InfiniteLoader from 'react-window-infinite-loader';
-import CircularProgress from '@mui/material/CircularProgress';
+import { Virtuoso } from 'react-virtuoso'
+import Box from '@mui/material/Box';
+import BottomLoader from './BottomLoader';
+
 export interface FileListListProps {
-  width: number;
-  height: number;
   hasNextPage?: boolean;
   isNextPageLoading?: boolean;
   loadNextPage?: any;
@@ -23,10 +22,8 @@ export interface FileListListProps {
 }
 
 export const ListContainer: React.FC<FileListListProps> = React.memo((props) => {
-  const { width, height } = props;
 
   const viewConfig = useSelector(selectFileViewConfig);
-
 
   const displayFileIds = useSelector(selectors.getDisplayFileIds);
   const displayFileIdsRef = useInstanceVariable(displayFileIds);
@@ -34,58 +31,39 @@ export const ListContainer: React.FC<FileListListProps> = React.memo((props) => 
     (index: number) => displayFileIdsRef.current[index] ?? `loading-file-${index}`,
     [displayFileIdsRef]
   );
-  const itemCount = props.hasNextPage ? displayFileIds.length + 1 : displayFileIds.length;
 
   const loadMoreItems = props.isNextPageLoading ? () => { } : props.loadNextPage;
 
-  const isItemLoaded = (index: number) => !props.hasNextPage || index < displayFileIds.length;
+  const { classes } = useStyles();
 
-  const {classes} = useStyles();
   const listComponent = useMemo(() => {
-    // When entry size is null, we use List view
-    const rowRenderer = (data: { index: number; style: CSSProperties }) => {
-
+    const rowRenderer = (index: number) => {
       return (
-        <div style={data.style} >
-          {!isItemLoaded(data.index) ?
-            <CircularProgress /> :
-            <SmartFileEntry
-              fileId={displayFileIds[data.index] ?? null}
-              displayIndex={data.index}
-              fileViewMode={FileViewMode.List}
-            />}
-        </div>
+        <Box height={viewConfig.entryHeight}>
+          <SmartFileEntry
+            fileId={displayFileIds[index] ?? null}
+            displayIndex={index}
+            fileViewMode={FileViewMode.List}
+          />
+        </Box>
       );
     };
 
     return (
-      <InfiniteLoader
-        isItemLoaded={isItemLoaded}
-        itemCount={itemCount}
-        loadMoreItems={loadMoreItems}
-      >
-        {({ onItemsRendered, ref }) => (
-          <FixedSizeList
-            ref={ref as any}
-            className={classes.listContainer}
-            itemSize={viewConfig.entryHeight}
-            onItemsRendered={onItemsRendered}
-            height={height}
-            itemCount={displayFileIds.length}
-            width={width}
-            itemKey={getItemKey}
-          >
-            {rowRenderer}
-          </FixedSizeList>
-        )}
-      </InfiniteLoader>
+      <Virtuoso
+        className={classes.listContainer}
+        totalCount={displayFileIds.length}
+        endReached={loadMoreItems}
+        itemContent={index => rowRenderer(index)}
+        computeItemKey={getItemKey}
+        components={{ Footer: () => props.isNextPageLoading ? <BottomLoader /> : null }}
+      />
+
     );
   }, [
     classes.listContainer,
     viewConfig.entryHeight,
-    height,
     displayFileIds,
-    width,
     getItemKey,
   ]);
 
@@ -95,5 +73,6 @@ export const ListContainer: React.FC<FileListListProps> = React.memo((props) => 
 const useStyles = makeLocalChonkyStyles((theme) => ({
   listContainer: {
     borderTop: `solid 1px ${theme.palette.divider}`,
+    height: '100%'
   },
 }));

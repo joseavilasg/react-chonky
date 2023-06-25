@@ -1,6 +1,5 @@
-import React, { UIEvent, useCallback, useContext, useMemo } from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import AutoSizer from 'react-virtualized-auto-sizer';
 import { ChonkyActions } from '../../action-definitions/index';
 import { selectCurrentFolder, selectFileViewConfig, selectors } from '../../redux/selectors';
 import { FileViewMode } from '../../types/file-view.types';
@@ -13,13 +12,11 @@ import { GridContainer } from './GridContainer';
 import { ListContainer } from './ListContainer';
 
 export interface FileListProps {
-  onScroll?: (e: UIEvent<HTMLDivElement>) => void;
   hasNextPage?: boolean;
   isNextPageLoading?: boolean;
   loadNextPage?: any;
 
 }
-
 interface StyleState {
   dndCanDrop: boolean;
   dndIsOverCurrent: boolean;
@@ -34,21 +31,15 @@ export const FileList: React.FC<FileListProps> = React.memo((props: FileListProp
   const styleState = useMemo<StyleState>(() => ({ dndCanDrop, dndIsOverCurrent }), [dndCanDrop, dndIsOverCurrent]);
 
   const { classes: localClasses } = useLocalStyles(styleState);
-  const { onScroll } = props;
-
-  // In Chonky v0.x, this field was user-configurable. In Chonky v1.x+, we hardcode
-  // this to `true` to simplify configuration. Users can just wrap Chonky in their
-  // own `div` if they want to have finer control over the height.
-  const fillParentContainer = true;
 
   const listRenderer = useCallback(
-    ({ width, height }: { width: number; height: number }) => {
+    () => {
       if (displayFileIds.length === 0) {
-        return <FileListEmpty width={width} height={viewConfig.entryHeight} />;
+        return <FileListEmpty height={viewConfig.entryHeight} />;
       } else if (viewConfig.mode === FileViewMode.List) {
-        return <ListContainer {...props} width={width} height={height} />;
+        return <ListContainer {...props} />;
       } else {
-        return <GridContainer {...props} width={width} height={height} />;
+        return <GridContainer {...props} />;
       }
     },
     [displayFileIds, viewConfig],
@@ -57,7 +48,6 @@ export const FileList: React.FC<FileListProps> = React.memo((props: FileListProp
   const ChonkyIcon = useContext(ChonkyIconContext);
   return (
     <div
-      onScroll={onScroll}
       ref={drop}
       className={localClasses.fileListWrapper}
       role="list"
@@ -67,7 +57,7 @@ export const FileList: React.FC<FileListProps> = React.memo((props: FileListProp
           <ChonkyIcon icon={dndCanDrop ? ChonkyIconName.dndCanDrop : ChonkyIconName.dndCannotDrop} />
         </div>
       </div>
-      <AutoSizer disableHeight={!fillParentContainer}>{listRenderer}</AutoSizer>
+      {listRenderer()}
     </div>
   );
 });
