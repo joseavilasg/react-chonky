@@ -39,7 +39,7 @@ export const defaultConfig: ChonkyConfig = {
   clearSelectionOnOutsideClick: true,
   iconComponent: ChonkyIconFA,
   i18n: {},
-  themeColor: "#904d00",
+  themeColor: "#8c9eff",
   themeMode: "dark"
 };
 
