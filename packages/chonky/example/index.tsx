@@ -2,7 +2,7 @@ import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { FullFileBrowser } from '../dist/chonky.esm';
 
-const files=Array(1000).fill(0).map((item,index)=>({ id: index.toString(), name: 'My File.txt' }))
+const files=Array(1000).fill(0).map((item,index)=>({ id: index.toString(), name: 'My File.txt',isDir:true }))
 const App = () => {
   const pathEntries = ['test', 'folder'];
   return (
@@ -10,7 +10,7 @@ const App = () => {
       <FullFileBrowser
         folderChain={pathEntries.map((name, idx) => ({
           id: `${idx}`,
-          name,
+          name
         }))}
         files={files}
       />

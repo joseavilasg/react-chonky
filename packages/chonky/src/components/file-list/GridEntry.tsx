@@ -7,13 +7,13 @@ import { useFileEntryHtmlProps, useFileEntryState } from './FileEntry-hooks';
 import { FileEntryName } from './FileEntryName';
 import { FileEntryState, GridEntryPreviewFile, GridEntryPreviewFolder } from './GridEntryPreview';
 import { isMobileDevice } from './GridContainer';
-import {cx} from '@emotion/css'
+import { cx } from '@emotion/css'
 
 export const GridEntry: React.FC<FileEntryProps> = React.memo(({ file, selected, focused, dndState }) => {
     const isDirectory = FileHelper.isDirectory(file);
     const entryState = useFileEntryState(file, selected, focused);
     const isMobile = isMobileDevice()
-    const {classes} = useFileEntryStyles(entryState);
+    const { classes } = useFileEntryStyles(entryState);
     const fileEntryHtmlProps = useFileEntryHtmlProps(file);
     const entryClassName = cx({
         [classes.gridFileEntry]: true,
@@ -41,11 +41,13 @@ export const GridEntry: React.FC<FileEntryProps> = React.memo(({ file, selected,
 });
 GridEntry.displayName = 'GridEntry';
 
-const useFileEntryStyles = makeLocalChonkyStyles((theme,state) => ({
+const useFileEntryStyles = makeLocalChonkyStyles((theme, state) => ({
     gridFileEntry: {
         flexDirection: 'column',
         display: 'flex',
         height: '100%',
+        width: '90%',
+        margin: 'auto'
     },
     gridFileEntryPreview: {
         flexGrow: 1,
@@ -57,12 +59,14 @@ const useFileEntryStyles = makeLocalChonkyStyles((theme,state) => ({
         paddingTop: 5,
         overflow: 'hidden',
         textOverflow: 'ellipsis',
-        height: '21%',
-        whiteSpace: 'nowrap'
+        display: '-webkit-box',
+        WebkitLineClamp: 2,
+        WebkitBoxOrient: 'vertical'
+
     },
     gridFileEntryName: {
         backgroundColor: state.selected ? 'rgba(0,153,255, .25)' : 'transparent',
-        textDecoration:  state.focused ? 'underline' : 'none',
+        textDecoration: state.focused ? 'underline' : 'none',
         borderRadius: 3,
         padding: [2, 4],
     },

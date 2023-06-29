@@ -1,6 +1,6 @@
 {
   "name": "@bhunter179/chonky",
-  "version": "0.2.30",
+  "version": "0.2.33",
   "description": "A File Browser component for React",
   "license": "MIT",
   "types": "dist/index.d.ts",
@@ -71,7 +71,8 @@
     "redux-watch": "^1.2.0",
     "shortid": "^2.2.16",
     "tsdef": "^0.0.14",
-    "tss-react": "^4.8.6"
+    "tss-react": "^4.8.6",
+    "use-container-queries": "^1.0.0"
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^8.2.4",
@@ -90,6 +91,7 @@
     "dts-cli": "^2.0.3",
     "husky": "^8.0.3",
     "prettier": "^2.8.8",
+    "process": "^0.11.10",
     "react-is": "^18.2.0",
     "size-limit": "^8.2.4",
     "tslib": "^2.5.3",
