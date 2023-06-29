@@ -36,23 +36,15 @@ This is a fork of [Chonky] by [TimboKZ].
 
 ### Usage
 
-Add the forked npm packages:
-
-```
-yarn add @aperturerobotics/chonky @aperturerobotics/chonky-icon-fontawesome
-```
-
 Add to your app:
 
 ```typescript
-import { FullFileBrowser } from '@aperturerobotics/chonky'
-import { ChonkyIconFA } from '@aperturerobotics/chonky-icon-fontawesome'
+import { FullFileBrowser } from '@bhunter179/chonky'
 
 export function MyComponent() {
     return <FullFileBrowser
       files={[]}
-      darkMode={true}
-      iconComponent={ChonkyIconFA}
+      folderChain={[]}
     />
 }
 ```
