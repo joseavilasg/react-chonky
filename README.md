@@ -1,10 +1,10 @@
 <p align="center">
     <img src="https://chonky.io/chonky-logo-v2.png" alt="Chonky v2 Logo" width="500" />
     <br />
-    <a href="https://www.npmjs.com/package/@aperturerobotics/chonky">
+    <a href="https://www.npmjs.com/package/@bhunter179/chonky">
         <img
             alt="NPM package"
-            src="https://img.shields.io/npm/v/@aperturerobotics/chonky.svg?style=flat&colorB=ffac5c"
+            src="https://img.shields.io/npm/v/@bhunter179/chonky.svg?style=flat&colorB=ffac5c"
         />
     </a>
     <a href="https://tldrlegal.com/license/mit-license">
