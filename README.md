@@ -13,12 +13,6 @@
             src="https://img.shields.io/npm/l/chonky?style=flat&colorB=dcd67a"
         />
     </a>
-    <a href="https://discord.gg/4HJaFn9">
-        <img
-            alt="Chat on Discord"
-            src="https://img.shields.io/discord/696033621986770957?label=discord&style=flat&colorB=08acee"
-        />
-    </a>
     <br />
     <br />
     <br />
@@ -55,6 +49,8 @@ export function MyComponent() {
 > problem or want to request a feature.
 
 ## License
+
+MIT © Bounty Hunter, LLC. 2023
 
 MIT © Aperture Robotics, LLC. 2023
 

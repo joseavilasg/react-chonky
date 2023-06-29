@@ -35,7 +35,7 @@ export const FileToolbar: React.FC<FileToolbarProps> = React.memo((props) => {
   }, [toolbarItems]);
 
   const hideToolbarInfo = useSelector(selectHideToolbarInfo);
-  const hideSearchBar = getValueOrFallback(props.hideSearchBar, true)
+  const hideSearchBar = getValueOrFallback(props.hideSearchBar, false)
 
   return (
     <div className={classes.toolbarWrapper}>
