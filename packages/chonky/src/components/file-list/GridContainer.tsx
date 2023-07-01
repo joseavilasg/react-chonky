@@ -1,13 +1,13 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo,forwardRef } from 'react';
 import { useSelector } from 'react-redux';
 import { selectFileViewConfig, selectors } from '../../redux/selectors';
+import { FileListProps} from '../../types/file-list.types';
 import { FileViewConfigGrid } from '../../types/file-view.types';
 import { useInstanceVariable } from '../../util/hooks-helpers';
 import { makeLocalChonkyStyles } from '../../util/styles';
 import { SmartFileEntry } from './FileEntry';
 import { Box } from '@mui/material';
-import { VirtuosoGrid } from 'react-virtuoso';
-import BottomLoader from './BottomLoader';
+import { VirtuosoGrid,VirtuosoGridHandle } from 'react-virtuoso';
 import { useContainerQueries } from 'use-container-queries';
 
 export const isMobileDevice = () => {
@@ -25,11 +25,6 @@ export const isMobileDevice = () => {
         return navigator.userAgent.match(toMatchItem);
     });
 };
-export interface FileListGridProps {
-    hasNextPage?: boolean;
-    isNextPageLoading?: boolean;
-    loadNextPage?: any;
-}
 
 const breakpoints = {
     xs: [0, 480],
@@ -47,8 +42,8 @@ const gridsize = {
     xl: 5,
 };
 
-export const GridContainer: React.FC<FileListGridProps> = React.memo(
-    ({ hasNextPage, loadNextPage}) => {
+export const GridContainer = React.memo(forwardRef<VirtuosoGridHandle, FileListProps>(
+    ({ hasNextPage, loadNextPage},ref) => {
         const viewConfig = useSelector(selectFileViewConfig) as FileViewConfigGrid;
 
         const displayFileIds = useSelector(selectors.getDisplayFileIds);
@@ -62,7 +57,7 @@ export const GridContainer: React.FC<FileListGridProps> = React.memo(
         );
 
         //@ts-ignore
-        const { ref, active: breakpoint } = useContainerQueries({ breakpoints });
+        const { ref:queryRef, active: breakpoint } = useContainerQueries({ breakpoints });
 
         const cellRenderer = useCallback(
             (index: number) => {
@@ -91,8 +86,9 @@ export const GridContainer: React.FC<FileListGridProps> = React.memo(
 
         const gridComponent = useMemo(() => {
             return (
-                <Box sx={{ width: '100%', height: '100%' }} ref={ref}>
+                <Box sx={{ width: '100%', height: '100%' }} ref={queryRef}>
                     <VirtuosoGrid
+                        ref={ref}
                         listClassName={classes.gridContainer}
                         totalCount={displayFileIds.length}
                         endReached={loadMoreItems}
@@ -105,7 +101,7 @@ export const GridContainer: React.FC<FileListGridProps> = React.memo(
 
         return gridComponent;
     }
-);
+));
 
 const useStyles = makeLocalChonkyStyles((_, breakpoint) => ({
     gridContainer: {

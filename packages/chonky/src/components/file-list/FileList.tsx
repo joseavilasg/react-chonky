@@ -1,8 +1,9 @@
-import React, { useCallback, useContext, useMemo } from 'react';
+import React, { useCallback, useContext, useMemo,forwardRef,memo,Ref } from 'react';
 import { useSelector } from 'react-redux';
 import { ChonkyActions } from '../../action-definitions/index';
 import { selectCurrentFolder, selectFileViewConfig, selectors } from '../../redux/selectors';
 import { FileViewMode } from '../../types/file-view.types';
+import { FileListProps } from '../../types/file-list.types';
 import { ChonkyIconName } from '../../types/icons.types';
 import { useFileDrop } from '../../util/dnd';
 import { ChonkyIconContext } from '../../util/icon-helper';
@@ -10,19 +11,13 @@ import { getStripeGradient, makeLocalChonkyStyles } from '../../util/styles';
 import { FileListEmpty } from './FileListEmpty';
 import { GridContainer } from './GridContainer';
 import { ListContainer } from './ListContainer';
-
-export interface FileListProps {
-  hasNextPage?: boolean;
-  isNextPageLoading?: boolean;
-  loadNextPage?: any;
-
-}
+import { VirtuosoHandle,VirtuosoGridHandle } from 'react-virtuoso';
 interface StyleState {
   dndCanDrop: boolean;
   dndIsOverCurrent: boolean;
 }
 
-export const FileList: React.FC<FileListProps> = React.memo((props: FileListProps) => {
+export const FileList = memo(forwardRef<unknown, FileListProps>((props,ref) => {
   const displayFileIds = useSelector(selectors.getDisplayFileIds);
   const viewConfig = useSelector(selectFileViewConfig);
 
@@ -37,9 +32,9 @@ export const FileList: React.FC<FileListProps> = React.memo((props: FileListProp
       if (displayFileIds.length === 0) {
         return <FileListEmpty height={viewConfig.entryHeight} />;
       } else if (viewConfig.mode === FileViewMode.List) {
-        return <ListContainer {...props} />;
+        return <ListContainer ref={ref as Ref<VirtuosoHandle>} {...props} />;
       } else {
-        return <GridContainer {...props} />;
+        return <GridContainer ref={ref as Ref<VirtuosoGridHandle>} {...props} />;
       }
     },
     [displayFileIds, viewConfig],
@@ -60,7 +55,7 @@ export const FileList: React.FC<FileListProps> = React.memo((props: FileListProp
       {listRenderer()}
     </div>
   );
-});
+}));
 FileList.displayName = 'FileList';
 
 const useLocalStyles = makeLocalChonkyStyles((theme, state) => ({

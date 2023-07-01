@@ -3,25 +3,19 @@
  * @copyright 2020
  * @license MIT
  */
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo,forwardRef } from 'react';
 import { useSelector } from 'react-redux';
 import { selectFileViewConfig, selectors } from '../../redux/selectors';
 import { FileViewMode } from '../../types/file-view.types';
 import { useInstanceVariable } from '../../util/hooks-helpers';
 import { makeLocalChonkyStyles } from '../../util/styles';
 import { SmartFileEntry } from './FileEntry';
-import { Virtuoso } from 'react-virtuoso';
+import { Virtuoso,VirtuosoHandle } from 'react-virtuoso';
 import Box from '@mui/material/Box';
-import BottomLoader from './BottomLoader';
+import { FileListProps} from '../../types/file-list.types';
 
-export interface FileListListProps {
-    hasNextPage?: boolean;
-    isNextPageLoading?: boolean;
-    loadNextPage?: any;
-}
-
-export const ListContainer: React.FC<FileListListProps> = React.memo(
-    ({ hasNextPage, loadNextPage}) => {
+export const ListContainer = React.memo(forwardRef<VirtuosoHandle, FileListProps>(
+    ({ hasNextPage, loadNextPage,restoreStateFrom},ref) => {
         const viewConfig = useSelector(selectFileViewConfig);
 
         const displayFileIds = useSelector(selectors.getDisplayFileIds);
@@ -54,18 +48,21 @@ export const ListContainer: React.FC<FileListListProps> = React.memo(
 
             return (
                 <Virtuoso
+                    ref={ref}
+                    defaultItemHeight={viewConfig.entryHeight}
                     className={classes.listContainer}
                     totalCount={displayFileIds.length}
                     endReached={loadMoreItems}
                     itemContent={(index) => rowRenderer(index)}
                     computeItemKey={getItemKey}
+                    restoreStateFrom={restoreStateFrom}
                 />
             );
         }, [displayFileIds, getItemKey]);
 
         return listComponent;
     }
-);
+));
 
 const useStyles = makeLocalChonkyStyles((theme) => ({
     listContainer: {

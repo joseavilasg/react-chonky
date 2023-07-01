@@ -179,10 +179,6 @@ export interface FileBrowserProps {
    */
   i18n?: I18nConfig;
 
-  /**
-   * Define listener for on scroll events on file lists
-   */
-  onScroll?: (e: UIEvent<HTMLDivElement>) => void;
 
   /**
    * Overrides ChonkyTheme properties.
@@ -194,7 +190,13 @@ export interface FileBrowserProps {
    */
   muiThemeOptions?: DeepPartial<MuiThemeOptions>;
 
+  /**
+   * Wrap MuiThemeProvider
+   */
   useThemeProvider?: boolean;
 
+ /**
+   * Wrap Redux StoreProvider
+   */
   useStoreProvider?: boolean;
 }
