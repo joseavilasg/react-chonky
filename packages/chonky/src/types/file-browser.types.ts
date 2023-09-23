@@ -11,6 +11,7 @@ import { ChonkyIconProps } from './icons.types';
 import { ThumbnailGenerator } from './thumbnails.types';
 import { Theme as MuiTheme } from '@mui/material/styles';
 import { M3ThemeMode } from '@bhunter179/react-material-you-theme';
+import { SortOrder } from './sort.types';
 
 
 /**
@@ -199,4 +200,9 @@ export interface FileBrowserProps {
    * Wrap Redux StoreProvider
    */
   useStoreProvider?: boolean;
+
+  /**
+   * Set default Sort Order
+   */
+  defaultSortOrder?: SortOrder;
 }

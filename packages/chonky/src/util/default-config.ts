@@ -1,6 +1,7 @@
 import { ChonkyActions } from '../action-definitions/index';
 import { ChonkyIconFA } from '../components/external/ChonkyIconFA';
 import { FileBrowserProps } from '../types/file-browser.types';
+import { SortOrder } from '../types/sort.types';
 
 export type ChonkyConfig = Pick<
   FileBrowserProps,
@@ -16,6 +17,7 @@ export type ChonkyConfig = Pick<
   | 'disableDragAndDropProvider'
   | 'defaultSortActionId'
   | 'defaultFileViewActionId'
+  | 'defaultSortOrder'
   | 'clearSelectionOnOutsideClick'
   | 'iconComponent'
   | 'i18n'
@@ -36,6 +38,7 @@ export const defaultConfig: ChonkyConfig = {
   disableDragAndDropProvider: false,
   defaultSortActionId: ChonkyActions.SortFilesByName.id,
   defaultFileViewActionId: ChonkyActions.EnableListView.id,
+  defaultSortOrder : SortOrder.ASC,
   clearSelectionOnOutsideClick: true,
   iconComponent: ChonkyIconFA,
   i18n: {},

@@ -52,6 +52,7 @@ export type ChonkyDndFileEntryItem = import('./types/dnd.types').ChonkyDndFileEn
 
 export type FileActionHandler = GenericFileActionHandler<ChonkyActionUnion>;
 export type ChonkyFileActionData = MapFileActionsToData<ChonkyActionUnion>;
+export { SortOrder } from './types/sort.types';
 
 // Extensions
 export * from './extensions';

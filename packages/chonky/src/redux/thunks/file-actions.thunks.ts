@@ -133,7 +133,7 @@ export const thunkUpdateDefaultFileViewActionId =
     };
 
 export const thunkActivateSortAction =
-  (fileActionId: Nilable<string>): ChonkyThunk =>
+  (fileActionId: Nilable<string>,defaultOrder?:SortOrder): ChonkyThunk =>
     (dispatch, getState) => {
       if (!fileActionId) return;
 
@@ -144,6 +144,7 @@ export const thunkActivateSortAction =
       let order = oldOrder === SortOrder.ASC ? SortOrder.DESC : SortOrder.ASC;
       if (oldActionId !== fileActionId) {
         order = SortOrder.ASC;
+        if(defaultOrder)  order = defaultOrder;
       }
 
       dispatch(reduxActions.setSort({ actionId: fileActionId, order: order }));
