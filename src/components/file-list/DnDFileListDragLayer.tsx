@@ -10,10 +10,11 @@ import { Nullable } from 'tsdef';
 
 import { ChonkyDndFileEntryItem, ChonkyDndFileEntryType } from '../../types/dnd.types';
 import { makeLocalChonkyStyles } from '../../util/styles';
+import { Box, SxProps } from '@mui/material';
 
 export interface DnDFileListDragLayerProps {}
 
-const layerStyles: React.CSSProperties = {
+const layerStyles: SxProps = {
   position: 'fixed',
   pointerEvents: 'none',
   zIndex: 100,
@@ -22,6 +23,7 @@ const layerStyles: React.CSSProperties = {
   width: '100%',
   height: '100%',
 };
+
 const getItemStyles = (
   initialCursorOffset: Nullable<{ x: number; y: number }>,
   initialFileOffset: Nullable<{ x: number; y: number }>,
@@ -60,8 +62,8 @@ export const DnDFileListDragLayer: React.FC<DnDFileListDragLayerProps> = () => {
 
   const selectionSize = item.payload.selectedFiles.length;
   return (
-    <div style={layerStyles}>
-      <div style={getItemStyles(initialCursorOffset, initialFileOffset, currentFileOffset)}>
+    <Box sx={layerStyles}>
+      <Box sx={getItemStyles(initialCursorOffset, initialFileOffset, currentFileOffset)}>
         <div className={classes.fileDragPreview}>
           <b>{item.payload.draggedFile.name}</b>
           {selectionSize > 1 && (
@@ -74,8 +76,8 @@ export const DnDFileListDragLayer: React.FC<DnDFileListDragLayerProps> = () => {
             </>
           )}
         </div>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

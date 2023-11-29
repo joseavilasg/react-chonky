@@ -9,6 +9,7 @@ import { Nullable } from 'tsdef';
 
 import { makeLocalChonkyStyles } from '../../util/styles';
 import {cx} from '@emotion/css'
+import { Box, SxProps } from '@mui/material';
 
 export interface FileThumbnailProps {
   className: string;
@@ -18,10 +19,10 @@ export interface FileThumbnailProps {
 export const FileThumbnail: React.FC<FileThumbnailProps> = React.memo((props) => {
   const { className, thumbnailUrl } = props;
 
-  const thumbnailStyle: React.CSSProperties = thumbnailUrl ? { backgroundImage: `url('${thumbnailUrl}')` } : {};
+  const thumbnailStyle: SxProps = thumbnailUrl ? { backgroundImage: `url('${thumbnailUrl}')` } : {};
 
   const {classes} = useStyles();
-  return <div className={cx([className, classes.fileThumbnail])} style={thumbnailStyle} />;
+  return <Box className={cx([className, classes.fileThumbnail])} sx={thumbnailStyle} />;
 });
 FileThumbnail.displayName = 'FileThumbnail';
 
