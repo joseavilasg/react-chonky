@@ -17,6 +17,7 @@ export type ChonkyConfig = Pick<
   | 'disableDragAndDropProvider'
   | 'defaultSortActionId'
   | 'defaultFileViewActionId'
+  | 'defaultFileViewEntryHeight'
   | 'defaultSortOrder'
   | 'clearSelectionOnOutsideClick'
   | 'iconComponent'
@@ -38,6 +39,7 @@ export const defaultConfig: ChonkyConfig = {
   disableDragAndDropProvider: false,
   defaultSortActionId: ChonkyActions.SortFilesByName.id,
   defaultFileViewActionId: ChonkyActions.EnableListView.id,
+  defaultFileViewEntryHeight: ChonkyActions.EnableListView.fileViewConfig.entryHeight,
   defaultSortOrder : SortOrder.ASC,
   clearSelectionOnOutsideClick: true,
   iconComponent: ChonkyIconFA,

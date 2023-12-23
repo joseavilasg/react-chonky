@@ -128,8 +128,8 @@ export const FileBrowser = React.forwardRef<
 
     const chonkyComps = (
         <>
-            <ChonkyBusinessLogic ref={ref} {...props} />
-            <ChonkyPresentationLayer>{children}</ChonkyPresentationLayer>
+        <ChonkyBusinessLogic ref={ref} {...props} />
+        <ChonkyPresentationLayer>{children}</ChonkyPresentationLayer>
         </>
     );
 

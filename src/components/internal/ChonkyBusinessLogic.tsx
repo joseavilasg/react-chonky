@@ -43,6 +43,7 @@ export const ChonkyBusinessLogicInner = React.memo(
     useDTE(
       thunkUpdateDefaultFileViewActionId,
       getValueOrFallback(props.defaultFileViewActionId, defaultConfig.defaultFileViewActionId, 'string'),
+      getValueOrFallback(props.defaultFileViewEntryHeight, defaultConfig.defaultFileViewEntryHeight,'number'),
     );
 
     useDTE(

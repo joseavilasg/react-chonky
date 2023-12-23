@@ -1,55 +1,72 @@
 {
   "name": "@bhunter179/chonky",
-  "version": "0.2.40",
+  "version": "0.2.41",
   "description": "A File Browser component for React",
   "license": "MIT",
   "types": "dist/index.d.ts",
+  "main": "dist/index.js",
+  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/chonky.esm.js"
+      "import": "./dist/index.js"
     }
   },
   "files": [
     "dist"
   ],
   "engines": {
-    "node": ">=14"
+    "node": ">=18"
   },
   "scripts": {
-    "build": "dts build --format esm",
+    "vite": "vite ./example",
+    "build": "tsup",
     "release": "npm publish --access=public",
     "patch": "npm --no-git-tag-version version patch",
     "format": "prettier --config ../../.prettierrc.js --ignore-path ../../.prettierignore . --write",
     "format-check": "prettier --config ../../.prettierrc.js --ignore-path ../../.prettierignore --check ."
   },
+  "tsup": {
+    "entry": [
+      "src/index.ts"
+    ],
+    "clean": true,
+    "treeshake": true,
+    "sourcemap": "inline",
+    "splitting": false,
+    "format": "esm",
+    "dts": true,
+    "external": [
+      "react"
+    ]
+  },
   "peerDependencies": {
-    "react": ">=16"
+    "react": ">=18",
+    "@mui/material": ">=5"
   },
   "dependencies": {
     "@bhunter179/react-material-you-theme": "^0.1.23",
     "@emotion/css": "^11.11.2",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@fortawesome/fontawesome-svg-core": "^6.5.0",
-    "@fortawesome/free-brands-svg-icons": "6.5.0",
-    "@fortawesome/free-solid-svg-icons": "^6.5.0",
+    "@fortawesome/fontawesome-svg-core": "^6.5.1",
+    "@fortawesome/free-brands-svg-icons": "6.5.1",
+    "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@mui/material": "^5.14.18",
-    "@reduxjs/toolkit": "^1.9.7",
+    "@reduxjs/toolkit": "^2.0.1",
     "deepmerge": "^4.3.1",
     "exact-trie": "^1.0.13",
     "fast-sort": "^3.4.0",
     "filesize": "^10.1.0",
     "fuzzy-search": "^3.2.1",
-    "hotkeys-js": "^3.12.2",
+    "hotkeys-js": "^3.13.3",
     "immer": "10.0.3",
     "react": ">=18",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
     "react-intl": "^6.5.5",
-    "react-redux": "^8.1.3",
+    "react-redux": "^9.0.4",
     "react-virtuoso": "^4.6.2",
     "redux-watch": "^1.2.0",
     "shortid": "^2.2.16",
@@ -58,22 +75,25 @@
     "use-container-queries": "^1.0.0"
   },
   "devDependencies": {
-    "@size-limit/preset-small-lib": "^11.0.0",
+    "@mui/material": "^5.15.1",
+    "tsup": "^8.0.1",
+    "@size-limit/preset-small-lib": "^11.0.1",
     "@types/classnames": "^2.3.0",
     "@types/fuzzy-search": "^2.1.5",
     "@types/memoizee": "^0.4.11",
-    "@types/react": "^18.2.39",
-    "@types/react-dom": "^18.2.17",
-    "@types/react-redux": "^7.1.31",
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
+    "@types/react-redux": "^7.1.33",
     "@types/redux-watch": "^1.1.2",
     "@types/shortid": "^0.0.32",
-    "dts-cli": "^2.0.3",
-    "prettier": "^3.1.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "prettier": "^3.1.1",
     "process": "^0.11.10",
     "react-is": "^18.2.0",
-    "size-limit": "^11.0.0",
+    "size-limit": "^11.0.1",
     "tslib": "^2.6.2",
-    "typescript": "^5.3.2"
+    "typescript": "^5.3.3",
+    "vite": "^5.0.10"
   },
   "homepage": "https://chonky.io/",
   "author": {

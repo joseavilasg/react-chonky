@@ -11,6 +11,7 @@ import { ChonkyIconProps } from './icons.types';
 import { ThumbnailGenerator } from './thumbnails.types';
 import { ThemeMode } from '@bhunter179/react-material-you-theme';
 import { SortOrder } from './sort.types';
+import { FileViewConfig } from '..';
 
 /**
  * File browser methods exposed to developers via the `FileBrowser` ref.
@@ -199,4 +200,10 @@ export interface FileBrowserProps {
      * Set default Sort Order
      */
     defaultSortOrder?: SortOrder;
+
+    /**
+     * Set default File View config
+     */
+    
+    defaultFileViewEntryHeight?: number
 }
