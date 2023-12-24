@@ -20,7 +20,6 @@ import { thunkActivateSortAction, thunkApplySelectionTransform } from './file-ac
 export const thunkDispatchFileAction =
   (data: FileActionData<FileAction>): ChonkyThunk =>
   (_dispatch, getState) => {
-    Logger.debug(`FILE ACTION DISPATCH: [${data.id}]`, 'data:', data);
     const state = getState();
     const action = selectFileActionMap(state)[data.id];
     const externalFileActionHandler = selectExternalFileActionHandler(state);
@@ -46,7 +45,6 @@ export const thunkDispatchFileAction =
 export const thunkRequestFileAction =
   <Action extends FileAction>(action: Action, payload: Action['__payloadType']): ChonkyThunk =>
   (dispatch, getState) => {
-    Logger.debug(`FILE ACTION REQUEST: [${action.id}]`, 'action:', action, 'payload:', payload);
     const state = getState();
     const instanceId = selectInstanceId(state);
 
