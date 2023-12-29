@@ -1,32 +1,46 @@
-import { Nullable } from 'tsdef';
+import { Nullable } from "tsdef";
 
-import { FileAction } from '../types/action.types';
-import { FileArray } from '../types/file.types';
-import { Logger } from '../util/logger';
+import { FileAction } from "@/types/action.types";
+import { FileArray } from "@/types/file.types";
+import { Logger } from "@/util/logger";
 
 interface SanitizeFiles {
-  (mode: 'files', rawArray: FileArray | any): {
+  (
+    mode: "files",
+    rawArray: FileArray | any,
+  ): {
     sanitizedArray: FileArray;
     errorMessages: string[];
   };
-  (mode: 'folderChain', rawArray: Nullable<FileArray> | any): {
+  (
+    mode: "folderChain",
+    rawArray: Nullable<FileArray> | any,
+  ): {
     sanitizedArray: FileArray;
     errorMessages: string[];
   };
-  (mode: 'fileActions', rawArray: FileAction[] | any): {
+  (
+    mode: "fileActions",
+    rawArray: FileAction[] | any,
+  ): {
     sanitizedArray: FileAction[];
     errorMessages: string[];
   };
 }
 
-export const sanitizeInputArray: SanitizeFiles = (mode: string, rawArray: any[]) => {
+export const sanitizeInputArray: SanitizeFiles = (
+  mode: string,
+  rawArray: any[],
+) => {
   const sanitizedFiles: any[] = [];
   const errorMessages: string[] = [];
 
-  if ((mode === 'folderChain' || mode === 'fileActions') && !rawArray) {
+  if ((mode === "folderChain" || mode === "fileActions") && !rawArray) {
     // Do nothing, we allow folder chain to be null.
   } else if (!Array.isArray(rawArray)) {
-    errorMessages.push(`Expected "${mode}" prop to be an array, got "${typeof rawArray}" instead.`);
+    errorMessages.push(
+      `Expected "${mode}" prop to be an array, got "${typeof rawArray}" instead.`,
+    );
   } else {
     let nonObjectFileCount = 0;
     let missingFieldFileCount = 0;
@@ -36,12 +50,12 @@ export const sanitizeInputArray: SanitizeFiles = (mode: string, rawArray: any[])
     for (let i = 0; i < rawArray.length; ++i) {
       const item = rawArray[i];
       if (!item) {
-        if (mode === 'fileActions') nonObjectFileCount++;
+        if (mode === "fileActions") nonObjectFileCount++;
         else sanitizedFiles.push(null);
-      } else if (typeof item !== 'object') {
+      } else if (typeof item !== "object") {
         nonObjectFileCount++;
       } else {
-        if (!item.id || (mode !== 'fileActions' && !item.name)) {
+        if (!item.id || (mode !== "fileActions" && !item.name)) {
           missingFieldFileCount++;
         } else if (seenIds.has(item.id)) {
           duplicateIds.add(item.id);
@@ -66,7 +80,8 @@ export const sanitizeInputArray: SanitizeFiles = (mode: string, rawArray: any[])
       );
     }
     if (duplicateIds.size > 0) {
-      const repeatedIdsString = '"' + Array.from(duplicateIds).join('", "') + '"';
+      const repeatedIdsString =
+        '"' + Array.from(duplicateIds).join('", "') + '"';
       errorMessages.push(
         `Detected ${duplicateIds.size} file IDs that are used multiple ` +
           `times. Remember that each file should have a unique IDs. The ` +
@@ -76,19 +91,19 @@ export const sanitizeInputArray: SanitizeFiles = (mode: string, rawArray: any[])
   }
 
   if (errorMessages.length > 0) {
-    const errorMessageString = '\n- ' + errorMessages.join('\n- ');
+    const errorMessageString = "\n- " + errorMessages.join("\n- ");
     let arrayString: string;
     let itemString: string;
-    if (mode === 'folderChain') {
-      arrayString = 'folder chain';
-      itemString = 'files';
-    } else if (mode === 'fileActions') {
-      arrayString = 'file actions';
-      itemString = 'file actions';
+    if (mode === "folderChain") {
+      arrayString = "folder chain";
+      itemString = "files";
+    } else if (mode === "fileActions") {
+      arrayString = "file actions";
+      itemString = "file actions";
     } else {
       // mode === 'files'
-      arrayString = 'files';
-      itemString = 'files';
+      arrayString = "files";
+      itemString = "files";
     }
 
     Logger.error(

@@ -1,11 +1,11 @@
-import { MaybePromise, Nullable } from 'tsdef';
+import { MaybePromise, Nullable } from "tsdef";
 
-import { FileActionState } from './action-handler.types';
-import { FileViewConfig } from './file-view.types';
-import { FileFilter, FileMap } from './file.types';
-import { ChonkyIconName } from './icons.types';
-import { ChonkyDispatch, RootState } from './redux.types';
-import { FileSortKeySelector } from './sort.types';
+import { FileActionState } from "./action-handler.types";
+import { FileViewConfig } from "./file-view.types";
+import { FileFilter, FileMap } from "./file.types";
+import { ChonkyIconName } from "./icons.types";
+import { ChonkyDispatch, RootState } from "./redux.types";
+import { FileSortKeySelector } from "./sort.types";
 
 export interface FileAction {
   /**
@@ -113,7 +113,7 @@ export type FileSelectionTransform = (data: {
 
 export type FileActionEffect<Action extends FileAction = any> = (data: {
   action: Action;
-  payload: Action['__payloadType'];
+  payload: Action["__payloadType"];
   state: FileActionState<{}>; // extra state is empty on purpose
   reduxDispatch: ChonkyDispatch;
   getReduxState: () => RootState;

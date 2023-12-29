@@ -1,33 +1,38 @@
-import React from 'react';
-import { Nullable } from 'tsdef';
+import React from "react";
+import { Nullable } from "tsdef";
 
-import { DndEntryState } from '../../types/file-list.types';
-import { FileData } from '../../types/file.types';
-import { useDndHoverOpen, useFileEntryDnD } from '../../util/dnd';
-import { FileHelper } from '../../util/file-helper';
-import { makeLocalChonkyStyles } from '../../util/styles';
+import { DndEntryState } from "@/types/file-list.types";
+import { FileData } from "@/types/file.types";
+import { useDndHoverOpen, useFileEntryDnD } from "@/util/dnd";
+import { FileHelper } from "@/util/file-helper";
+import { makeStyles } from "tss-react/mui";
 
 export interface DnDFileEntryProps {
   file: Nullable<FileData>;
   children: (dndState: DndEntryState) => React.ReactElement;
 }
 
-export const DnDFileEntry = React.memo(({ file, children }: DnDFileEntryProps) => {
-  const { drop, drag, dndState } = useFileEntryDnD(file);
+export const DnDFileEntry = React.memo(
+  ({ file, children }: DnDFileEntryProps) => {
+    const { drop, drag, dndState } = useFileEntryDnD(file);
 
-  useDndHoverOpen(file, dndState);
-  const { classes } = useStyles();
-  return (
-    <div ref={drop} className={classes.fillParent}>
-      <div ref={FileHelper.isDraggable(file) ? drag : null} className={classes.fillParent}>
-        {children(dndState)}
+    useDndHoverOpen(file, dndState);
+    const { classes } = useStyles();
+    return (
+      <div ref={drop} className={classes.fillParent}>
+        <div
+          ref={FileHelper.isDraggable(file) ? drag : null}
+          className={classes.fillParent}
+        >
+          {children(dndState)}
+        </div>
       </div>
-    </div>
-  );
-});
+    );
+  },
+);
 
-export const useStyles = makeLocalChonkyStyles(() => ({
+export const useStyles = makeStyles()(() => ({
   fillParent: {
-    height: '100%',
+    height: "100%",
   },
 }));

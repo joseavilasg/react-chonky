@@ -1,8 +1,8 @@
-import { Nullable } from 'tsdef';
+import { Nullable } from "tsdef";
 
-import { FileData } from './file.types';
+import { FileData } from "./file.types";
 
-import { StateSnapshot} from 'react-virtuoso';
+import { StateSnapshot } from "react-virtuoso";
 
 export interface DndEntryState {
   dndIsDragging?: boolean;
@@ -20,6 +20,6 @@ export interface FileEntryProps {
 export interface FileListProps {
   hasNextPage?: boolean;
   isNextPageLoading?: boolean;
-  loadNextPage?: ()=>void;
+  loadNextPage?: () => void;
   restoreStateFrom?: StateSnapshot;
 }

@@ -1,5 +1,5 @@
-import { Nullable } from 'tsdef';
-import { ChonkyIconName } from '../types/icons.types';
+import { Nullable } from "tsdef";
+import { ChonkyIconName } from "@/types/icons.types";
 
 export interface FileActionGroup {
   name: string;

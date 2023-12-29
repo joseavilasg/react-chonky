@@ -4,24 +4,23 @@ import {
   ChonkyActions,
   DefaultFileActions,
   EssentialFileActions,
-} from "../../action-definitions/index";
+} from "@/action-definitions/index";
 import {
   FileActionGroup,
   FileActionMenuItem,
-} from "../../types/action-menus.types";
-import { FileAction } from "../../types/action.types";
-import { ChonkyIconName } from "../../types/icons.types";
-import { ChonkyThunk } from "../../types/redux.types";
-import { SortOrder } from "../../types/sort.types";
-import { sanitizeInputArray } from "../files-transforms";
-import { reduxActions } from "../reducers";
+} from "@/types/action-menus.types";
+import { FileAction } from "@/types/action.types";
+import { ChonkyIconName } from "@/types/icons.types";
+import { ChonkyThunk } from "@/types/redux.types";
+import { SortOrder } from "@/types/sort.types";
+import { sanitizeInputArray } from "@/redux/files-transforms";
+import { reduxActions } from "@/redux/reducers";
 import {
   selectCleanFileIds,
   selectFileMap,
   selectHiddenFileIdMap,
   selectSelectionMap,
-} from "../selectors";
-import { FileViewConfig } from "../..";
+} from "@/redux/selectors";
 
 /**
  * Merges multiple file action arrays into one while removing duplicates

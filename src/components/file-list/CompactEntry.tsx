@@ -1,26 +1,31 @@
-import React, { useContext } from 'react';
+import React, { useContext } from "react";
 
-import { FileEntryProps } from '../../types/file-list.types';
-import { useLocalizedFileEntryStrings } from '../../util/i18n';
-import { ChonkyIconContext } from '../../util/icon-helper';
-import { makeLocalChonkyStyles } from '../../util/styles';
-import { TextPlaceholder } from '../external/TextPlaceholder';
-import { useFileEntryHtmlProps, useFileEntryState } from './FileEntry-hooks';
-import { FileEntryName } from './FileEntryName';
-import { FileEntryState } from './GridEntryPreview';
-import { isMobileDevice } from './GridContainer';
+import { FileEntryProps } from "@/types/file-list.types";
+import { useLocalizedFileEntryStrings } from "@/util/i18n";
+import { ChonkyIconContext } from "@/util/icon-helper";
+import { makeStyles } from "tss-react/mui";
+import { TextPlaceholder } from "@/components/external/TextPlaceholder";
+import { useFileEntryHtmlProps, useFileEntryState } from "./FileEntry-hooks";
+import { FileEntryName } from "./FileEntryName";
+import { FileEntryState } from "./GridEntryPreview";
+import { isMobileDevice } from "./GridContainer";
 
 export const CompactEntry: React.FC<FileEntryProps> = React.memo(
   // @ts-ignore
   ({ file, selected, focused, dndState }) => {
-    const entryState: FileEntryState = useFileEntryState(file, selected, focused);
+    const entryState: FileEntryState = useFileEntryState(
+      file,
+      selected,
+      focused,
+    );
 
-    const { fileModDateString, fileSizeString } = useLocalizedFileEntryStrings(file);
+    const { fileModDateString, fileSizeString } =
+      useLocalizedFileEntryStrings(file);
 
     const { classes } = useStyles(entryState);
     const ChonkyIcon = useContext(ChonkyIconContext);
     const fileEntryHtmlProps = useFileEntryHtmlProps(file);
-    const isMobile = isMobileDevice()
+    const isMobile = isMobileDevice();
 
     return (
       <div className={classes.listFileEntry} {...fileEntryHtmlProps}>
@@ -59,28 +64,28 @@ export const CompactEntry: React.FC<FileEntryProps> = React.memo(
         <div className="chonky-file-entry-selection"></div>
       </div>
     );
-  }
+  },
 );
 
-const useStyles = makeLocalChonkyStyles((theme, state) => ({
+const useStyles = makeStyles<FileEntryState>()((theme, state) => ({
   listFileEntry: {
     fontSize: theme.listFileEntry.fontSize,
-    alignItems: 'center',
-    position: 'relative',
-    display: 'flex',
-    height: '100%',
+    alignItems: "center",
+    position: "relative",
+    display: "flex",
+    height: "100%",
   },
   listFileEntryIcon: {
     backgroundColor: state.color,
-    boxShadow: 'inset rgba(255, 255, 255, 0.5) 0 0 0 999px',
+    boxShadow: "inset rgba(255, 255, 255, 0.5) 0 0 0 999px",
     borderRadius: theme.listFileEntry.iconBorderRadius,
     fontSize: theme.listFileEntry.iconFontSize,
-    color: '#fff',
+    color: "#fff",
     padding: 8,
   },
   listFileEntryDescription: {
-    flexDirection: 'column',
-    display: 'flex',
+    flexDirection: "column",
+    display: "flex",
     flexGrow: 1,
   },
   listFileEntryName: {
@@ -88,8 +93,8 @@ const useStyles = makeLocalChonkyStyles((theme, state) => ({
   },
   listFileEntryProperties: {
     fontSize: theme.listFileEntry.propertyFontSize,
-    flexDirection: 'row',
-    display: 'flex',
+    flexDirection: "row",
+    display: "flex",
   },
   listFileEntryProperty: {
     padding: [0, 8],

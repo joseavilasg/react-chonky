@@ -1,6 +1,6 @@
-import { Nullable, Undefinable } from 'tsdef';
+import { Nullable, Undefinable } from "tsdef";
 
-import { ChonkyIconName } from './icons.types';
+import { ChonkyIconName } from "./icons.types";
 
 export interface FileData {
   id: string; // (Required) String that uniquely identifies the file

@@ -1,17 +1,17 @@
-import { Nullable } from 'tsdef';
+import { Nullable } from "tsdef";
 
-import { Action, Store, ThunkAction, ThunkDispatch } from '@reduxjs/toolkit';
+import { Action, Store, ThunkAction, ThunkDispatch } from "@reduxjs/toolkit";
 
-import { GenericFileActionHandler } from './action-handler.types';
-import { FileActionMenuItem } from './action-menus.types';
-import { FileAction, FileActionMap } from './action.types';
-import { ContextMenuConfig } from './context-menu.types';
-import { FileViewConfig } from './file-view.types';
-import { FileArray, FileIdTrueMap, FileMap } from './file.types';
-import { OptionMap } from './options.types';
-import { FileSelection } from './selection.types';
-import { SortOrder } from './sort.types';
-import { ThumbnailGenerator } from './thumbnails.types';
+import { GenericFileActionHandler } from "./action-handler.types";
+import { FileActionMenuItem } from "./action-menus.types";
+import { FileAction, FileActionMap } from "./action.types";
+import { ContextMenuConfig } from "./context-menu.types";
+import { FileViewConfig } from "./file-view.types";
+import { FileArray, FileIdTrueMap, FileMap } from "./file.types";
+import { OptionMap } from "./options.types";
+import { FileSelection } from "./selection.types";
+import { SortOrder } from "./sort.types";
+import { ThumbnailGenerator } from "./thumbnails.types";
 
 export type RootState = {
   instanceId: string;
@@ -45,7 +45,7 @@ export type RootState = {
   // Search
   focusSearchInput: Nullable<() => void>;
   searchString: string;
-  searchMode: 'currentFolder';
+  searchMode: "currentFolder";
 
   // Selection
   selectionMap: FileSelection;
@@ -77,7 +77,12 @@ export type RootState = {
   contextMenuConfig: Nullable<ContextMenuConfig>;
 };
 
-export type ChonkyThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, null, Action<string>>;
+export type ChonkyThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  null,
+  Action<string>
+>;
 
 export type ChonkyDispatch = ThunkDispatch<RootState, null, Action<string>>;
 

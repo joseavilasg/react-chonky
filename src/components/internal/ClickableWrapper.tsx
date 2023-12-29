@@ -1,13 +1,7 @@
-/**
- * @author Timur Kuzhagaliyev <tim.kuzh@gmail.com>
- * @copyright 2020
- * @license MIT
- */
+import React, { useCallback } from "react";
+import { AnyObjectWithStringKeys } from "tsdef";
 
-import React, { useCallback } from 'react';
-import { AnyObjectWithStringKeys } from 'tsdef';
-
-import { useClickHandler, useKeyDownHandler } from './ClickableWrapper-hooks';
+import { useClickHandler, useKeyDownHandler } from "./ClickableWrapper-hooks";
 
 export interface MouseClickEvent {
   altKey: boolean;

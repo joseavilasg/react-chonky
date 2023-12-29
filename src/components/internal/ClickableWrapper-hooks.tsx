@@ -1,20 +1,14 @@
-/**
- * @author Timur Kuzhagaliyev <tim.kuzh@gmail.com>
- * @copyright 2020
- * @license MIT
- */
+import React, { useCallback, useRef } from "react";
+import { useSelector } from "react-redux";
+import { Nilable, Nullable } from "tsdef";
 
-import React, { useCallback, useRef } from 'react';
-import { useSelector } from 'react-redux';
-import { Nilable, Nullable } from 'tsdef';
-
-import { selectDoubleClickDelay } from '../../redux/selectors';
+import { selectDoubleClickDelay } from "@/redux/selectors";
 import {
   KeyboardClickEvent,
   KeyboardClickEventHandler,
   MouseClickEvent,
   MouseClickEventHandler,
-} from './ClickableWrapper';
+} from "./ClickableWrapper";
 
 export const useClickHandler = (
   onSingleClick: Nilable<MouseClickEventHandler>,
@@ -43,13 +37,16 @@ export const useClickHandler = (
         }
         counter.current.clickCount = 1;
         // @ts-ignore
-        counter.current.clickTimeout = setTimeout(() => (counter.current.clickCount = 0), doubleClickDelay);
+        counter.current.clickTimeout = setTimeout(
+          () => (counter.current.clickCount = 0),
+          doubleClickDelay,
+        );
       } else if (counter.current.clickCount === 2) {
         if (onDoubleClick) {
           event.preventDefault();
           onDoubleClick(mouseClickEvent);
         }
-        if (typeof counter.current.clickTimeout === 'number') {
+        if (typeof counter.current.clickTimeout === "number") {
           clearTimeout(counter.current.clickTimeout);
           counter.current.clickTimeout = null;
           counter.current.clickCount = 0;
@@ -60,14 +57,16 @@ export const useClickHandler = (
   );
 };
 
-export const useKeyDownHandler = (onKeyboardClick?: KeyboardClickEventHandler) => {
+export const useKeyDownHandler = (
+  onKeyboardClick?: KeyboardClickEventHandler,
+) => {
   return useCallback(
     (event: React.KeyboardEvent) => {
       if (!onKeyboardClick) return;
 
       const keyboardClickEvent: KeyboardClickEvent = {
-        enterKey: event.nativeEvent.code === 'Enter',
-        spaceKey: event.nativeEvent.code === 'Space',
+        enterKey: event.nativeEvent.code === "Enter",
+        spaceKey: event.nativeEvent.code === "Space",
         altKey: event.altKey,
         ctrlKey: event.ctrlKey,
         shiftKey: event.shiftKey,

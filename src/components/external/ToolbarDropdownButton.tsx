@@ -1,24 +1,19 @@
-/**
- * @author Timur Kuzhagaliyev <tim.kuzh@gmail.com>
- * @copyright 2020
- * @license MIT
- */
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import MenuItem from "@mui/material/MenuItem";
+import React, { useCallback, useContext } from "react";
+import { Nullable } from "tsdef";
 
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import MenuItem from '@mui/material/MenuItem';
-import React, { useCallback, useContext } from 'react';
-import { Nullable } from 'tsdef';
-
-import { selectFileActionData } from '../../redux/selectors';
-import { useParamSelector } from '../../redux/store';
-import { ChonkyIconName } from '../../types/icons.types';
-import { CustomVisibilityState } from '../../types/action.types';
-import { useFileActionProps, useFileActionTrigger } from '../../util/file-actions';
-import { useLocalizedFileActionStrings } from '../../util/i18n';
-import { ChonkyIconContext } from '../../util/icon-helper';
-import { important, makeLocalChonkyStyles } from '../../util/styles';
-import { cx } from '@emotion/css'
+import { selectFileActionData } from "@/redux/selectors";
+import { useParamSelector } from "@/redux/store";
+import { ChonkyIconName } from "@/types/icons.types";
+import { CustomVisibilityState } from "@/types/action.types";
+import { useFileActionProps, useFileActionTrigger } from "@/util/file-actions";
+import { useLocalizedFileActionStrings } from "@/util/i18n";
+import { ChonkyIconContext } from "@/util/icon-helper";
+import { cx } from "@emotion/css";
+import { makeStyles } from "tss-react/mui";
+import { important } from "@/util/styles";
 export interface ToolbarDropdownButtonProps {
   text: string;
   active?: boolean;
@@ -38,30 +33,37 @@ export const ToolbarDropdownButton = React.forwardRef(
       [classes.activeButton]: active,
     });
     return (
-      <MenuItem ref={ref} className={className} onClick={onClick} disabled={disabled}>
+      <MenuItem
+        ref={ref}
+        className={className}
+        onClick={onClick}
+        disabled={disabled}
+      >
         {icon && (
           <ListItemIcon className={classes.icon}>
             <ChonkyIcon icon={icon} fixedWidth={true} />
           </ListItemIcon>
         )}
-        <ListItemText primaryTypographyProps={{ className: classes.text }}>{text}</ListItemText>
+        <ListItemText primaryTypographyProps={{ className: classes.text }}>
+          {text}
+        </ListItemText>
       </MenuItem>
     );
   },
 );
 
-const useStyles = makeLocalChonkyStyles((theme) => ({
+const useStyles = makeStyles()((theme) => ({
   baseButton: {
-    lineHeight: important(theme.toolbar.lineHeight),
+    lineHeight: theme.toolbar.lineHeight,
     height: theme.toolbar.size,
-    minHeight: important('auto'),
-    minWidth: important('auto'),
+    minHeight: "auto",
+    minWidth: "auto",
     padding: theme.toolbar.buttonPadding,
   },
   icon: {
     fontSize: theme.toolbar.fontSize,
-    minWidth: important('auto'),
-    color: important('inherit'),
+    minWidth: "auto",
+    color: "inherit",
     marginRight: 8,
   },
   text: {
@@ -95,7 +97,11 @@ export const SmartToolbarDropdownButton = React.forwardRef(
     if (!action) return null;
     const { button } = action;
     if (!button) return null;
-    if (action.customVisibility !== undefined && action.customVisibility() === CustomVisibilityState.Hidden || disabled)
+    if (
+      (action.customVisibility !== undefined &&
+        action.customVisibility() === CustomVisibilityState.Hidden) ||
+      disabled
+    )
       return null;
 
     return (

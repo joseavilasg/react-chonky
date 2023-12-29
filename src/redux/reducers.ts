@@ -1,29 +1,38 @@
-import { Nilable, Nullable } from 'tsdef';
+import { Nilable, Nullable } from "tsdef";
 
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { GenericFileActionHandler } from '../types/action-handler.types';
-import { FileActionMenuItem } from '../types/action-menus.types';
-import { FileAction, FileActionMap } from '../types/action.types';
-import { ContextMenuConfig } from '../types/context-menu.types';
-import { FileViewConfig } from '../types/file-view.types';
-import { FileArray, FileIdTrueMap, FileMap } from '../types/file.types';
-import { OptionMap } from '../types/options.types';
-import { RootState } from '../types/redux.types';
-import { SortOrder } from '../types/sort.types';
-import { ThumbnailGenerator } from '../types/thumbnails.types';
-import { FileHelper } from '../util/file-helper';
-import { sanitizeInputArray } from './files-transforms';
-import { initialRootState } from './state';
+import { GenericFileActionHandler } from "@/types/action-handler.types";
+import { FileActionMenuItem } from "@/types/action-menus.types";
+import { FileAction, FileActionMap } from "@/types/action.types";
+import { ContextMenuConfig } from "@/types/context-menu.types";
+import { FileViewConfig } from "@/types/file-view.types";
+import { FileArray, FileIdTrueMap, FileMap } from "@/types/file.types";
+import { OptionMap } from "@/types/options.types";
+import { RootState } from "@/types/redux.types";
+import { SortOrder } from "@/types/sort.types";
+import { ThumbnailGenerator } from "@/types/thumbnails.types";
+import { FileHelper } from "@/util/file-helper";
+import { sanitizeInputArray } from "./files-transforms";
+import { initialRootState } from "./state";
 
 const reducers = {
-  setExternalFileActionHandler(state: RootState, action: PayloadAction<Nilable<GenericFileActionHandler<FileAction>>>) {
+  setExternalFileActionHandler(
+    state: RootState,
+    action: PayloadAction<Nilable<GenericFileActionHandler<FileAction>>>,
+  ) {
     state.externalFileActionHandler = action.payload ?? null;
   },
-  setRawFileActions(state: RootState, action: PayloadAction<FileAction[] | any>) {
+  setRawFileActions(
+    state: RootState,
+    action: PayloadAction<FileAction[] | any>,
+  ) {
     state.rawFileActions = action.payload;
   },
-  setFileActionsErrorMessages(state: RootState, action: PayloadAction<string[]>) {
+  setFileActionsErrorMessages(
+    state: RootState,
+    action: PayloadAction<string[]>,
+  ) {
     state.fileActionsErrorMessages = action.payload;
   },
   setFileActions(state: RootState, action: PayloadAction<FileAction[]>) {
@@ -34,19 +43,28 @@ const reducers = {
     state.fileActionMap = fileActionMap as FileMap;
     state.fileActionIds = fileIds;
   },
-  updateFileActionMenuItems(state: RootState, action: PayloadAction<[FileActionMenuItem[], FileActionMenuItem[]]>) {
+  updateFileActionMenuItems(
+    state: RootState,
+    action: PayloadAction<[FileActionMenuItem[], FileActionMenuItem[]]>,
+  ) {
     [state.toolbarItems, state.contextMenuItems] = action.payload;
   },
   setRawFolderChain(state: RootState, action: PayloadAction<FileArray | any>) {
     const rawFolderChain = action.payload;
-    const { sanitizedArray: folderChain, errorMessages } = sanitizeInputArray('folderChain', rawFolderChain);
+    const { sanitizedArray: folderChain, errorMessages } = sanitizeInputArray(
+      "folderChain",
+      rawFolderChain,
+    );
     state.rawFolderChain = rawFolderChain;
     state.folderChain = folderChain;
     state.folderChainErrorMessages = errorMessages;
   },
   setRawFiles(state: RootState, action: PayloadAction<FileArray | any>) {
     const rawFiles = action.payload;
-    const { sanitizedArray: files, errorMessages } = sanitizeInputArray('files', rawFiles);
+    const { sanitizedArray: files, errorMessages } = sanitizeInputArray(
+      "files",
+      rawFiles,
+    );
     state.rawFiles = rawFiles;
     state.filesErrorMessages = errorMessages;
 
@@ -68,7 +86,10 @@ const reducers = {
       }
     }
   },
-  setSortedFileIds(state: RootState, action: PayloadAction<Nullable<string>[]>) {
+  setSortedFileIds(
+    state: RootState,
+    action: PayloadAction<Nullable<string>[]>,
+  ) {
     state.sortedFileIds = action.payload;
   },
   setHiddenFileIds(state: RootState, action: PayloadAction<FileIdTrueMap>) {
@@ -81,7 +102,10 @@ const reducers = {
       }
     }
   },
-  setFocusSearchInput(state: RootState, action: PayloadAction<Nullable<() => void>>) {
+  setFocusSearchInput(
+    state: RootState,
+    action: PayloadAction<Nullable<() => void>>,
+  ) {
     state.focusSearchInput = action.payload;
   },
   setSearchString(state: RootState, action: PayloadAction<string>) {
@@ -92,14 +116,20 @@ const reducers = {
       .filter((id) => id && FileHelper.isSelectable(state.fileMap[id]))
       .map((id) => (id ? (state.selectionMap[id] = true) : null));
   },
-  selectFiles(state: RootState, action: PayloadAction<{ fileIds: string[]; reset: boolean }>) {
+  selectFiles(
+    state: RootState,
+    action: PayloadAction<{ fileIds: string[]; reset: boolean }>,
+  ) {
     if (state.disableSelection) return;
     if (action.payload.reset) state.selectionMap = {};
     action.payload.fileIds
       .filter((id) => id && FileHelper.isSelectable(state.fileMap[id]))
       .map((id) => (state.selectionMap[id] = true));
   },
-  toggleSelection(state: RootState, action: PayloadAction<{ fileId: string; exclusive: boolean }>) {
+  toggleSelection(
+    state: RootState,
+    action: PayloadAction<{ fileId: string; exclusive: boolean }>,
+  ) {
     if (state.disableSelection) return;
     const oldValue = !!state.selectionMap[action.payload.fileId];
     if (action.payload.exclusive) state.selectionMap = {};
@@ -119,7 +149,10 @@ const reducers = {
   setFileViewConfig(state: RootState, action: PayloadAction<FileViewConfig>) {
     state.fileViewConfig = action.payload;
   },
-  setSort(state: RootState, action: PayloadAction<{ actionId: string; order: SortOrder }>) {
+  setSort(
+    state: RootState,
+    action: PayloadAction<{ actionId: string; order: SortOrder }>,
+  ) {
     state.sortActionId = action.payload.actionId;
     state.sortOrder = action.payload.order;
   },
@@ -132,7 +165,10 @@ const reducers = {
   toggleOption(state: RootState, action: PayloadAction<string>) {
     state.optionMap[action.payload] = !state.optionMap[action.payload];
   },
-  setThumbnailGenerator(state: RootState, action: PayloadAction<Nullable<ThumbnailGenerator>>) {
+  setThumbnailGenerator(
+    state: RootState,
+    action: PayloadAction<Nullable<ThumbnailGenerator>>,
+  ) {
     state.thumbnailGenerator = action.payload;
   },
   setDoubleClickDelay(state: RootState, action: PayloadAction<number>) {
@@ -147,10 +183,16 @@ const reducers = {
   setHideToolbarInfo(state: RootState, action: PayloadAction<boolean>) {
     state.hideToolbarInfo = action.payload;
   },
-  setClearSelectionOnOutsideClick(state: RootState, action: PayloadAction<boolean>) {
+  setClearSelectionOnOutsideClick(
+    state: RootState,
+    action: PayloadAction<boolean>,
+  ) {
     state.clearSelectionOnOutsideClick = action.payload;
   },
-  setLastClickIndex(state: RootState, action: PayloadAction<Nullable<{ index: number; fileId: string }>>) {
+  setLastClickIndex(
+    state: RootState,
+    action: PayloadAction<Nullable<{ index: number; fileId: string }>>,
+  ) {
     state.lastClick = action.payload;
   },
   setContextMenuMounted(state: RootState, action: PayloadAction<boolean>) {
@@ -166,7 +208,7 @@ const reducers = {
 };
 
 export const { actions: reduxActions, reducer: rootReducer } = createSlice({
-  name: 'root',
+  name: "root",
   initialState: initialRootState,
   reducers,
 });

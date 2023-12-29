@@ -1,7 +1,7 @@
-import { Nullable } from 'tsdef';
+import { Nullable } from "tsdef";
 
-import { FileData } from '../types/file.types';
-import { Logger } from './logger';
+import { FileData } from "@/types/file.types";
+import { Logger } from "./logger";
 
 export class FileHelper {
   public static isDirectory(file: Nullable<FileData>): file is FileData {
@@ -59,12 +59,13 @@ export class FileHelper {
   }
 
   public static getModDate(file: Nullable<FileData>): Nullable<Date> {
-    if (!file || file.modDate === null || file.modDate === undefined) return null;
+    if (!file || file.modDate === null || file.modDate === undefined)
+      return null;
     return FileHelper.parseDate(file.modDate);
   }
 
   public static parseDate(maybeDate: Date | string | any): Nullable<Date> {
-    if (typeof maybeDate === 'string' || typeof maybeDate === 'number') {
+    if (typeof maybeDate === "string" || typeof maybeDate === "number") {
       // We allow users to provide string and numerical representations of dates.
       try {
         return new Date(maybeDate);
@@ -72,7 +73,7 @@ export class FileHelper {
         const err = error as Error;
         Logger.error(
           `Could not convert provided string/number into a date: ${err.message} `,
-          'Invalid value:',
+          "Invalid value:",
           maybeDate,
         );
       }
@@ -83,12 +84,12 @@ export class FileHelper {
     }
 
     // If we have an invalid date representation, we just return null.
-    Logger.warn('Unsupported date representation:', maybeDate);
+    Logger.warn("Unsupported date representation:", maybeDate);
     return null;
   }
 
   public static getChildrenCount(file: Nullable<FileData>): Nullable<number> {
-    if (!file || typeof file.childrenCount !== 'number') return null;
+    if (!file || typeof file.childrenCount !== "number") return null;
 
     return file.childrenCount;
   }

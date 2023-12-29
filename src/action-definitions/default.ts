@@ -1,15 +1,15 @@
-import { Nullable } from 'tsdef';
+import { Nullable } from "tsdef";
 
-import { selectFocusSearchInput } from '../redux/selectors';
-import { thunkRequestFileAction } from '../redux/thunks/dispatchers.thunks';
-import { FileSelectionTransform } from '../types/action.types';
-import { FileViewMode } from '../types/file-view.types';
-import { FileData } from '../types/file.types';
-import { ChonkyIconName } from '../types/icons.types';
-import { FileHelper } from '../util/file-helper';
-import { defineFileAction } from '../util/helpers';
-import { EssentialActions } from './essential';
-import { OptionIds } from './option-ids';
+import { selectFocusSearchInput } from "@/redux/selectors";
+import { thunkRequestFileAction } from "@/redux/thunks/dispatchers.thunks";
+import { FileSelectionTransform } from "@/types/action.types";
+import { FileViewMode } from "@/types/file-view.types";
+import { FileData } from "@/types/file.types";
+import { ChonkyIconName } from "@/types/icons.types";
+import { FileHelper } from "@/util/file-helper";
+import { defineFileAction } from "@/util/helpers";
+import { EssentialActions } from "./essential";
+import { OptionIds } from "./option-ids";
 
 export const DefaultActions = {
   /**
@@ -17,15 +17,15 @@ export const DefaultActions = {
    */
   OpenSelection: defineFileAction(
     {
-      id: 'open_selection',
-      hotkeys: ['enter'],
+      id: "open_selection",
+      hotkeys: ["enter"],
       requiresSelection: true,
       fileFilter: FileHelper.isOpenable,
       button: {
-        name: 'Open selection',
+        name: "Open selection",
         toolbar: true,
         contextMenu: true,
-        group: 'Actions',
+        group: "Actions",
         icon: ChonkyIconName.openFiles,
       },
     } as const,
@@ -42,13 +42,13 @@ export const DefaultActions = {
    * Action that selects all files.
    */
   SelectAllFiles: defineFileAction({
-    id: 'select_all_files',
-    hotkeys: ['ctrl+a'],
+    id: "select_all_files",
+    hotkeys: ["ctrl+a"],
     button: {
-      name: 'Select all files',
+      name: "Select all files",
       toolbar: true,
       contextMenu: true,
-      group: 'Actions',
+      group: "Actions",
       icon: ChonkyIconName.selectAllFiles,
     },
     selectionTransform: (({ fileIds, hiddenFileIds }) => {
@@ -65,13 +65,13 @@ export const DefaultActions = {
    * Action that clear the file selection.
    */
   ClearSelection: defineFileAction({
-    id: 'clear_selection',
-    hotkeys: ['escape'],
+    id: "clear_selection",
+    hotkeys: ["escape"],
     button: {
-      name: 'Clear selection',
+      name: "Clear selection",
       toolbar: true,
       contextMenu: true,
-      group: 'Actions',
+      group: "Actions",
       icon: ChonkyIconName.clearSelection,
     },
     selectionTransform: (({ prevSelection }) => {
@@ -83,17 +83,17 @@ export const DefaultActions = {
    * Action that enables List view.
    */
   EnableListView: defineFileAction({
-    id: 'enable_list_view',
+    id: "enable_list_view",
     fileViewConfig: {
       mode: FileViewMode.List,
       entryHeight: 40,
     },
     button: {
-      name: 'Switch to List',
+      name: "Switch to List",
       toolbar: true,
       icon: ChonkyIconName.list,
       // iconOnly: true,
-      group: 'Options',
+      group: "Options",
     },
   } as const),
   /**
@@ -102,84 +102,91 @@ export const DefaultActions = {
    */
   EnableCompactView: defineFileAction({
     // TODO: Don't enable until compact view is fully supported
-    id: 'enable_compact_view',
+    id: "enable_compact_view",
     fileViewConfig: {
       mode: FileViewMode.Compact,
       entryHeight: 40,
       entryWidth: 220,
     },
     button: {
-      name: 'Switch to Compact',
+      name: "Switch to Compact",
       toolbar: true,
       icon: ChonkyIconName.compact,
       // iconOnly: true,
-      group: 'Options',
+      group: "Options",
     },
   } as const),
   /**
    * Action that enables Grid view.
    */
   EnableGridView: defineFileAction({
-    id: 'enable_grid_view',
-    fileViewConfig: { mode: FileViewMode.Grid, entryWidth: 165, entryHeight: 130 },
+    id: "enable_grid_view",
+    fileViewConfig: {
+      mode: FileViewMode.Grid,
+      entryWidth: 165,
+      entryHeight: 130,
+    },
     button: {
-      name: 'Switch to Grid',
+      name: "Switch to Grid",
       toolbar: true,
       icon: ChonkyIconName.smallThumbnail,
       // iconOnly: true,
-      group: 'Options',
+      group: "Options",
     },
   } as const),
   /**
    * Action that sorts files by `file.name`.
    */
   SortFilesByName: defineFileAction({
-    id: 'sort_files_by_name',
-    sortKeySelector: (file: Nullable<FileData>) => (file ? file.name.toLowerCase() : undefined),
+    id: "sort_files_by_name",
+    sortKeySelector: (file: Nullable<FileData>) =>
+      file ? file.name.toLowerCase() : undefined,
     button: {
-      name: 'Sort by name',
+      name: "Sort by name",
       toolbar: true,
-      group: 'Options',
+      group: "Options",
     },
   } as const),
   /**
    * Action that sorts files by `file.size`.
    */
   SortFilesBySize: defineFileAction({
-    id: 'sort_files_by_size',
-    sortKeySelector: (file: Nullable<FileData>) => (file ? file.size : undefined),
+    id: "sort_files_by_size",
+    sortKeySelector: (file: Nullable<FileData>) =>
+      file ? file.size : undefined,
     button: {
-      name: 'Sort by size',
+      name: "Sort by size",
       toolbar: true,
-      group: 'Options',
+      group: "Options",
     },
   } as const),
   /**
    * Action that sorts files by `file.modDate`.
    */
   SortFilesByDate: defineFileAction({
-    id: 'sort_files_by_date',
-    sortKeySelector: (file: Nullable<FileData>) => (file ? file.modDate : undefined),
+    id: "sort_files_by_date",
+    sortKeySelector: (file: Nullable<FileData>) =>
+      file ? file.modDate : undefined,
     button: {
-      name: 'Sort by date',
+      name: "Sort by date",
       toolbar: true,
-      group: 'Options',
+      group: "Options",
     },
   } as const),
   /**
    * Action that toggles whether hidden files are shown to the user or not.
    */
   ToggleHiddenFiles: defineFileAction({
-    id: 'toggle_hidden_files',
-    hotkeys: ['ctrl+h'],
+    id: "toggle_hidden_files",
+    hotkeys: ["ctrl+h"],
     option: {
       id: OptionIds.ShowHiddenFiles,
       defaultValue: true,
     },
     button: {
-      name: 'Show hidden files',
+      name: "Show hidden files",
       toolbar: true,
-      group: 'Options',
+      group: "Options",
     },
   } as const),
   /**
@@ -187,15 +194,15 @@ export const DefaultActions = {
    * current sort function.
    */
   ToggleShowFoldersFirst: defineFileAction({
-    id: 'toggle_show_folders_first',
+    id: "toggle_show_folders_first",
     option: {
       id: OptionIds.ShowFoldersFirst,
       defaultValue: true,
     },
     button: {
-      name: 'Show folders first',
+      name: "Show folders first",
       toolbar: true,
-      group: 'Options',
+      group: "Options",
     },
   } as const),
   /**
@@ -203,8 +210,8 @@ export const DefaultActions = {
    */
   FocusSearchInput: defineFileAction(
     {
-      id: 'focus_search_input',
-      hotkeys: ['ctrl+f'],
+      id: "focus_search_input",
+      hotkeys: ["ctrl+f"],
     } as const,
     ({ getReduxState }) => {
       const focusSearchInput = selectFocusSearchInput(getReduxState());
@@ -215,13 +222,13 @@ export const DefaultActions = {
    * Action that enables List view.
    */
   ToggleDarkMode: defineFileAction({
-    id: 'enable_dark_mode',
+    id: "enable_dark_mode",
     option: {
       id: OptionIds.DarkMode,
       defaultValue: false,
     },
     button: {
-      name: 'Enable dark mode',
+      name: "Enable dark mode",
       toolbar: true,
       icon: ChonkyIconName.list,
       iconOnly: true,

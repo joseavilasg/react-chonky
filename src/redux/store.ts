@@ -1,13 +1,13 @@
-import { useCallback, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore } from "@reduxjs/toolkit";
 
-import { RootState } from '../types/redux.types';
-import { useStaticValue } from '../util/hooks-helpers';
-import { rootReducer } from './reducers';
-import { initialRootState } from './state';
-import { useStoreWatchers } from './watchers';
+import { RootState } from "@/types/redux.types";
+import { useStaticValue } from "@/util/hooks-helpers";
+import { rootReducer } from "./reducers";
+import { initialRootState } from "./state";
+import { useStoreWatchers } from "./watchers";
 
 export const useChonkyStore = (chonkyInstanceId: string) => {
   const store = useStaticValue(() => {
@@ -49,7 +49,10 @@ export const useParamSelector = <Args extends Array<any>, Value>(
  * DTE - DispatchThunkEffect. This method is used to decrease code duplication in
  * main Chonky method.
  */
-export const useDTE = <Args extends Array<any>>(actionCreator: (...args: Args) => any, ...selectorParams: Args) => {
+export const useDTE = <Args extends Array<any>>(
+  actionCreator: (...args: Args) => any,
+  ...selectorParams: Args
+) => {
   const dispatch = useDispatch();
   useEffect(
     () => {
@@ -60,7 +63,10 @@ export const useDTE = <Args extends Array<any>>(actionCreator: (...args: Args) =
   );
 };
 
-export const usePropReduxUpdate = <Payload extends any>(actionCreator: (payload: Payload) => any, payload: Payload) => {
+export const usePropReduxUpdate = <Payload extends any>(
+  actionCreator: (payload: Payload) => any,
+  payload: Payload,
+) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(actionCreator(payload));

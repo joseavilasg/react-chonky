@@ -1,8 +1,8 @@
 // Used in React hooks to indicate empty deps are intentional.
-import { MaybePromise, Nullable, WritableProps } from 'tsdef';
+import { MaybePromise, Nullable, WritableProps } from "tsdef";
 
-import { FileAction, FileActionEffect } from '../types/action.types';
-import { Logger } from './logger';
+import { FileAction, FileActionEffect } from "@/types/action.types";
+import { Logger } from "./logger";
 
 // Used in contexts that need to provide some default value for a function.
 // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
@@ -14,10 +14,12 @@ export const NOOP_FUNCTION = (...args: any[]) => {
   );
 };
 
-export const isPromise = <T>(value: MaybePromise<T> | any): value is Promise<T> => {
-  if (typeof value !== 'object' || !value) return false;
+export const isPromise = <T>(
+  value: MaybePromise<T> | any,
+): value is Promise<T> => {
+  if (typeof value !== "object" || !value) return false;
   const then = (value as Promise<T>).then;
-  return then && typeof then === 'function';
+  return then && typeof then === "function";
 };
 
 export const defineFileAction = <Action extends FileAction>(
@@ -58,17 +60,20 @@ export const findElementAmongAncestors = (
   return null;
 };
 
-export const elementIsInsideButton = (buttonCandidate: HTMLElement | any): boolean => {
+export const elementIsInsideButton = (
+  buttonCandidate: HTMLElement | any,
+): boolean => {
   return !!findElementAmongAncestors(
     buttonCandidate,
-    (element: any) => element.tagName && element.tagName.toLowerCase() === 'button',
+    (element: any) =>
+      element.tagName && element.tagName.toLowerCase() === "button",
   );
 };
 
 export const getValueOrFallback = <T extends any>(
   value: T | undefined,
   fallback: T,
-  desiredType?: 'boolean' | 'string' | 'number',
+  desiredType?: "boolean" | "string" | "number",
 ): NonNullable<T> => {
   if (desiredType) {
     return (typeof value === desiredType ? value : fallback) as NonNullable<T>;

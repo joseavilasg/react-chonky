@@ -1,9 +1,9 @@
-import { ChonkyActions } from '../action-definitions/index';
-import { RootState } from '../types/redux.types';
-import { SortOrder } from '../types/sort.types';
+import { ChonkyActions } from "@/action-definitions/index";
+import { RootState } from "@/types/redux.types";
+import { SortOrder } from "@/types/sort.types";
 
 export const initialRootState: RootState = {
-  instanceId: 'CHONKY_INVALID_ID', // should be overwritten by preloaded state
+  instanceId: "CHONKY_INVALID_ID", // should be overwritten by preloaded state
 
   externalFileActionHandler: null,
 
@@ -28,8 +28,8 @@ export const initialRootState: RootState = {
   hiddenFileIdMap: {},
 
   focusSearchInput: null,
-  searchString: '',
-  searchMode: 'currentFolder',
+  searchString: "",
+  searchMode: "currentFolder",
 
   selectionMap: {},
   disableSelection: false,

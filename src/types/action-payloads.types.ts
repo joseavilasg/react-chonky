@@ -1,6 +1,6 @@
-import { Nullable } from 'tsdef';
+import { Nullable } from "tsdef";
 
-import { FileData } from './file.types';
+import { FileData } from "./file.types";
 
 export interface MouseClickFilePayload {
   file: FileData;
@@ -8,7 +8,7 @@ export interface MouseClickFilePayload {
   altKey: boolean;
   ctrlKey: boolean;
   shiftKey: boolean;
-  clickType: 'single' | 'double';
+  clickType: "single" | "double";
 }
 
 export interface KeyboardClickFilePayload {

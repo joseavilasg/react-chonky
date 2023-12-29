@@ -1,4 +1,4 @@
-import { reduxActions } from '../redux/reducers';
+import { reduxActions } from "@/redux/reducers";
 import {
   getFileData,
   getIsFileSelected,
@@ -6,9 +6,9 @@ import {
   selectors,
   selectParentFolder,
   selectSelectionSize,
-} from '../redux/selectors';
-import { reduxThunks } from '../redux/thunks';
-import { thunkRequestFileAction } from '../redux/thunks/dispatchers.thunks';
+} from "@/redux/selectors";
+import { reduxThunks } from "@/redux/thunks";
+import { thunkRequestFileAction } from "@/redux/thunks/dispatchers.thunks";
 import {
   ChangeSelectionPayload,
   EndDragNDropPayload,
@@ -18,12 +18,12 @@ import {
   OpenFileContextMenuPayload,
   OpenFilesPayload,
   StartDragNDropPayload,
-} from '../types/action-payloads.types';
-import { ChonkyIconName } from '../types/icons.types';
-import { FileHelper } from '../util/file-helper';
-import { defineFileAction } from '../util/helpers';
-import { Logger } from '../util/logger';
-import { ChonkyActions } from './index';
+} from "@/types/action-payloads.types";
+import { ChonkyIconName } from "@/types/icons.types";
+import { FileHelper } from "@/util/file-helper";
+import { defineFileAction } from "@/util/helpers";
+import { Logger } from "@/util/logger";
+import { ChonkyActions } from "./index";
 
 export const EssentialActions = {
   /**
@@ -32,11 +32,11 @@ export const EssentialActions = {
    */
   MouseClickFile: defineFileAction(
     {
-      id: 'mouse_click_file',
+      id: "mouse_click_file",
       __payloadType: {} as MouseClickFilePayload,
     } as const,
     ({ payload, reduxDispatch, getReduxState }) => {
-      if (payload.clickType === 'double') {
+      if (payload.clickType === "double") {
         if (FileHelper.isOpenable(payload.file)) {
           reduxDispatch(
             thunkRequestFileAction(ChonkyActions.OpenFiles, {
@@ -71,7 +71,7 @@ export const EssentialActions = {
           } else if (payload.shiftKey) {
             // Range selection
             const lastClickIndex = selectors.getLastClickIndex(getReduxState());
-            if (typeof lastClickIndex === 'number') {
+            if (typeof lastClickIndex === "number") {
               // We have the index of the previous click
               let rangeStart = lastClickIndex;
               let rangeEnd = payload.fileDisplayIndex;
@@ -131,7 +131,7 @@ export const EssentialActions = {
    */
   KeyboardClickFile: defineFileAction(
     {
-      id: 'keyboard_click_file',
+      id: "keyboard_click_file",
       __payloadType: {} as KeyboardClickFilePayload,
     } as const,
     ({ payload, reduxDispatch, getReduxState }) => {
@@ -168,7 +168,7 @@ export const EssentialActions = {
    */
   StartDragNDrop: defineFileAction(
     {
-      id: 'start_drag_n_drop',
+      id: "start_drag_n_drop",
       __payloadType: {} as StartDragNDropPayload,
     } as const,
     ({ payload, reduxDispatch, getReduxState }) => {
@@ -191,7 +191,7 @@ export const EssentialActions = {
    */
   EndDragNDrop: defineFileAction(
     {
-      id: 'end_drag_n_drop',
+      id: "end_drag_n_drop",
       __payloadType: {} as EndDragNDropPayload,
     } as const,
     ({ payload, reduxDispatch, getReduxState }) => {
@@ -201,7 +201,8 @@ export const EssentialActions = {
       }
 
       const { draggedFile, selectedFiles } = payload as EndDragNDropPayload;
-      const droppedFiles = selectedFiles.length > 0 ? selectedFiles : [draggedFile];
+      const droppedFiles =
+        selectedFiles.length > 0 ? selectedFiles : [draggedFile];
       reduxDispatch(
         thunkRequestFileAction(ChonkyActions.MoveFiles, {
           ...payload,
@@ -215,14 +216,14 @@ export const EssentialActions = {
    * usually by dragging & dropping some files into the folder.
    */
   MoveFiles: defineFileAction({
-    id: 'move_files',
+    id: "move_files",
     __payloadType: {} as MoveFilesPayload,
   } as const),
   /**
    * Action that is dispatched when the selection changes for any reason.
    */
   ChangeSelection: defineFileAction({
-    id: 'change_selection',
+    id: "change_selection",
     __payloadType: {} as ChangeSelectionPayload,
   } as const),
   /**
@@ -230,7 +231,7 @@ export const EssentialActions = {
    * often triggered by other actions.
    */
   OpenFiles: defineFileAction({
-    id: 'open_files',
+    id: "open_files",
     __payloadType: {} as OpenFilesPayload,
   } as const),
   /**
@@ -238,10 +239,10 @@ export const EssentialActions = {
    */
   OpenParentFolder: defineFileAction(
     {
-      id: 'open_parent_folder',
-      hotkeys: ['backspace'],
+      id: "open_parent_folder",
+      hotkeys: ["backspace"],
       button: {
-        name: 'Go up a directory',
+        name: "Go up a directory",
         toolbar: true,
         contextMenu: false,
         icon: ChonkyIconName.openParentFolder,
@@ -260,8 +261,8 @@ export const EssentialActions = {
         );
       } else if (!reduxState.forceEnableOpenParent) {
         Logger.warn(
-          'Open parent folder effect was triggered even though the parent folder' +
-            ' is not openable. This indicates a bug in presentation components.',
+          "Open parent folder effect was triggered even though the parent folder" +
+            " is not openable. This indicates a bug in presentation components.",
         );
       }
     },
@@ -272,7 +273,7 @@ export const EssentialActions = {
    */
   OpenFileContextMenu: defineFileAction(
     {
-      id: 'open_file_context_menu',
+      id: "open_file_context_menu",
       __payloadType: {} as OpenFileContextMenuPayload,
     } as const,
     ({ payload, reduxDispatch, getReduxState }) => {

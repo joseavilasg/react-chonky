@@ -1,12 +1,12 @@
-import React, { useImperativeHandle } from 'react';
-import { useDispatch, useStore } from 'react-redux';
+import React, { useImperativeHandle } from "react";
+import { useDispatch, useStore } from "react-redux";
 
-import { reduxActions } from '../redux/reducers';
-import { selectSelectionMap } from '../redux/selectors';
-import { thunkRequestFileAction } from '../redux/thunks/dispatchers.thunks';
-import { FileAction } from '../types/action.types';
-import { FileBrowserHandle } from '../types/file-browser.types';
-import { ChonkyDispatch, RootState } from '../types/redux.types';
+import { reduxActions } from "@/redux/reducers";
+import { selectSelectionMap } from "@/redux/selectors";
+import { thunkRequestFileAction } from "@/redux/thunks/dispatchers.thunks";
+import { FileAction } from "@/types/action.types";
+import { FileBrowserHandle } from "@/types/file-browser.types";
+import { ChonkyDispatch, RootState } from "@/types/redux.types";
 
 export const useFileBrowserHandle = (ref: React.Ref<FileBrowserHandle>) => {
   const store = useStore<RootState>();
@@ -26,9 +26,11 @@ export const useFileBrowserHandle = (ref: React.Ref<FileBrowserHandle>) => {
       },
       async requestFileAction<Action extends FileAction>(
         action: Action,
-        payload: Action['__payloadType'],
+        payload: Action["__payloadType"],
       ): Promise<void> {
-        return Promise.resolve(dispatch(thunkRequestFileAction(action, payload)));
+        return Promise.resolve(
+          dispatch(thunkRequestFileAction(action, payload)),
+        );
       },
     }),
     [store, dispatch],

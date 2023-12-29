@@ -1,7 +1,7 @@
 export enum FileViewMode {
-  List = 'list',
-  Compact = 'compact',
-  Grid = 'grid',
+  List = "list",
+  Compact = "compact",
+  Grid = "grid",
 }
 
 export type FileViewConfigList = {

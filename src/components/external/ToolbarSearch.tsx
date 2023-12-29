@@ -1,35 +1,35 @@
-/**
- * @author Timur Kuzhagaliyev <tim.kuzh@gmail.com>
- * @copyright 2020
- * @license MIT
- */
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { useIntl } from "react-intl";
+import { useDispatch, useSelector } from "react-redux";
 
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { useIntl } from 'react-intl';
-import { useDispatch, useSelector } from 'react-redux';
+import InputAdornment from "@mui/material/InputAdornment";
+import TextField from "@mui/material/TextField";
 
-import InputAdornment from '@mui/material/InputAdornment';
-import TextField from '@mui/material/TextField';
-
-import { reduxActions } from '../../redux/reducers';
-import { selectSearchString } from '../../redux/selectors';
-import { ChonkyIconName } from '../../types/icons.types';
-import { useDebounce } from '../../util/hooks-helpers';
-import { getI18nId, I18nNamespace } from '../../util/i18n';
-import { ChonkyIconContext } from '../../util/icon-helper';
-import { important, makeLocalChonkyStyles } from '../../util/styles';
-import { ChonkyDispatch } from '../../types/redux.types';
+import { reduxActions } from "@/redux/reducers";
+import { selectSearchString } from "@/redux/selectors";
+import { ChonkyIconName } from "@/types/icons.types";
+import { useDebounce } from "@/util/hooks-helpers";
+import { getI18nId, I18nNamespace } from "@/util/i18n";
+import { ChonkyIconContext } from "@/util/icon-helper";
+import { ChonkyDispatch } from "@/types/redux.types";
+import { makeStyles } from "tss-react/mui";
 
 export interface ToolbarSearchProps {}
 
 export const ToolbarSearch: React.FC<ToolbarSearchProps> = React.memo(() => {
   const intl = useIntl();
   const searchPlaceholderString = intl.formatMessage({
-    id: getI18nId(I18nNamespace.Toolbar, 'searchPlaceholder'),
-    defaultMessage: 'Search',
+    id: getI18nId(I18nNamespace.Toolbar, "searchPlaceholder"),
+    defaultMessage: "Search",
   });
 
-  const {classes} = useStyles();
+  const { classes } = useStyles();
   const ChonkyIcon = useContext(ChonkyIconContext);
 
   const searchInputRef = useRef<HTMLInputElement>();
@@ -57,19 +57,22 @@ export const ToolbarSearch: React.FC<ToolbarSearchProps> = React.memo(() => {
     dispatch(reduxActions.setSearchString(debouncedLocalSearchString));
   }, [debouncedLocalSearchString, dispatch]);
 
-  const handleChange = useCallback((event: React.FormEvent<HTMLInputElement>) => {
-    setShowLoadingIndicator(true);
-    setLocalSearchString(event.currentTarget.value);
-  }, []);
+  const handleChange = useCallback(
+    (event: React.FormEvent<HTMLInputElement>) => {
+      setShowLoadingIndicator(true);
+      setLocalSearchString(event.currentTarget.value);
+    },
+    [],
+  );
   const handleKeyUp = useCallback(
     (event: React.KeyboardEvent<HTMLInputElement>) => {
       // Remove focus from the search input field when user presses escape.
       // Note: We use KeyUp instead of KeyPress because some browser plugins can
       //       intercept KeyPress events with Escape key.
       //       @see https://stackoverflow.com/a/37461974
-      if (event.key === 'Escape') {
-        setLocalSearchString('');
-        dispatch(reduxActions.setSearchString(''));
+      if (event.key === "Escape") {
+        setLocalSearchString("");
+        dispatch(reduxActions.setSearchString(""));
         if (searchInputRef.current) searchInputRef.current.blur();
       }
     },
@@ -90,7 +93,11 @@ export const ToolbarSearch: React.FC<ToolbarSearchProps> = React.memo(() => {
         startAdornment: (
           <InputAdornment className={classes.searchIcon} position="start">
             <ChonkyIcon
-              icon={showLoadingIndicator ? ChonkyIconName.loading : ChonkyIconName.search}
+              icon={
+                showLoadingIndicator
+                  ? ChonkyIconName.loading
+                  : ChonkyIconName.search
+              }
               spin={showLoadingIndicator}
             />
           </InputAdornment>
@@ -102,19 +109,19 @@ export const ToolbarSearch: React.FC<ToolbarSearchProps> = React.memo(() => {
   );
 });
 
-const useStyles = makeLocalChonkyStyles((theme) => ({
+const useStyles = makeStyles()((theme) => ({
   searchFieldContainer: {
     height: theme.toolbar.size,
     width: 150,
   },
   searchIcon: {
-    fontSize: '0.9em',
+    fontSize: "0.9em",
     opacity: 0.75,
   },
   searchFieldInput: {
     lineHeight: 0,
     padding: 0,
-    margin:0,
+    margin: 0,
     fontSize: theme.toolbar.fontSize,
     borderRadius: theme.toolbar.buttonRadius,
     height: theme.toolbar.size - 4,
@@ -122,12 +129,12 @@ const useStyles = makeLocalChonkyStyles((theme) => ({
     marginTop: 2,
   },
   searchFieldInputInner: {
-    lineHeight: important(`${theme.toolbar.size - 4}px`),
+    lineHeight: theme.toolbar.size - 4,
     fontSize: theme.toolbar.fontSize,
     height: theme.toolbar.size - 4,
     padding: 0,
     paddingRight: 8,
     margin: 0,
-    WebkitAppearance: 'none'
+    WebkitAppearance: "none",
   },
 }));

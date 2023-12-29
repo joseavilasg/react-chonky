@@ -1,1 +1,1 @@
-export * as fileMap from './file-map';
+export * as fileMap from "./file-map";

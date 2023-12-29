@@ -1,13 +1,13 @@
-import React, { ReactElement, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import React, { ReactElement, useMemo } from "react";
+import { useSelector } from "react-redux";
 
-import { selectToolbarItems, selectHideToolbarInfo } from '../../redux/selectors';
-import { makeLocalChonkyStyles } from '../../util/styles';
-import { getValueOrFallback } from '../../util/helpers';
-import { SmartToolbarButton } from './ToolbarButton';
-import { ToolbarDropdown } from './ToolbarDropdown';
-import { ToolbarInfo } from './ToolbarInfo';
-import { ToolbarSearch } from './ToolbarSearch';
+import { selectToolbarItems, selectHideToolbarInfo } from "@/redux/selectors";
+import { makeStyles } from "tss-react/mui";
+import { getValueOrFallback } from "@/util/helpers";
+import { SmartToolbarButton } from "./ToolbarButton";
+import { ToolbarDropdown } from "./ToolbarDropdown";
+import { ToolbarInfo } from "./ToolbarInfo";
+import { ToolbarSearch } from "./ToolbarSearch";
 
 export interface FileToolbarProps {
   hideSearchBar?: boolean;
@@ -22,9 +22,9 @@ export const FileToolbar: React.FC<FileToolbarProps> = React.memo((props) => {
     for (let i = 0; i < toolbarItems.length; ++i) {
       const item = toolbarItems[i];
 
-      const key = `toolbar-item-${typeof item === 'string' ? item : item.name}`;
+      const key = `toolbar-item-${typeof item === "string" ? item : item.name}`;
       const component =
-        typeof item === 'string' ? (
+        typeof item === "string" ? (
           <SmartToolbarButton key={key} fileActionId={item} />
         ) : (
           <ToolbarDropdown key={key} {...item} />
@@ -35,7 +35,7 @@ export const FileToolbar: React.FC<FileToolbarProps> = React.memo((props) => {
   }, [toolbarItems]);
 
   const hideToolbarInfo = useSelector(selectHideToolbarInfo);
-  const hideSearchBar = getValueOrFallback(props.hideSearchBar, false)
+  const hideSearchBar = getValueOrFallback(props.hideSearchBar, false);
 
   return (
     <div className={classes.toolbarWrapper}>
@@ -50,24 +50,24 @@ export const FileToolbar: React.FC<FileToolbarProps> = React.memo((props) => {
   );
 });
 
-const useStyles = makeLocalChonkyStyles((theme) => ({
+const useStyles = makeStyles()((theme) => ({
   toolbarWrapper: {},
   toolbarContainer: {
-    flexWrap: 'wrap-reverse',
-    display: 'flex',
+    flexWrap: "wrap-reverse",
+    display: "flex",
   },
   toolbarLeft: {
     paddingBottom: theme.margins.rootLayoutMargin,
-    flexWrap: 'wrap',
+    flexWrap: "wrap",
     flexGrow: 10000,
-    display: 'flex',
+    display: "flex",
   },
   toolbarLeftFiller: {
     flexGrow: 10000,
   },
   toolbarRight: {
     paddingBottom: theme.margins.rootLayoutMargin,
-    flexWrap: 'wrap',
-    display: 'flex',
+    flexWrap: "wrap",
+    display: "flex",
   },
 }));

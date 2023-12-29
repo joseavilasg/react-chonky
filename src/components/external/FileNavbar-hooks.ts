@@ -1,13 +1,13 @@
-import { useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Nullable } from 'tsdef';
+import { useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Nullable } from "tsdef";
 
-import { ChonkyActions } from '../../action-definitions/index';
-import { selectFolderChain } from '../../redux/selectors';
-import { thunkRequestFileAction } from '../../redux/thunks/dispatchers.thunks';
-import { FileData } from '../../types/file.types';
-import { ChonkyDispatch } from '../../types/redux.types';
-import { FileHelper } from '../../util/file-helper';
+import { ChonkyActions } from "@/action-definitions/index";
+import { selectFolderChain } from "@/redux/selectors";
+import { thunkRequestFileAction } from "@/redux/thunks/dispatchers.thunks";
+import { FileData } from "@/types/file.types";
+import { ChonkyDispatch } from "@/types/redux.types";
+import { FileHelper } from "@/util/file-helper";
 
 export interface FolderChainItem {
   file: Nullable<FileData>;

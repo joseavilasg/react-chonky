@@ -1,20 +1,14 @@
-/**
- * @author Timur Kuzhagaliyev <tim.kuzh@gmail.com>
- * @copyright 2020
- * @license MIT
- */
+import Box from "@mui/material/Box";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import React, { ReactElement, useMemo } from "react";
 
-import Box from '@mui/material/Box';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import React, { ReactElement, useMemo } from 'react';
+import { ChonkyActions } from "@/action-definitions/index";
+import { useFolderChainItems } from "./FileNavbar-hooks";
+import { FolderChainButton } from "./FolderChainButton";
+import { SmartToolbarButton } from "./ToolbarButton";
+import { makeStyles } from "tss-react/mui";
 
-import { ChonkyActions } from '../../action-definitions/index';
-import { makeLocalChonkyStyles } from '../../util/styles';
-import { useFolderChainItems } from './FileNavbar-hooks';
-import { FolderChainButton } from './FolderChainButton';
-import { SmartToolbarButton } from './ToolbarButton';
-
-export interface FileNavbarProps { }
+export interface FileNavbarProps {}
 
 export const FileNavbar: React.FC<FileNavbarProps> = React.memo(() => {
   const { classes } = useStyles();
@@ -41,7 +35,10 @@ export const FileNavbar: React.FC<FileNavbarProps> = React.memo(() => {
     <Box className={classes.navbarWrapper}>
       <Box className={classes.navbarContainer}>
         <SmartToolbarButton fileActionId={ChonkyActions.OpenParentFolder.id} />
-        <Breadcrumbs className={classes.navbarBreadcrumbs} classes={{ separator: classes.separator }}>
+        <Breadcrumbs
+          className={classes.navbarBreadcrumbs}
+          classes={{ separator: classes.separator }}
+        >
           {folderChainComponents}
         </Breadcrumbs>
       </Box>
@@ -49,18 +46,18 @@ export const FileNavbar: React.FC<FileNavbarProps> = React.memo(() => {
   );
 });
 
-const useStyles = makeLocalChonkyStyles((theme) => ({
+const useStyles = makeStyles()((theme) => ({
   navbarWrapper: {
     paddingBottom: theme.margins.rootLayoutMargin,
   },
   navbarContainer: {
-    display: 'flex',
+    display: "flex",
   },
   upDirectoryButton: {
     fontSize: theme.toolbar.fontSize,
     height: theme.toolbar.size,
     width: theme.toolbar.size,
-    padding: '0px !important',
+    padding: 0,
   },
   navbarBreadcrumbs: {
     fontSize: theme.toolbar.fontSize,

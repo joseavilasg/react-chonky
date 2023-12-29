@@ -1,18 +1,21 @@
-import { MaybePromise, Undefinable } from 'tsdef';
+import { MaybePromise, Undefinable } from "tsdef";
 
-import { FileActionData, FileActionState } from '../../types/action-handler.types';
-import { FileAction } from '../../types/action.types';
-import { ChonkyDispatch, ChonkyThunk } from '../../types/redux.types';
-import { Logger } from '../../util/logger';
-import { reduxActions } from '../reducers';
+import { FileActionData, FileActionState } from "@/types/action-handler.types";
+import { FileAction } from "@/types/action.types";
+import { ChonkyDispatch, ChonkyThunk } from "@/types/redux.types";
+import { Logger } from "@/util/logger";
+import { reduxActions } from "@/redux/reducers";
 import {
   selectContextMenuTriggerFile,
   selectExternalFileActionHandler,
   selectFileActionMap,
   selectInstanceId,
   selectSelectedFiles,
-} from '../selectors';
-import { thunkActivateSortAction, thunkApplySelectionTransform } from './file-actions.thunks';
+} from "@/redux/selectors";
+import {
+  thunkActivateSortAction,
+  thunkApplySelectionTransform,
+} from "./file-actions.thunks";
 
 /**
  * Thunk that dispatches actions to the external (user-provided) action handler.
@@ -26,12 +29,15 @@ export const thunkDispatchFileAction =
     if (action) {
       if (externalFileActionHandler) {
         Promise.resolve(externalFileActionHandler(data)).catch((error) =>
-          Logger.error(`User-defined file action handler threw an error: ${error.message}`),
+          Logger.error(
+            `User-defined file action handler threw an error: ${error.message}`,
+          ),
         );
       }
     } else {
       Logger.warn(
-        `Internal components dispatched the "${data.id}" file action, but such ` + `action was not registered.`,
+        `Internal components dispatched the "${data.id}" file action, but such ` +
+          `action was not registered.`,
       );
     }
   };
@@ -43,7 +49,10 @@ export const thunkDispatchFileAction =
  * dispatches the action to the external action handler.
  */
 export const thunkRequestFileAction =
-  <Action extends FileAction>(action: Action, payload: Action['__payloadType']): ChonkyThunk =>
+  <Action extends FileAction>(
+    action: Action,
+    payload: Action["__payloadType"],
+  ): ChonkyThunk =>
   (dispatch, getState) => {
     const state = getState();
     const instanceId = selectInstanceId(state);
@@ -59,7 +68,9 @@ export const thunkRequestFileAction =
 
     // Determine files for the action if action requires selection
     const selectedFiles = selectSelectedFiles(state);
-    const selectedFilesForAction = action.fileFilter ? selectedFiles.filter(action.fileFilter) : selectedFiles;
+    const selectedFilesForAction = action.fileFilter
+      ? selectedFiles.filter(action.fileFilter)
+      : selectedFiles;
     if (action.requiresSelection && selectedFilesForAction.length === 0) {
       Logger.warn(
         `Internal components requested the "${action.id}" file ` +
@@ -83,7 +94,8 @@ export const thunkRequestFileAction =
 
     // === Update file view state if necessary
     const fileViewConfig = action.fileViewConfig;
-    if (fileViewConfig) dispatch(reduxActions.setFileViewConfig(fileViewConfig));
+    if (fileViewConfig)
+      dispatch(reduxActions.setFileViewConfig(fileViewConfig));
 
     // === Update option state if necessary
     const option = action.option;
@@ -107,7 +119,10 @@ export const thunkRequestFileAction =
         }) as MaybePromise<boolean | undefined>;
       } catch (err) {
         const error = err as Error;
-        Logger.error(`User-defined effect function for action ${action.id} threw an ` + `error: ${error.message}`);
+        Logger.error(
+          `User-defined effect function for action ${action.id} threw an ` +
+            `error: ${error.message}`,
+        );
       }
     }
 

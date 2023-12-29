@@ -1,20 +1,18 @@
-/**
- * @author Timur Kuzhagaliyev <tim.kuzh@gmail.com>
- * @copyright 2020
- * @license MIT
- */
+import React from "react";
+import { useIntl } from "react-intl";
+import { useSelector } from "react-redux";
 
-import React from 'react';
-import { useIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
+import Typography from "@mui/material/Typography";
 
-import Typography from '@mui/material/Typography';
+import {
+  selectHiddenFileCount,
+  selectors,
+  selectSelectionSize,
+} from "@/redux/selectors";
+import { getI18nId, I18nNamespace } from "@/util/i18n";
+import { makeStyles } from "tss-react/mui";
 
-import { selectHiddenFileCount, selectors, selectSelectionSize } from '../../redux/selectors';
-import { getI18nId, I18nNamespace } from '../../util/i18n';
-import { important, makeLocalChonkyStyles } from '../../util/styles';
-
-export interface ToolbarInfoProps { }
+export interface ToolbarInfoProps {}
 
 export const ToolbarInfo: React.FC<ToolbarInfoProps> = React.memo(() => {
   const { classes } = useStyles();
@@ -26,7 +24,7 @@ export const ToolbarInfo: React.FC<ToolbarInfoProps> = React.memo(() => {
   const intl = useIntl();
   const fileCountString = intl.formatMessage(
     {
-      id: getI18nId(I18nNamespace.Toolbar, 'visibleFileCount'),
+      id: getI18nId(I18nNamespace.Toolbar, "visibleFileCount"),
       defaultMessage: `{fileCount, plural,
                 =0 {# items}
                 one {# item}
@@ -37,7 +35,7 @@ export const ToolbarInfo: React.FC<ToolbarInfoProps> = React.memo(() => {
   );
   const selectedString = intl.formatMessage(
     {
-      id: getI18nId(I18nNamespace.Toolbar, 'selectedFileCount'),
+      id: getI18nId(I18nNamespace.Toolbar, "selectedFileCount"),
       defaultMessage: `{fileCount, plural,
                 =0 {}
                 other {# selected}
@@ -47,7 +45,7 @@ export const ToolbarInfo: React.FC<ToolbarInfoProps> = React.memo(() => {
   );
   const hiddenString = intl.formatMessage(
     {
-      id: getI18nId(I18nNamespace.Toolbar, 'hiddenFileCount'),
+      id: getI18nId(I18nNamespace.Toolbar, "hiddenFileCount"),
       defaultMessage: `{fileCount, plural,
                 =0 {}
                 other {# hidden}
@@ -63,7 +61,7 @@ export const ToolbarInfo: React.FC<ToolbarInfoProps> = React.memo(() => {
         {(selectedString || hiddenString) && (
           <span className={classes.extraInfoSpan}>
             (<span className={classes.selectionSizeText}>{selectedString}</span>
-            {selectedString && hiddenString && ', '}
+            {selectedString && hiddenString && ", "}
             <span className={classes.hiddenCountText}>{hiddenString}</span>)
           </span>
         )}
@@ -72,13 +70,13 @@ export const ToolbarInfo: React.FC<ToolbarInfoProps> = React.memo(() => {
   );
 });
 
-const useStyles = makeLocalChonkyStyles((theme) => ({
+const useStyles = makeStyles()((theme) => ({
   infoContainer: {
     height: theme.toolbar.size,
-    display: 'flex',
+    display: "flex",
   },
   infoText: {
-    lineHeight: important(theme.toolbar.lineHeight),
+    lineHeight: theme.toolbar.lineHeight,
     fontSize: theme.toolbar.fontSize,
     marginLeft: 12,
     height: theme.toolbar.size,

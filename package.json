@@ -1,6 +1,6 @@
 {
   "name": "@bhunter179/chonky",
-  "version": "0.2.41",
+  "version": "0.2.42",
   "description": "A File Browser component for React",
   "license": "MIT",
   "types": "dist/index.d.ts",
@@ -21,10 +21,11 @@
   "scripts": {
     "vite": "vite ./example",
     "build": "tsup",
+    "typecheck": "tsc --noEmit",
     "release": "npm publish --access=public",
     "patch": "npm --no-git-tag-version version patch",
-    "format": "prettier --config ../../.prettierrc.js --ignore-path ../../.prettierignore . --write",
-    "format-check": "prettier --config ../../.prettierrc.js --ignore-path ../../.prettierignore --check ."
+    "format": "prettier --write '**/*.{ts,tsx}'",
+    "format-check": "prettier --check '**/*.{ts,tsx}"
   },
   "tsup": {
     "entry": [
