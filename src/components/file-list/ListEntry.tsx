@@ -131,14 +131,14 @@ const useStyles = makeStyles<StyleState>()(
       display: "flex",
       flexDirection: "column",
       minWidth: 0,
-      gap: 4,
-      fontSize: "inherit",
+      gap: 4
     },
     listFileEntryText: {
       textOverflow: "ellipsis",
       boxSizing: "border-box",
       whiteSpace: "nowrap",
       overflow: "hidden",
+      fontSize: theme.listFileEntry.fontSize,
     },
     listFileEntryProperty: {
       fontSize: theme.listFileEntry.propertyFontSize,
