@@ -298,11 +298,12 @@ export const VFSBrowser: React.FC<VFSProps> = React.memo((props) => {
       >
         Reset file map
       </Button>
-      <div style={{ height: 400 }}>
+      <div style={{ height: '100vh' }}>
         <FullFileBrowser
           files={files}
           folderChain={folderChain}
           fileActions={fileActions}
+          defaultFileViewActionId={ChonkyActions.EnableGridView.id}
           onFileAction={handleFileAction}
           thumbnailGenerator={thumbnailGenerator}
           {...props}

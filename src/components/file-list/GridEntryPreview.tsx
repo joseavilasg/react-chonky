@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Nullable } from "tsdef";
-
+import { SVGProps } from "react";
 import { DndEntryState } from "@/types/file-list.types";
 import { ChonkyIconName } from "@/types/icons.types";
 import { ChonkyIconContext } from "@/util/icon-helper";
@@ -8,6 +8,7 @@ import { FileThumbnail } from "./FileThumbnail";
 import { GridEntryDndIndicator } from "./GridEntryDndIndicator";
 import { cx } from "@emotion/css";
 import { makeStyles } from "tss-react/mui";
+import { useTheme } from "@mui/material";
 
 export type FileEntryState = {
   childrenCount: Nullable<number>;
@@ -25,6 +26,23 @@ export interface FileEntryPreviewProps {
   dndState: DndEntryState;
 }
 
+const FolderIcon = (props: SVGProps<SVGSVGElement>) => {
+  const theme = useTheme();
+
+  return (
+    <svg viewBox="0 0 48 48" {...props}>
+      <path
+        fill={theme.palette.onPrimaryContainer.main}
+        d="M40 12H22l-4-4H8c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z"
+      />
+      <path
+        fill={theme.palette.primary.main}
+        d="M40 12H8c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4V16c0-2.2-1.8-4-4-4z"
+      />
+    </svg>
+  );
+};
+
 export const GridEntryPreviewFolder: React.FC<FileEntryPreviewProps> =
   React.memo((props) => {
     const { className: externalClassName, entryState, dndState } = props;
@@ -38,23 +56,12 @@ export const GridEntryPreviewFolder: React.FC<FileEntryPreviewProps> =
     });
     return (
       <div className={className}>
-        <div className={folderClasses.folderBackSideMid}>
-          <div className={folderClasses.folderBackSideTop} />
-          <div className={folderClasses.folderFrontSide}>
-            <GridEntryDndIndicator
-              className={fileClasses.dndIndicator}
-              dndState={dndState}
-            />
-            <div className={cx([fileClasses.fileIcon, folderClasses.fileIcon])}>
-              {entryState.childrenCount}
-            </div>
-            <div className={commonClasses.selectionIndicator}></div>
-            <FileThumbnail
-              className={fileClasses.thumbnail}
-              thumbnailUrl={entryState.thumbnailUrl}
-            />
-          </div>
-        </div>
+        <GridEntryDndIndicator
+          className={fileClasses.dndIndicator}
+          dndState={dndState}
+        />
+        <FolderIcon className={fileClasses.fileIcon} />
+        <div className={commonClasses.selectionIndicator}></div>
       </div>
     );
   });
@@ -62,76 +69,16 @@ GridEntryPreviewFolder.displayName = "GridEntryPreviewFolder";
 
 const useFolderStyles = makeStyles<FileEntryState>()((theme, state) => ({
   previewFile: {
+    boxShadow: (() => {
+      const shadows: string[] = [];
+      if (state.selected) shadows.push("inset rgba(0,153,255, .65) 0 0 0 3px");
+      if (state.focused) shadows.push("inset rgba(0, 0, 0, 1) 0 0 0 3px");
+      shadows.push(`inset ${theme.gridFileEntry.fileColorTint} 0 0 0 999px`);
+      return shadows.join(", ");
+    })(),
     borderRadius: theme.gridFileEntry.borderRadius,
     position: "relative",
     overflow: "hidden",
-  },
-  folderBackSideTop: {
-    backgroundColor: state.color,
-    boxShadow: (() => {
-      let color = theme.gridFileEntry.folderBackColorTint;
-      if (state.focused) color = "rgba(0, 0, 0, 0.3)";
-      else if (state.selected) color = "rgba(0, 153, 255, .4)";
-      return `inset ${color} 0 0 0 999px`;
-    })(),
-    borderTopLeftRadius: theme.gridFileEntry.borderRadius,
-    borderTopRightRadius: 10,
-    position: "absolute",
-    right: "60%",
-    height: 13,
-    top: -10,
-    left: 0,
-    "&:after": {
-      borderRightColor: theme.palette.background.paper,
-      borderTopColor: theme.palette.background.paper,
-      borderBottomColor: "transparent",
-      borderLeftColor: "transparent",
-      borderWidth: [0, 15, 10, 0],
-      borderStyle: "solid",
-      position: "absolute",
-      display: "block",
-      content: '""',
-      right: 0,
-      top: 0,
-    },
-  },
-  folderBackSideMid: {
-    backgroundColor: state.color,
-    boxShadow: (() => {
-      let color = theme.gridFileEntry.folderBackColorTint;
-      if (state.focused) color = "rgba(0, 0, 0, 0.3)";
-      else if (state.selected) color = "rgba(0, 153, 255, .4)";
-      return `inset ${color} 0 0 0 999px`;
-    })(),
-    borderTopRightRadius: theme.gridFileEntry.borderRadius,
-    position: "absolute",
-    bottom: 0,
-    right: 0,
-    left: 0,
-    top: 10,
-  },
-  folderFrontSide: {
-    boxShadow: (() => {
-      const shadows: string[] = [];
-      if (state.focused) shadows.push("inset rgba(0, 0, 0, 1) 0 0 0 3px");
-      if (state.selected)
-        shadows.push("inset rgba(0, 153, 255, .65) 0 0 0 3px");
-      shadows.push(
-        `inset ${theme.gridFileEntry.folderFrontColorTint} 0 0 0 999px`,
-      );
-      return shadows.join(", ");
-    })(),
-    backgroundColor: state.color,
-    borderRadius: theme.gridFileEntry.borderRadius,
-    position: "absolute",
-    overflow: "hidden",
-    bottom: 0,
-    right: 0,
-    left: 0,
-    top: 10,
-  },
-  fileIcon: {
-    fontSize: theme.gridFileEntry.childrenCountSize,
   },
 }));
 
@@ -152,14 +99,17 @@ export const GridEntryPreviewFile: React.FC<FileEntryPreviewProps> = React.memo(
           className={fileClasses.dndIndicator}
           dndState={dndState}
         />
-        <div className={fileClasses.fileIcon}>
-          <ChonkyIcon icon={entryState.icon} spin={entryState.iconSpin} />
-        </div>
+        {!entryState.thumbnailUrl ? (
+          <div className={fileClasses.fileIcon}>
+            <ChonkyIcon icon={entryState.icon} spin={entryState.iconSpin} />
+          </div>
+        ) : (
+          <FileThumbnail
+            className={fileClasses.thumbnail}
+            thumbnailUrl={entryState.thumbnailUrl}
+          />
+        )}
         <div className={commonClasses.selectionIndicator}></div>
-        <FileThumbnail
-          className={fileClasses.thumbnail}
-          thumbnailUrl={entryState.thumbnailUrl}
-        />
       </div>
     );
   },
@@ -199,18 +149,15 @@ const useFileStyles = makeStyles<FileEntryState>()((theme, state) => ({
     borderRadius: theme.gridFileEntry.borderRadius,
     position: "absolute",
     zIndex: 6,
-    bottom: 5,
-    right: 5,
-    left: 5,
-    top: 5,
+    inset: 3,
   },
 }));
 
 export const useCommonEntryStyles = makeStyles<FileEntryState>()(
-  (theme, state) => ({
+  (_, state) => ({
     selectionIndicator: {
       display: state.selected ? "block" : "none",
-      backgroundColor: theme.palette.primaryContainer.main,
+      backgroundColor: "rgba(0, 153, 255, .14)",
       position: "absolute",
       height: "100%",
       width: "100%",
@@ -218,6 +165,7 @@ export const useCommonEntryStyles = makeStyles<FileEntryState>()(
     },
     focusIndicator: {
       display: state.focused ? "block" : "none",
+      boxShadow: "inset rgba(0, 0, 0, 1) 0 0 0 2px",
       position: "absolute",
       height: "100%",
       width: "100%",

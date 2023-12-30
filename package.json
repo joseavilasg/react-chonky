@@ -1,6 +1,6 @@
 {
   "name": "@bhunter179/chonky",
-  "version": "0.2.45",
+  "version": "0.2.46",
   "description": "A File Browser component for React",
   "license": "MIT",
   "types": "dist/index.d.ts",
@@ -25,7 +25,8 @@
     "release": "npm publish --access=public",
     "patch": "npm --no-git-tag-version version patch",
     "format": "prettier --write '**/*.{ts,tsx}'",
-    "format-check": "prettier --check '**/*.{ts,tsx}"
+    "format-check": "prettier --check '**/*.{ts,tsx}",
+    "update": "npx --yes npm-check-updates -u && npm install"
   },
   "tsup": {
     "entry": [
@@ -48,7 +49,7 @@
   "dependencies": {
     "@bhunter179/react-material-you-theme": "^0.1.23",
     "@emotion/css": "^11.11.2",
-    "@emotion/react": "^11.11.1",
+    "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-brands-svg-icons": "6.5.1",
@@ -72,17 +73,16 @@
     "redux-watch": "^1.2.0",
     "shortid": "^2.2.16",
     "tsdef": "^0.0.14",
-    "tss-react": "^4.9.3",
-    "use-container-queries": "^1.0.0"
+    "tss-react": "^4.9.3"
   },
   "devDependencies": {
-    "@mui/material": "^5.15.1",
+    "@mui/material": "^5.15.2",
     "tsup": "^8.0.1",
     "@size-limit/preset-small-lib": "^11.0.1",
     "@types/classnames": "^2.3.0",
     "@types/fuzzy-search": "^2.1.5",
     "@types/memoizee": "^0.4.11",
-    "@types/react": "^18.2.45",
+    "@types/react": "^18.2.46",
     "@types/react-dom": "^18.2.18",
     "@types/react-redux": "^7.1.33",
     "@types/redux-watch": "^1.1.2",

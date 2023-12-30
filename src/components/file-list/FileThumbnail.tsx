@@ -34,5 +34,6 @@ const useStyles = makeStyles()(() => ({
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
     backgroundSize: "contain",
+    margin: "auto",
   },
 }));

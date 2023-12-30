@@ -69,9 +69,8 @@ const useFileEntryStyles = makeStyles<FileEntryState>()((theme, state) => ({
     paddingTop: 5,
     overflow: "hidden",
     textOverflow: "ellipsis",
-    display: "-webkit-box",
-    WebkitLineClamp: 2,
     WebkitBoxOrient: "vertical",
+    whiteSpace:"nowrap"
   },
   gridFileEntryName: {
     backgroundColor: state.selected ? "rgba(0,153,255, .25)" : "transparent",

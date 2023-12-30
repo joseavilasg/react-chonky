@@ -8,7 +8,6 @@ import { makeStyles } from "tss-react/mui";
 import { SmartFileEntry } from "./FileEntry";
 import { Box } from "@mui/material";
 import { VirtuosoGrid, VirtuosoGridHandle } from "react-virtuoso";
-import { useContainerQueries } from "use-container-queries";
 
 export const isMobileDevice = () => {
   const toMatch = [
@@ -24,22 +23,6 @@ export const isMobileDevice = () => {
   return toMatch.some((toMatchItem) => {
     return navigator.userAgent.match(toMatchItem);
   });
-};
-
-const breakpoints = {
-  xs: [0, 480],
-  sm: [481, 600],
-  md: [601, 900],
-  lg: [901, 1200],
-  xl: [1201],
-};
-
-const gridsize = {
-  xs: 1,
-  sm: 2,
-  md: 3,
-  lg: 4,
-  xl: 5,
 };
 
 export const GridContainer = React.memo(
@@ -58,10 +41,6 @@ export const GridContainer = React.memo(
           displayFileIdsRef.current[index] ?? `loading-file-${index}`,
         [displayFileIdsRef],
       );
-
-      const { ref: queryRef, active: breakpoint } = useContainerQueries({
-        breakpoints,
-      } as any);
 
       const cellRenderer = useCallback(
         (index: number) => {
@@ -86,11 +65,11 @@ export const GridContainer = React.memo(
         [hasNextPage, loadNextPage],
       );
 
-      const { classes } = useStyles(breakpoint);
+      const { classes } = useStyles();
 
       const gridComponent = useMemo(() => {
         return (
-          <Box sx={{ width: "100%", height: "100%" }} ref={queryRef}>
+          <Box sx={{ width: "100%", height: "100%", containerType: "size" }}>
             <VirtuosoGrid
               ref={ref}
               listClassName={classes.gridContainer}
@@ -108,12 +87,29 @@ export const GridContainer = React.memo(
   ),
 );
 
-const useStyles = makeStyles<string>()((_, breakpoint) => ({
+const useStyles = makeStyles()(() => ({
   gridContainer: {
     display: "grid",
     gap: "8px",
     paddingRight: "16px",
     paddingLeft: "8px",
-    gridTemplateColumns: `repeat(${gridsize[breakpoint]}, minmax(180px, 1fr))`,
+    gridTemplateColumns: "repeat(2,minmax(0px,1fr))",
+    "@container (max-width: 320px)": {
+      gridTemplateColumns: "repeat(1,minmax(0px,1fr))",
+    },
+    "@container (min-width: 480px) and (max-width: 719px)": {
+      gridTemplateColumns: "repeat(3,minmax(0px,1fr))",
+    },
+    "@container (min-width: 720px) and (max-width: 899px)": {
+      gridTemplateColumns: "repeat(4,minmax(0px,1fr))",
+    },
+
+    "@container (min-width: 900px) and (max-width: 1199px)": {
+      gridTemplateColumns: "repeat(5,minmax(0px,1fr))",
+    },
+
+    "@container (min-width: 1200px)": {
+      gridTemplateColumns: "repeat(6,minmax(0px,1fr))",
+    },
   },
 }));
