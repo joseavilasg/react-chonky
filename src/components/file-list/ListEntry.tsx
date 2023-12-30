@@ -48,7 +48,6 @@ export const ListEntry: React.FC<FileEntryProps> = React.memo(
 
     return (
       <div className={classes.listFileEntry} {...fileEntryHtmlProps}>
-        <div className={commonClasses.focusIndicator}></div>
         <div
           className={cx([
             commonClasses.selectionIndicator,

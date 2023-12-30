@@ -20,7 +20,7 @@
   },
   "scripts": {
     "vite": "vite ./example",
-    "build": "tsup",
+    "build": "tsup --watch",
     "typecheck": "tsc --noEmit",
     "release": "npm publish --access=public",
     "patch": "npm --no-git-tag-version version patch",

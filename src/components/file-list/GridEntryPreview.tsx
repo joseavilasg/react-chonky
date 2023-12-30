@@ -73,7 +73,6 @@ const useFolderStyles = makeStyles<FileEntryState>()((theme, state) => ({
       const shadows: string[] = [];
       if (state.selected) shadows.push("inset rgba(0,153,255, .65) 0 0 0 3px");
       if (state.focused) shadows.push("inset rgba(0, 0, 0, 1) 0 0 0 3px");
-      shadows.push(`inset ${theme.gridFileEntry.fileColorTint} 0 0 0 999px`);
       return shadows.join(", ");
     })(),
     borderRadius: theme.gridFileEntry.borderRadius,
@@ -157,19 +156,11 @@ export const useCommonEntryStyles = makeStyles<FileEntryState>()(
   (_, state) => ({
     selectionIndicator: {
       display: state.selected ? "block" : "none",
-      backgroundColor: "rgba(0, 153, 255, .14)",
+      backgroundColor: "rgba(0, 153, 255, .36)",
       position: "absolute",
       height: "100%",
       width: "100%",
       zIndex: 10,
-    },
-    focusIndicator: {
-      display: state.focused ? "block" : "none",
-      boxShadow: "inset rgba(0, 0, 0, 1) 0 0 0 2px",
-      position: "absolute",
-      height: "100%",
-      width: "100%",
-      zIndex: 11,
-    },
+    }
   }),
 );
