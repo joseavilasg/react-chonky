@@ -1,6 +1,6 @@
 {
   "name": "@bhunter179/chonky",
-  "version": "0.2.46",
+  "version": "0.2.48",
   "description": "A File Browser component for React",
   "license": "MIT",
   "types": "dist/index.d.ts",
@@ -20,7 +20,7 @@
   },
   "scripts": {
     "vite": "vite ./example",
-    "build": "tsup --watch",
+    "build": "tsup",
     "typecheck": "tsc --noEmit",
     "release": "npm publish --access=public",
     "patch": "npm --no-git-tag-version version patch",
@@ -79,7 +79,6 @@
     "@mui/material": "^5.15.2",
     "tsup": "^8.0.1",
     "@size-limit/preset-small-lib": "^11.0.1",
-    "@types/classnames": "^2.3.0",
     "@types/fuzzy-search": "^2.1.5",
     "@types/memoizee": "^0.4.11",
     "@types/react": "^18.2.46",

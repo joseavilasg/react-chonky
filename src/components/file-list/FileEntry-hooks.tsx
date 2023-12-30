@@ -31,6 +31,7 @@ import {
   MouseClickEvent,
 } from "@/components/internal/ClickableWrapper";
 import { FileEntryState } from "./GridEntryPreview";
+import { useTheme } from "@mui/material";
 
 export const useFileEntryHtmlProps = (
   file: Nullable<FileData>,
@@ -55,7 +56,7 @@ export const useFileEntryState = (
 ) => {
   const iconData = useIconData(file);
   const { thumbnailUrl, thumbnailLoading } = useThumbnailUrl(file);
-
+  const { palette } = useTheme();
   return useMemo<FileEntryState>(() => {
     const fileColor = thumbnailUrl
       ? ColorsDark[iconData.colorCode]
@@ -68,7 +69,7 @@ export const useFileEntryState = (
       icon: file && file.icon !== undefined ? file.icon : icon,
       iconSpin: iconSpin,
       thumbnailUrl: thumbnailUrl,
-      color: file && file.color !== undefined ? file.color : fileColor,
+      color: file && file.isDir ? palette.primary.main : fileColor,
       selected: selected,
       focused: !!focused,
     };

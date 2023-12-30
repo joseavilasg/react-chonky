@@ -75,6 +75,7 @@ const useFolderStyles = makeStyles<FileEntryState>()((theme, state) => ({
       if (state.focused) shadows.push("inset rgba(0, 0, 0, 1) 0 0 0 3px");
       return shadows.join(", ");
     })(),
+    backgroundColor: theme.palette.surfaceContainer.main,
     borderRadius: theme.gridFileEntry.borderRadius,
     position: "relative",
     overflow: "hidden",
