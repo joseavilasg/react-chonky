@@ -56,7 +56,6 @@ export const useFileEntryState = (
 ) => {
   const iconData = useIconData(file);
   const { thumbnailUrl, thumbnailLoading } = useThumbnailUrl(file);
-  const { palette } = useTheme();
   return useMemo<FileEntryState>(() => {
     const fileColor = thumbnailUrl
       ? ColorsDark[iconData.colorCode]
@@ -69,7 +68,7 @@ export const useFileEntryState = (
       icon: file && file.icon !== undefined ? file.icon : icon,
       iconSpin: iconSpin,
       thumbnailUrl: thumbnailUrl,
-      color: file && file.isDir ? palette.primary.main : fileColor,
+      color: file && file.isDir ? "#FFCA64" : fileColor,
       selected: selected,
       focused: !!focused,
     };
